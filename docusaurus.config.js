@@ -48,25 +48,27 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
+          routeBasePath: '/',
           sidebarPath: "./sidebars.js",
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            "https://github.com/citrus-software/mikan-docs/tree/main/packages/create-docusaurus/templates/shared/",
+          // editUrl:
+          //   "https://github.com/citrus-software/mikan-docs/tree/main/packages/create-docusaurus/templates/shared/",
         },
+
         blog: {
           showReadingTime: true,
           feedOptions: {
             type: ["rss", "atom"],
             xslt: true,
           },
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            "https://github.com/citrus-software/mikan-docs/tree/main/packages/create-docusaurus/templates/shared/",
+          // editUrl:
+          //   "https://github.com/citrus-software/mikan-docs/tree/main/packages/create-docusaurus/templates/shared/",
+
           // Useful options to enforce blogging best practices
           onInlineTags: "warn",
           onInlineAuthors: "warn",
           onUntruncatedBlogPosts: "warn",
         },
+
         theme: {
           customCss: "./src/css/custom.css",
         },
@@ -92,6 +94,7 @@ const config = {
             position: "left",
             label: "Docs",
           },
+
           //{ to: "/blog", label: "Blog", position: "left" },
           //{
           //  href: "https://github.com/facebook/docusaurus",
@@ -107,8 +110,8 @@ const config = {
             title: "Docs",
             items: [
               {
-                label: "Tutorial",
-                to: "/docs/introduction/intro",
+                label: "About",
+                to: "/introduction/about",
               },
             ],
           },
@@ -130,7 +133,7 @@ const config = {
               // },
               {
                 label: "GitHub",
-                href: "https://github.com/citrus-sofwatre/mikan",
+                href: "https://github.com/citrus-software/mikan",
               },
             ],
           },
