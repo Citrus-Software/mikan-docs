@@ -12,52 +12,57 @@
 ### 🚀 One-Minute Setup (Windows + Maya)
 
 1. **Close Maya** if it's currently open.
-2. **Extract** the contents of `mikan-main.zip` anywhere you like.  
+2. **Download** the [latest packaged ZIP](https://github.com/citrus-software/mikan/releases).
+3. **Extract** the contents of `mikan-main.zip` anywhere you like.  
    _Example: extract to `C:\` so that you get `C:\mikan-main`._
-3. **Open Command Prompt** and go to your Maya installation folder:  
+4. **Open Command Prompt** and go to your Maya installation folder:  
    _Example:_
    ```bash
    cd "C:\Program Files\Autodesk\Maya2022\bin"
    ```
-4. **Install Mikan's Maya dependencies** using `mayapy`:
+5. **Install Mikan's Maya dependencies** using `mayapy`:
    ```bash
    mayapy -m pip install -r C:\mikan-main\requirements-maya.txt
    ```
-5. **Launch Maya**.
-6. Pick any **shelf tab** where you'd like to add the Mikan button.
-7. Open the **Script Editor**, select the **Python** tab, and paste this code:
+6. **Launch Maya**.
+7. Pick any **shelf tab** where you'd like to add the Mikan button.
+8. Open the **Script Editor**, select the **Python** tab, and paste this code:
    ```python
    import sys
    sys.path.insert(0, r'C:\mikan-main\src')
    from mikan.maya.ui import MikanUI
    MikanUI.start()
    ```
-8. In the Script Editor, go to **File → Save Script to Shelf...**
-9. When prompted, name the shelf button **Mikan**, then click **OK**.
-10. You should now see a **Mikan** button in your chosen shelf tab — click it!
-11. The Mikan UI will appear, docked on the right.
+9. In the Script Editor, go to **File → Save Script to Shelf...**
+10. When prompted, name the shelf button **Mikan**, then click **OK**.
+11. You should now see a **Mikan** button in your chosen shelf tab — click it!
+12. The Mikan UI will appear, docked on the right.
 
 ## Full Setup Guide
 
-Clone the repo:
+### Obtain Mikan
+
+#### **Option 1**: Download the [latest packaged ZIP](https://github.com/citrus-software/mikan/releases)
+
+1. Download the latest release from the Releases page.
+2. Extract the ZIP archive.
+3. Open a terminal in the extracted folder and install the requirements
+
+#### **Option 2**: Clone the repo:
 
 ```bash
-git clone https://gitlab.teamto.fr/teamto-technology/mikan.git
-cd mikan
-pip install -r requirements.txt
+git clone https://github.com/citrus-software/mikan.git
 ```
 
-## Maya Integration
+### Maya Integration
 
 Make sure the project folder is in Maya's PYTHONPATH. You can do this by editing your user userSetup.py or setting the environment variable.
-
-## Maya Requirements
 
 Installing Python packages for Maya can be tricky depending on your setup.
 
 There are two main approaches:
 
-### 1. Install requirements into Maya's built-in Python
+#### Option 1: Install requirements into Maya's built-in Python
 
 You can try installing the required packages directly into Maya's `site-packages`, using Maya's bundled Python. This can be done via the command line (adjust path to your version):
 
@@ -65,9 +70,11 @@ You can try installing the required packages directly into Maya's `site-packages
 "C:\Program Files\Autodesk\Maya2024\bin\mayapy.exe" -m pip install -r requirements-maya.txt
 ```
 
-⚠️ Be careful: this modifies Maya’s internal Python environment and may conflict with other tools.
+:::warning
+**Not recommended**: This modifies Maya’s internal Python environment, which can lead to conflicts with other tools or future updates.
+:::
 
-### 2. Use a custom Python environment via `PYTHONPATH`
+#### Option 2: Use a custom Python environment via `PYTHONPATH` ✅ (recommended)
 
 Alternatively, install the requirements in a separate Python environment and expose the installed packages to Maya via `PYTHONPATH`.
 
@@ -84,7 +91,24 @@ set PYTHONPATH=%PYTHONPATH%;C:\maya_env\Lib\site-packages
 
 This approach is safer and more flexible, especially if you're managing multiple tools.
 
-📝 Note:
+:::note
 
 - Adjust paths based on your system setup.
-- Make sure the Python version in your virtual environment matches the one used by Maya (e.g. 3.9 or 3.10).
+- You can share the same virtual environment across multiple tools or versions of Maya if compatible.
+
+:::
+
+#### Start Mikan
+
+Open the **Script Editor**, select the **Python** tab, and paste this code:
+
+```python
+from mikan.maya.ui import MikanUI
+MikanUI.start()
+```
+
+:::tip
+For easier access, add this command to a **shelf button** in Maya.  
+Use the icon at `src/mikan/core/ui/logo.svg` for a nice touch!
+<img src="../img/logo.svg" alt="Mikan Logo" width="48" />
+:::
