@@ -28,7 +28,7 @@ Born from years of production experience, Mikan combines **performance**, **modu
   Mikan allows fast and scalable prototyping of rig mechanisms. Thanks to its modular design, technical artists can easily author and iterate on reusable components, enabling precise control over the structure and behavior of rigs — from simple props to advanced facial systems.
 
 - **Software-Agnostic Rigging**  
-  A single, unified blueprint drives rig generation across both Maya and Tangerine. These blueprints can also be exported in neutral formats such as **Alembic**, ensuring compatibility with external DCC tools.
+  A single, unified blueprint drives rig generation across both Maya and Tangerine. These blueprints can also be exported in neutral formats such as **Alembic**, ensuring compatibility with any DCC tools.
 
 ### Target Audience & Prerequisites
 
