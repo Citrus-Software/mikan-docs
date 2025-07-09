@@ -9,32 +9,34 @@ Welcome to the Mikan documentation. This project aims to provide a flexible Pyth
 
 ## What is Mikan
 
-**Mikan** is a rigging toolkit developed for **Autodesk Maya** and **Tangerine** — TeamTO Technology’s high-performance animation platform. It is designed to author rig blueprints that are software-agnostic and production-ready, enabling the creation of complete rigs from start to finish: from guide placement to advanced deformation graphs.
+**Mikan** is a modern rigging toolkit developed for **Autodesk Maya** and **Tangerine**, a high-performance animation platform originally built in-house at **TeamTO** and now available to external partners. Mikan enables the creation of robust, software-agnostic rig blueprints — from guide placement to advanced deformation setups.
 
-Born from years of production experience, Mikan aims to combine **performance** with **ergonomics**. It generates flexible, customizable rigs while ensuring consistency and reproducibility across projects.
+Born from years of production experience, Mikan combines **performance**, **modularity**, and **ergonomics** to deliver consistent, scalable rigs that are ready for demanding pipelines.
 
 ### Key Concepts
 
-- **Cross-Platform Blueprinting**  
-  Mikan builds a single, unified **blueprint** — or rig template — that drives rig generation both in Maya and Tangerine.
-
 - **High-Performance Autorig**  
-  Mikan provides a performant and user-friendly autorig solution, capable of generating versatile and studio-grade rigs with minimal friction.
+  A fast, user-friendly autorig system capable of generating high-quality, customizable rigs with minimal friction.
 
 - **Round-Trip Workflow**  
-  Mikan promotes a continuous **template → rig → template** feedback loop. Every modification — adding controllers, tweaking skin weights, repositioning elements — is performed directly on the blueprint. Rebuilding the rig applies and syncs these changes across both Maya and Tangerine.
+  Mikan supports a seamless **template → rig → template** feedback loop. Any changes — from control tweaks to deformation adjustments — are performed directly on the blueprint, then rebuilt and propagated across both Maya and Tangerine.
 
 - **Pipeline-Ready by Design**  
-  Mikan enables the industrialization of rigging: consistent, high-quality rigs that are ready for delivery to external teams and partners.
+  Mikan industrializes rigging: it guarantees consistent, predictable outputs ready for external production teams and partners.
 
-- **Format Neutrality**  
-  The blueprint can be exported as **Alembic**, facilitating interoperability with other DCC tools.
+- **Modular Blueprint Prototyping**  
+  Mikan allows fast and scalable prototyping of rig mechanisms. Thanks to its modular design, technical artists can easily author and iterate on reusable components, enabling precise control over the structure and behavior of rigs — from simple props to advanced facial systems.
+
+- **Software-Agnostic Rigging**  
+  A single, unified blueprint drives rig generation across both Maya and Tangerine. These blueprints can also be exported in neutral formats such as **Alembic**, ensuring compatibility with external DCC tools.
 
 ### Target Audience & Prerequisites
 
-- **Target Audience** Studios, clients, and external partners looking to adopt **Tangerine** for animation, and in need of advanced, production-ready rigs optimized for this platform.
+- **Target Audience**  
+  Studios, clients, and external partners looking to adopt **Tangerine** for animation, and in need of advanced, production-ready rigs optimized for this platform.
 
-- **Prerequisites** Basic knowledge of rigging in **Maya** is expected (joints, constraints, hierarchies). No prior experience with Mikan or Tangerine is required.
+- **Prerequisites**  
+  Basic knowledge of rigging in **Maya** is expected (joints, constraints, hierarchies).
 
 ## Blueprint Concept
 
@@ -53,7 +55,7 @@ Understanding this hierarchy and its logic is the foundation for working effecti
 | ---------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
 | `Asset`    | Top-level container for a rig blueprint and its generated rig.               | Multiple assets can exist in a scene. Each one acts as an isolated rig root.             |
 | `Template` | Main building blocks of the rig: define skeleton guides and pivot hierarchy. | Represented by transforms and joints. Added hierarchically. Blueprint logic starts here. |
-| `Graph`    | Nodes embedded in the hierarchy carrying metadata or logical groupings.      | Used to define spaces, behaviors, or structure without affecting the guide layout.       |
+| `Helper`   | Nodes embedded in the hierarchy carrying metadata or logical groupings.      | Used to define spaces, behaviors, or structure without affecting the guide layout.       |
 | `Shape`    | Controller shapes parented under `Template` nodes.                           | Ignored by the build process but used to define visual handles.                          |
 | `Modifier` | Logic metadata: defines custom rigging behaviors, constraints, plugs, etc.   | Acts like a programmable customization layer.                                            |
 | `Deformer` | Binding metadata: defines how geometry is connected to the skeleton.         | Executed after modifiers by default. Covers skinClusters, wraps, lattices, etc.          |
