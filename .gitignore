@@ -29,6 +29,7 @@ Thumbs.db
 # Optional: IDEs
 .idea/
 *.iml
+.codesandbox/
 
 # Optional: output of local scripts or temp files
 *.log
