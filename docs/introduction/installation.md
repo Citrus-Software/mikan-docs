@@ -22,7 +22,7 @@
    ```
 5. **Install Mikan's Maya dependencies** using `mayapy`:
    ```bash
-   mayapy -m pip install -r C:\mikan-main\requirements-maya.txt
+   mayapy -m pip install -r C:\mikan-main\requirements.txt
    ```
 6. **Launch Maya**.
 7. Pick any **shelf tab** where you'd like to add the Mikan button.
@@ -46,7 +46,6 @@
 
 1. Download the latest release from the Releases page.
 2. Extract the ZIP archive.
-3. Open a terminal in the extracted folder and install the requirements
 
 #### **Option 2**: Clone the repo:
 
@@ -62,19 +61,19 @@ Installing Python packages for Maya can be tricky depending on your setup.
 
 There are two main approaches:
 
-#### Option 1: Install requirements into Maya's built-in Python
+#### **Option 1**: Install requirements into Maya's built-in Python
 
 You can try installing the required packages directly into Maya's `site-packages`, using Maya's bundled Python. This can be done via the command line (adjust path to your version):
 
 ```cmd
-"C:\Program Files\Autodesk\Maya2024\bin\mayapy.exe" -m pip install -r requirements-maya.txt
+"C:\Program Files\Autodesk\Maya2024\bin\mayapy.exe" -m pip install -r requirements.txt
 ```
 
 :::warning
 **Not recommended**: This modifies Maya’s internal Python environment, which can lead to conflicts with other tools or future updates.
 :::
 
-#### Option 2: Use a custom Python environment via `PYTHONPATH` ✅ (recommended)
+#### **Option 2**: Use a custom Python environment via `PYTHONPATH` ✅ (recommended)
 
 Alternatively, install the requirements in a separate Python environment and expose the installed packages to Maya via `PYTHONPATH`.
 
@@ -82,7 +81,7 @@ Alternatively, install the requirements in a separate Python environment and exp
 :: Create a virtual environment somewhere
 python -m venv C:\maya_env
 C:\maya_env\Scripts\activate
-pip install -r requirements-maya.txt
+pip install -r requirements.txt
 deactivate
 
 :: Add the site-packages folder to PYTHONPATH (e.g. in userSetup.py or system environment variables)
