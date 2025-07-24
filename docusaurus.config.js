@@ -48,7 +48,7 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          routeBasePath: '/',
+          routeBasePath: "/",
           sidebarPath: "./sidebars.js",
           // editUrl:
           //   "https://github.com/citrus-software/mikan-docs/tree/main/packages/create-docusaurus/templates/shared/",
@@ -120,7 +120,7 @@ const config = {
             items: [
               {
                 label: "Discord",
-                href: "https://discord.gg/beHRwnue",
+                href: "https://rebrand.ly/mikan-rig-discord",
               },
             ],
           },
