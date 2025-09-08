@@ -14,23 +14,20 @@ pnpm-debug.log*
 # OS files
 .DS_Store
 Thumbs.db
+*.swp
 
 # Env files
 .env
 .env.local
 .env.*.local
 
-# VSCode settings (optionnel, si tu veux pas versionner ton éditeur)
-.vscode/
-
-# Mac system files
-*.swp
+# output of local scripts or temp files
+*.log
+.cache/
 
 # Optional: IDEs
+.vscode/
 .idea/
 *.iml
 .codesandbox/
-
-# Optional: output of local scripts or temp files
-*.log
-.cache/
+sandbox.config.json
