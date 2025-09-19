@@ -86,7 +86,7 @@ Result once the note is written:
 
 If you rebuild your rig, you will now see a visibility switch menu for the fingers controllers by right-clicking on the hand IK control.
 
-![vis_fingers](./img/visFingers.png)
+![fingers vis](./img/visFingers.png)
 
 ### Example 2 : Adjusting Arm Shear Attributes
 
