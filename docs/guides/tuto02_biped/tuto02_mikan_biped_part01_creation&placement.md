@@ -9,7 +9,7 @@ In the **Template** tab, fill in the **Add Asset** field with the name of your a
 
 ![add asset](./img/add_asset.png)
 
-### Setting up the base controls: WORLD and ROOT
+### Setting up the base controls: World and Root
 
 Before adding body modules, we need to establish the foundation of the rig hierarchy. We start by creating the **WORLD** module.  
 This is the top-level control: it allows you to move, rotate, or scale the entire character in the scene.
