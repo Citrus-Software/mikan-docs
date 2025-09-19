@@ -5,7 +5,7 @@
 ### Binding
 
 After building our template hierarchy, let's move on to constructing the rig and binding the character.  
-To bind your character, the rig must first be built.  
+Before binding your character, make sure the rig is built.  
 To do this, simply click on the **rocket** icon.
 
 ![build rig](./img/build_rig.png)
@@ -83,6 +83,10 @@ group:
 Result once the note is written:
 
 ![note group](./img/note_fingers.png)
+
+If you rebuild your rig, you will now see a visibility switch menu for the fingers controllers by right-clicking on the hand IK control.
+
+![vis_fingers](./img/visFingers.png)
 
 ### Example 2 : Adjusting Arm Shear Attributes
 

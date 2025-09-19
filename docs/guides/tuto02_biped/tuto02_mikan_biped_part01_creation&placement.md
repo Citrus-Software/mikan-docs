@@ -37,9 +37,11 @@ Animation usually starts from the ROOT.
 
 :::
 
+:::info
 If you want to resize the control shapes, click the **Toggle Shapes** icon in Mikan after selecting the template.
 
 ![toogle shapes](./img/toogle_shapes.png)
+:::
 
 ### Spine
 
@@ -102,7 +104,9 @@ By default:
 - The **Clavicle** option is enabled.
 - The **Auto Clavicle** option lets you decide if the clavicle automatically follows the arm.
 
+:::info
 This is a good time to adjust the position and size of the control shapes to keep the rig clean.
+:::
 
 :::note
 👉 There is no manual placement for pole vectors.  
