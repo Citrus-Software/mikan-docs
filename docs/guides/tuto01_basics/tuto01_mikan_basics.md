@@ -1,7 +1,5 @@
 # Building a Basic Rig
 
----
-
 ## Main Interface Overview
 
 Mikan's interface is divided into **four main tabs**:
@@ -92,9 +90,9 @@ Click **Add Template** to create the module.
 when you modify an option, it turns **blue**.  
 👉 Right-click **Reset** to restore the default value.
 
-:::
-
 ![reset options](./img/options_reset.png)
+
+:::
 
 ---
 
@@ -132,7 +130,7 @@ Build logs are displayed in the **Logs** tab.
 
 ---
 
-## 🔹 Customizing Controller Shapes
+## Customizing Controller Shapes
 
 To display all controller shapes:
 
@@ -152,18 +150,20 @@ The **Shapes** tab provides:
 
 ![shapes tab](./img/onglet_shapes.png)
 
-ℹ️ **Recommendation**: customize shapes on the **template**.  
-👉 If you edit shapes after a build, you can push those changes back into the template using the **Rig to Tpl** button.
+:::warning
+
+### always customize shapes on the template.
+
+👉 If you edit shapes directly on the rig, these changes will be lost on the next rebuild since only the template stores the information.
+✨ To preserve your adjustments, use the Rig to Tpl button to push those modifications back into the template.
 
 ![shapes rig to tpl](./img/shapes_rig_to_tpl.png)
 
----
+:::
 
-## 🔹 Binding
+## Binding
 
 Once your template is ready, the next step is **binding** – linking the rig to the model.
-
-👉 The rig must be **built before binding**.
 
 In complex hierarchies, skin joints can be hard to select.  
 From the **Mikan outliner**: right-click → **Select skin joints**.
@@ -172,8 +172,12 @@ From the **Mikan outliner**: right-click → **Select skin joints**.
 
 Then skin your geometry as you normally would.
 
+:::warning
+
 ⚠️ **Important**:  
 Anything added manually (skinning, clusters, deformers, etc.) will be removed with each **rebuild**, unless those changes are saved in the **blueprint**.
+
+:::
 
 ### Backing Up Deformers
 
@@ -205,7 +209,7 @@ The Add tab gives you access to a set of default template modules provided by Mi
 
 :::
 
-## ✅ Conclusion
+## Conclusion
 
 You've now covered the basics of rigging with Mikan:
 
