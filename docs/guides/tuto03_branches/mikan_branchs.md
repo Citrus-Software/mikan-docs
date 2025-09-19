@@ -1,167 +1,179 @@
-# Les Branches dans Mikan
+# Branches in Mikan
 
 ## Introduction
 
-Une **branch** dans Mikan est un paramètre qui permet de créer plusieurs variantes d'un même module de template.  
+A **branch** in Mikan is a parameter that allows you to create multiple variants of the same template module.  
 
-Exemples typiques :
+Typical examples:  
 
-- symétrie gauche/droite pour les bras et les jambes,  
-- duplication d'éléments répétés comme des tentacules ou des pattes.  
+- left/right symmetry for arms and legs,  
+- duplication of repeated elements such as tentacles or legs.  
 
-👉 Les branches garantissent la **cohérence** et simplifient le rigging en évitant les duplications manuelles.
+👉 Branches ensure **consistency** and simplify rigging by avoiding manual duplication.  
 
+---
 
-## Principes de base
+## Basics
 
-### Définir une branch
+### Defining a branch
 
-Le champ **Branches** se trouve dans les options du module.  
+The **Branches** field is located in the module options.  
 
-![options branchs](./img/option_branchs.png)  
+![branch options](./img/option_branchs.png)  
 
-1. Écrivez manuellement une liste de labels séparés par des virgules.  
-   - Exemple : `[L, R]`, `[up, dn]`, `[1, 2, 3, 4]`  
-2. Ou bien, faites un **clic droit** pour accéder à des labels **pré-définis** :  
+1. Manually type a list of labels separated by commas.  
+   - Example: `[L, R]`, `[up, dn]`, `[1, 2, 3, 4]`  
+2. Or, **right-click** to access **predefined labels**:  
 
-![options branchs 02](./img/option_branchs_02.png)  
+![branch options 02](./img/option_branchs_02.png)  
 
 :::note
-Si le champ est vide, Mikan ne crée **qu’un seul module**, sans duplication ni symétrie.  
-Sur certains modules de template où la symétrie est évidente (par exemple les **bras** et les **jambes**), ce champ est déjà **pré-rempli** par défaut avec `[L, R]`. Vous pouvez bien sûr modifier ou remplacer ces valeurs.
+If the field is empty, Mikan creates **only one module**, without duplication or symmetry.  
+For some template modules where symmetry is obvious (for example **arms** and **legs**), this field is already **pre-filled** with `[L, R]`. You can, of course, modify or replace these values.
 :::
 
-Au moment du **build du rig** :
+When building the rig:  
 
-Chaque label défini génère automatiquement une variante du module,  
-Exemple : `[L, R]` → un module côté gauche et un module côté droit.  
+- Each defined label automatically generates a variant of the module.  
+- Example: `[L, R]` → one module for the left side and one for the right side.  
 
+---
 
-### Notes et Modifiers
+### Notes and Modifiers
 
-Lorsque vous utilisez des branches, vous n'avez pas besoin de répéter vos notes ou modifiers pour chaque côté.  
+When using branches, you don’t need to repeat your notes or modifiers for each side.  
 
-Exemple :
+Example:  
 
-1. Vous travaillez sur un module de bras avec une branche `[L, R]`.  
-2. Saisissez vos notes en utilisant les **IDs du côté gauche** (par exemple les contrôleurs du bras gauche).  
-3. Mikan répliquera automatiquement cette logique en miroir pour le côté droit lors du build.  
+1. You work on an arm module with a `[L, R]` branch.  
+2. Enter your notes using the **IDs of the left side** (for example, the left arm controllers).  
+3. Mikan will automatically mirror this logic for the right side when building.  
 
-![notes branchs](./img/branch_notes.png)  
+![branch notes](./img/branch_notes.png)  
 
-Cela signifie :
+This means:  
 
-- pas besoin de copier les notes pour le côté droit,  
-- un setup **propre, cohérent et facile à maintenir**, même sur des rigs complexes.  
+- no need to copy notes for the right side,  
+- a **clean, consistent, and easy-to-maintain** setup, even on complex rigs.  
 
+---
 
-## Adapter les branches à un rig asymétrique
+## Adapting branches to an asymmetric rig
 
-Imaginons un personnage dont le bras droit est plus gros, plus long.  
+Imagine a character whose right arm is bigger or longer.  
 
-![modeling assymetrique](./img/modeling_assymetrique.png)  
+![asymmetric modeling](./img/modeling_assymetrique.png)  
 
-Même si les deux bras viennent du **même module avec branches**, vous avez la possibilité d'aller modifier le module de template uniquement pour le côté **R** :  
+Even if both arms come from the **same module with branches**, you can edit the template module only for the **R** side:  
 
-1. Faites un clic droit sur le module concerné.  
-2. Choisissez **Build Branches Template**.  
+1. Right-click on the module.  
+2. Select **Build Branches Template**.  
 
 ![build branch template](./img/build_branches.png)  
 
-Mikan génère alors un **module branch** (par exemple `R` si vos branches sont `[L, R]`).  
+Mikan then generates a **branch module** (e.g. `R` if your branches are `[L, R]`).  
 
 ![branch R](./img/branch_R.png)  
 
-Vous pouvez ensuite modifier directement :
+You can then directly edit:  
 
-- la **position des joints**,  
-- l'**aspect des shapes** (via le bouton *Toggle Shapes*).  
+- the **joint positions**,  
+- the **controller shapes** (via the *Toggle Shapes* button).  
 
-![edition branch R](./img/edition_branchR.png)  
+![edit branch R](./img/edition_branchR.png)  
 
 ---
 
 :::warning
-N'utilisez pas de branches si les variantes sont **structurellement différentes**.  
-Exemple : un robot dont le bras gauche et le bras droit ont des mécaniques distinctes.  
-👉 Dans ce cas, créez **deux modules séparés**, sans branches.
+Do not use branches if the variants are **structurally different**.  
+Example: a robot where the left and right arms have completely different mechanics.  
+👉 In this case, create **two separate modules**, without branches.
 :::
 
+---
 
-## Exemple avancé : l'araignée
+## Advanced example: the spider
 
-Les pattes d'araignée sont un **cas typique d’utilisation des branches** : elles sont nombreuses, mais partagent toutes le même comportement.  
+Spider legs are a **typical case for using branches**: there are many of them, but they all share the same behavior.  
 
-### Mise en place du template de base
+### Step 1 — Set up the base template
 
-Commençons par créer un template très simple, composé de :
+Let’s start with a very simple template made of:  
 
-- un module **WORLD**,  
-- un module **joint** pour le corps,  
-- un module **bones** pour l'arrière de l’araignée.  
+- a **WORLD** module,  
+- a **joint** module for the body,  
+- a **bones** module for the back of the spider.  
 
 ![base template](./img/base_araignee.png)  
 
+---
 
-### Créer un groupe pour les pattes
+### Step 2 — Create a group for the legs
 
-Créons ensuite un **modules group** pour rassembler toutes les pattes (*legs*).  
+Next, create a **modules group** to gather all the legs.  
 
-1. Ajoutez un group nommé **legs**.  
-2. Définissez un set de branches : **A, B, C, D** pour les quatre pattes du côté gauche.  
+1. Add a group named **legs**.  
+2. Define a set of branches: **A, B, C, D** for the four legs on the left side.  
 
-![édition branch A B C D](./img/araignee_branchsABCD.png)  
+![branch edit A B C D](./img/araignee_branchsABCD.png)  
 
+---
 
-### Ajouter un module quad
+### Step 3 — Add a quad module
 
-Ajoutons maintenant un **module quad** classique, configuré avec les branches `[L, R]`.  
+Now add a standard **quad module**, configured with the `[L, R]` branches.  
 
 ![quad](./img/araignee_quad.png)  
 
+---
 
-### Edition des branches
+### Step 4 — Editing the branches
 
-Pour éditer les branches :  
+To edit the branches:  
 
-1. Faites un clic droit sur le group **legs**.  
-2. Sélectionnez **Build Branches Template**.  
+1. Right-click on the **legs** group.  
+2. Select **Build Branches Template**.  
 
-Par défaut, Mikan génère des branches pour les deux côtés `[L, R]`.  
-Mais dans notre cas, nous voulons uniquement editer les branches du côté gauche (**A_L, B_L, C_L, D_L**), et garder la symétrie à droite :  
+By default, Mikan generates branches for both sides `[L, R]`.  
+But in this case, we only want to edit the branches on the left side (**A_L, B_L, C_L, D_L**) and keep the symmetry on the right side:  
 
-3. Dans l'Outliner, sélectionnez les branches côté **R**.  
-4. Supprimez-les avec l'icône **poubelle** 🗑️.  
+3. In the Outliner, select the branches on the **R** side.  
+4. Delete them using the **trash** 🗑️ icon.  
 
 ![delete R](./img/delete_branchesR.png)  
 
-5. Placez et ajustez ensuite les branches du côté gauche.  
+5. Then, place and adjust the branches on the left side.  
 
 ![placement branches](./img/araignee_placementBranches.png)  
 
+---
 
-### Lancer un build de test
+### Step 5 — Run a test build
 
-Enfin, lançons un build pour vérifier le résultat :  
+Finally, run a build to check the result:  
 
-![resultat](./img/araignee_resultat.png)  
+![result](./img/araignee_resultat.png)  
 
-Le rig est généré correctement sur toutes les pattes, côté gauche **et** côté droit.  
-Et les fonctionnalités accessibles par clic droit fonctionnent aussi parfaitement.  
+The rig is correctly generated on all legs, both left **and** right.  
+And right-click features also work perfectly.  
 
+---
 
-## Bonnes pratiques et astuces
+## Best practices and tips
 
-- Utilisez des labels **clairs et courts** (`L/R`, `up/dn`, `1/2/3/4` …).  
-- Ne multipliez pas les branches inutilement.  
-- Vérifiez toujours le build avant de passer à l'étape suivante.  
-- Pour des rigs complexes, privilégiez les branches > maintenance facilitée.  
+- Use **clear and short** labels (`L/R`, `up/dn`, `1/2/3/4` …).  
+- Don’t multiply branches unnecessarily.  
+- Always test the build before moving to the next step.  
+- For complex rigs, branches are highly recommended → easier maintenance.  
 
+---
 
-## Résumé rapide
+## Quick summary
 
-- **Champ Branches vide** > un seul module.  
-- **Labels définis** > une variante par label.  
-- **Notes/modifiers** > définis une fois, répliqués automatiquement.  
-- **Asymétrie** > utiliser *Build Branches Template*.  
-- **Cas trop différents** > créer des modules séparés.  
+- **Empty Branches field** → one single module.  
+- **Defined labels** → one variant per label.  
+- **Notes/modifiers** → defined once, automatically replicated.  
+- **Asymmetry** → use *Build Branches Template*.  
+- **Too different cases** → create separate modules.  
+
+---
