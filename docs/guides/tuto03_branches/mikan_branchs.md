@@ -52,8 +52,6 @@ This means:
 - no need to copy notes for the right side,
 - a **clean, consistent, and easy-to-maintain** setup, even on complex rigs.
 
----
-
 ## Adapting branches to an asymmetric rig
 
 Imagine a character whose right arm is bigger or longer.
@@ -62,7 +60,7 @@ Imagine a character whose right arm is bigger or longer.
 
 Even if both arms come from the **same module with branches**, you can edit the template module only for the **R** side:
 
-1. Right-click on the module.
+1. Right-click on the template module.
 2. Select **Build Branches Template**.
 
 ![build branch template](./img/build_branches.png)
