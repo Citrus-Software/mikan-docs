@@ -71,7 +71,7 @@ For example:
 If you select the top node of the modeling hierarchy, Mikan will only save the deformers applied to the hat.  
 This way, you can clearly distinguish the original character’s deformers from those of the additional elements in the variation.
 
-:::Note
+:::note
 During the rebuild process, Mikan will **automatically link the deformers**.  
 Therefore, it is generally recommended to use **classic backups** for your main scenes to ensure that **all** deformers are saved.  
 The linked backup mode should be reserved for **specific variation cases only**.
