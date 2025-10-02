@@ -1,4 +1,4 @@
-# Subdiv
+# subdiv
 
 Polygon subdivision (surface smoothing).
 

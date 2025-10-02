@@ -1,4 +1,4 @@
-# Delta Mush
+# delta Mush
 
 Filters deformation artifacts and smooths geometry.
 
