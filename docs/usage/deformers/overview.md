@@ -69,7 +69,7 @@ For example:
 - Variant with an added hat
 
 If you select the top node of the modeling hierarchy, Mikan will only save the deformers applied to the hat.  
-This way, you can clearly distinguish the original character’s deformers from those of the additional elements in the variation.
+This way, you can clearly distinguish the original character's deformers from those of the additional elements in the variation.
 
 :::note
 During the rebuild process, Mikan will **automatically link the deformers**.  

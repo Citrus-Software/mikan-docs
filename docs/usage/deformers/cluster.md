@@ -16,6 +16,6 @@ Once this step is done, you need to **assign the meshes to the deformer sets**. 
 
 ![assign cluster](./img/assign_deformer.png)  
 
-Next, adjust the cluster’s influence areas on your mesh as usual.  
+Next, adjust the cluster's influence areas on your mesh as usual.  
 
-Finally, don’t forget to **save this information back to the template**, following the save procedure described in the *Deformers Overview* section.  
+Finally, don't forget to **save this information back to the template**, following the save procedure described in the *Deformers Overview* section.  
