@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Deformers
+# overview
 
 **Deformers** are the commands that attach the rig to the scene geometry.  
 They are executed **after** the construction of the template hierarchy and the modifiers.

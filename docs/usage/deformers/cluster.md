@@ -1,4 +1,4 @@
-# Cluster
+# cluster
 
 The setup logic for clusters is similar to binding.  
 It consists of going back and forth between the template, the generated rig, and the application of the deformer.  
