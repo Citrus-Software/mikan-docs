@@ -1,4 +1,4 @@
-# Wire
+# wire
 
 To set up a wire, proceed as you normally would in Maya:  
 select the curve to be used as the wire, then the target mesh, and apply the wire deformer through Maya's standard menu.  

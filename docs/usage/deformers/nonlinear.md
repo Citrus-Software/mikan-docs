@@ -1,4 +1,4 @@
-# Nonlinear
+# nonlinear
 
 To set up a nonlinear deformer, the process is the same as for clusters.  
 As an example, let’s take the **nonlinear bend deformer**.  
