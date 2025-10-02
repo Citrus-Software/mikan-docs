@@ -9,10 +9,11 @@ Deformer used for shape morphs.
 - Each shape animates from 0 to 1.  
 - It is possible to either connect geometries in the targets or directly provide position deltas.
 
-:::warning
-⚠️ Tang does not support in-betweens. Only shapes with weight = 1 will be saved (index 6000 in Maya).  
-Tang also does not recreate groups or their weights.  
-:::
+
+## Limitations
+
+- Tang does not support in-betweens. Only shapes with weight = 1 will be saved (index 6000 in Maya).  
+- Tang does not recreate groups or their weights.  
 
 
 ## Options

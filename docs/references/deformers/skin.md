@@ -7,9 +7,11 @@ Skeletal Deformation
 
 Attaches a geometry to a skeleton.
 
-:::warning
-⚠️ Dual Quaternion does not yet work perfectly with skin layers.
-:::
+
+## Limitations
+
+- Dual Quaternion does not yet work perfectly with skin layers.  
+
 
 ## Options
 

@@ -14,9 +14,10 @@ Filters deformation artifacts and smooths geometry.
 The Delta Mush applies a Laplacian smoothing algorithm on the geometry in its rest state and stores the difference (delta) between the rest and smoothed states per vertex, in surface space coordinates.  
 Then, the same smoothing is applied to the deformed geometry, and the stored deltas are reapplied in surface space to remove deformation artifacts introduced in the deformation chain.  
 
-:::warning
-⚠️ Work in progress: not fully implemented in Tangerine yet.  
-:::
+
+## Limitations
+
+- Work in progress: not fully implemented in Tangerine yet.  
 
 
 ## Options

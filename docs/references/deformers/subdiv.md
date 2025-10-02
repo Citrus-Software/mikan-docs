@@ -9,10 +9,11 @@ Polygon subdivision (surface smoothing).
 - Reads/writes the subdivision **level** (`divisions`).
 - Built with `keepBorders = false` (borders are smoothed) and `smoothUVs = true` (UVs are smoothed).
 
-:::warning
-    - Operates on polygon meshes.
-    - Subdivision changes topology (adds vertices/edges/faces). Plan your downstream rig/deformer stack accordingly.
-:::
+
+## Limitations
+
+- Operates only on polygon meshes.  
+- Subdivision changes topology (adds vertices/edges/faces). Plan your downstream rig/deformer stack accordingly.  
 
 
 ## Options

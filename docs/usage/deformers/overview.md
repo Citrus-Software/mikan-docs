@@ -45,6 +45,7 @@ To ensure deformers are portable and reproducible across DCCs, each deformer is 
   - the geometry name (or full path)  
   - its tag (see the _Mikan Identifiers page here_ [IDs](https://citrus-software.github.io/mikan-docs/usage/modifiers##Mikan-Identifiers-(IDs)))  
 
+
   :::tip
   If you select a mesh and open its modifier note, you can see the IDs of all the deformers applied to that mesh in the Template tab.  
 
