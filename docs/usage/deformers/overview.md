@@ -2,11 +2,10 @@
 sidebar_position: 1
 ---
 
-# overview
+# Overview
 
 **Deformers** are the commands that attach the rig to the scene geometry.  
 They are executed **after** the construction of the template hierarchy and the modifiers.
-
 
 ## Creation and Editing
 
@@ -34,20 +33,19 @@ If multiple deformers are saved for the same geometry, they will be listed seque
 This allows them to be rebuilt in the correct order during the build process.  
 However, if the deformers are not connected linearly, you will need to manually update the notes to define the correct inputs/outputs (Mikan does not yet save this information).
 
-
 ## IDs, Options and Hooks
 
 Since deformer node structures differ greatly between software, Mikan cannot rely on native attributes directly.  
-To ensure deformers are portable and reproducible across DCCs, each deformer is defined using three concepts: **IDs**, **Options**, and **Hooks**.  
+To ensure deformers are portable and reproducible across DCCs, each deformer is defined using three concepts: **IDs**, **Options**, and **Hooks**.
 
 - **IDs**: each deformer receives a **unique identifier** when it is saved (or recreated).  
   The ID consists of:
-  - the geometry name (or full path)  
-  - its tag (see the _Mikan Identifiers page here_ [IDs](https://citrus-software.github.io/mikan-docs/usage/modifiers##Mikan-Identifiers-(IDs)))  
 
+  - the geometry name (or full path)
+  - its tag (see the _Mikan Identifiers page here_ [IDs](<https://citrus-software.github.io/mikan-docs/usage/modifiers##Mikan-Identifiers-(IDs)>))
 
   :::tip
-  If you select a mesh and open its modifier note, you can see the IDs of all the deformers applied to that mesh in the Template tab.  
+  If you select a mesh and open its modifier note, you can see the IDs of all the deformers applied to that mesh in the Template tab.
 
   ![Deformers](./img/deformers.png)  
   :::
@@ -55,14 +53,13 @@ To ensure deformers are portable and reproducible across DCCs, each deformer is 
 Because the list of available attributes also differs between software, Mikan uses a **specific nomenclature** for them.
 
 - **Options**: standardized creation parameters of the deformer (e.g. subdivision level, curvature, list of influence joints).  
-  These are saved in the template notes and rebuilt consistently across applications.  
+  These are saved in the template notes and rebuilt consistently across applications.
 
 - **Hooks**: attributes exposed for rig connections (e.g. envelope, weight, curvature).  
-  Hooks define the animator-facing interface and remain uniform regardless of the underlying software.  
+  Hooks define the animator-facing interface and remain uniform regardless of the underlying software.
 
 This approach ensures that deformers in Mikan remain **software-agnostic** while providing a stable and predictable workflow.  
 The detailed list of options and hooks is documented in the dedicated pages for each deformer.
-
 
 ## Linked Backup
 

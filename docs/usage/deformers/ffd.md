@@ -1,19 +1,11 @@
-# ffd
+# Lattices (FFD)
 
-To set up a lattice, select your meshes and apply a lattice as you normally would in Maya using the **Deform > Lattice** menu.  
+The setup workflow for lattices is almost identical to the standard Maya process. The key difference is that we also need to export the lattice geometries, so their naming conventions and hierarchy must be carefully managed. Lattices are usually placed in a `deformers` or `utils` group, parallel to the template.
 
-Once your lattice and lattice base are created, parent them under a group named **dfm**.  
+![dfm group](./img/dfm_grp.png)
 
-![dfm group](./img/dfm_grp.png)  
+Mikan will backup the lattice shapes, and will inject metadata into the lattice geometry nodes to allow reconstruction during the rebuild loop.
 
-Mikan will then know that it should look for the deformers created inside this group.  
+Lattice deformations are backed up in the same way as the main geometries. Typically, we backup the group in which the lattices were parented.
 
-Adjust the shape of your lattices as you normally would.  
-
-Finally, as with any other deformer, save the deformation information as described in the *Deformers Overview* section, by selecting the mesh to which the lattice was applied.  
-
-:::note
-If you apply additional deformers (e.g. skinning) directly on the deformation objects (here, a lattice),  
-make sure to also save them by selecting the **dfm** group that contains the lattice with deformers,  
-then follow the backup process described in *Deformers Overview*.  
-:::
+Finally, ensure that the lattice base is properly rigged or parented according to how the lattice is deformed, to maintain correct behavior. We generally use the modifiers `hook` or `parent`, depending on how the lattice is deformed.

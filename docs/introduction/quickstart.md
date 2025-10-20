@@ -38,7 +38,7 @@ Template modules appear as joint chains in the scene. This means pre-built templ
 
 #### Create a New Asset
 
-- Go to the **Templates** tab → `Add` subtab → `New Asset`
+- Go to the **Templates** tab, then select the `Add` subtab and click `New Asset`
 - Name the asset, this will become the root of your rig
 
 #### Add Template Modules
@@ -137,7 +137,7 @@ This can be configured later using custom build options, but the initial setup a
 
 You can now perform a standard Maya `Bind Skin` operation.
 
-> 🧩 Mikan supports many Maya deformers, though not all are fully covered yet. See the [Deformers Guide](../usage/deformers.md) for details.
+> 🧩 Mikan supports many Maya deformers, though not all are fully covered yet. See the [Deformers Guide](../usage/deformers/overview.md) for details.
 
 ## 💾 Saving & Reinjecting Deformer Data
 
