@@ -1,21 +1,25 @@
-# cluster
+# Cluster
 
-The setup logic for clusters is similar to binding.  
-It consists of going back and forth between the template, the generated rig, and the application of the deformer.  
+Unlike the standard Maya workflow where you select the mesh first and then create a cluster that builds its own setup, our system follows a different approach.
 
-To create a cluster, select an already built controller and assign a cluster to it using the following menu:  
+You must first create the controller within the template, and add the cluster to it afterward once it’s built.
+This workflow is required for several reasons:
 
-- **Tools > Cluster > Add Cluster to Controller**  
+- It improves the overall cluster behavior and integration.
+- It ensures full compatibility with Tangerine.
 
-![add cluster](./img/add_cluster.png)  
+To create a cluster, select an already built controller and assign a cluster to it using the following menu:
 
-Once this step is done, you need to **assign the meshes to the deformer sets**. This can be done in two ways:  
+- **Tools > Cluster > Add Cluster to Controller**
 
-- In Maya: **Window > Relationship Editors > Deformer Sets** (if available in your version of Maya)  
-- In Gemini: **Tools > Deformers > Assign Deformer Tool** (opens a window where you can select the desired deformer set)  
+![add cluster](./img/add_cluster.png)
 
-![assign cluster](./img/assign_deformer.png)  
+Once this step is done, you need to **assign the meshes to the deformer sets** using the following menu:
 
-Next, adjust the cluster's influence areas on your mesh as usual.  
+- **Tools > Deformers > Assign Deformer Tool**
 
-Finally, don't forget to **save this information back to the template**, following the save procedure described in the *Deformers Overview* section.  
+![assign cluster](./img/assign_deformer.png)
+
+Next, adjust the cluster's influence areas on your mesh as usual.
+
+Finally, don't forget to **save this information back to the template**, following the save procedure described in the [Overview](./overview.md) section.

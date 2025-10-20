@@ -1,33 +1,22 @@
-# wire
+# Wire
 
-To set up a wire, proceed as you normally would in Maya:  
-select the curve to be used as the wire, then the target mesh, and apply the wire deformer through Maya's standard menu.  
+The setup workflow for wire deformers is very similar to lattices ([FFD](./ffd.md)). You also need to export the curve geometries, managing their naming conventions and hierarchy carefully. These curves are usually placed in the `deformers` or `utils` group, parallel to the template.
 
-Once your wire is applied, parent both your wire curves (`wire` and `baseWire`) under the **dfm** group.  
-If the group does not exist yet, create it.  
+For the rest of the process, create the curves as usual and apply the wire deformer using the standard Maya menus.
+
+A key point is that wire deformers require a reference geometry, which is automatically created by Maya. Make sure to parent this reference geometry in the rig, in the same way as lattice bases, using the same tools (deformers or modifiers).
+
+Finally, remember to backup both the curve deformations and the geometry deformations, typically by backing up the group in which the curves are parented. Do this the same way you would save deformers on meshes.
+
+![save dfm](./img/save_dfm.png)
 
 :::tip
-Over time, you may end up with many deformation objects under the **dfm** group.  
-For better readability, it is recommended to organize them into intermediate subgroups.  
+Over time, you may end up with many deformation objects under your `deformers` group. For better readability, it is recommended to organize them into intermediate subgroups.
 
-**Example:**
+### Example:
 
-- `dfm_eyes` for lattices applied to the eyes  
-- `dfm_eyebrows` for wires applied to the eyebrow meshes  
+- `dfm_eyes` for lattices applied to the eyes
+- `dfm_eyebrows` for wires applied to the eyebrow meshes
 
 ![dfm organization](./img/rangement_dfm.png)
 :::
-
-Finally, as with any other deformer, save the deformation information as described in the *Deformers Overview* section, by selecting the mesh to which the wire was applied.  
-
-
-## Important
-
-If you add a deformer to your wire curve (for example, skinning), make sure to also save this information into the template.  
-Do this the same way you would save deformers on meshes:  
-
-1. Select the **dfm** group  
-2. Go to **Mikan > Deformers tab > Create Backup Group**  
-3. Parent the created backup group under the template  
-
-![save dfm](./img/save_dfm.png)  
