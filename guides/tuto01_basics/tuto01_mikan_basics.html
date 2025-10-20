@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-guides/tuto01_basics/tuto01_mikan_basics" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.8.1">
+<title data-rh="true">Building a Basic Rig | Mikan Rigging Framework</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://citrus-software.github.io/mikan-docs/guides/tuto01_basics/tuto01_mikan_basics"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Building a Basic Rig | Mikan Rigging Framework"><meta data-rh="true" name="description" content="Main Interface Overview"><meta data-rh="true" property="og:description" content="Main Interface Overview"><link data-rh="true" rel="icon" href="/mikan-docs/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://citrus-software.github.io/mikan-docs/guides/tuto01_basics/tuto01_mikan_basics"><link data-rh="true" rel="alternate" href="https://citrus-software.github.io/mikan-docs/guides/tuto01_basics/tuto01_mikan_basics" hreflang="en"><link data-rh="true" rel="alternate" href="https://citrus-software.github.io/mikan-docs/guides/tuto01_basics/tuto01_mikan_basics" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Building a Basic Rig","item":"https://citrus-software.github.io/mikan-docs/guides/tuto01_basics/tuto01_mikan_basics"}]}</script><link rel="stylesheet" href="/mikan-docs/assets/css/styles.d8592ec4.css">
+<script src="/mikan-docs/assets/js/runtime~main.e7e8f656.js" defer="defer"></script>
+<script src="/mikan-docs/assets/js/main.16b884cb.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;"><defs>
+<symbol id="theme-svg-external-link" viewBox="0 0 24 24"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"/></symbol>
+</defs></svg>
+<script>!function(){var t="light";var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();document.documentElement.setAttribute("data-theme",e||t),document.documentElement.setAttribute("data-theme-choice",e||t)}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><link rel="preload" as="image" href="/mikan-docs/img/logo.svg"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="theme-layout-navbar navbar navbar--fixed-top"><div class="navbar__inner"><div class="theme-layout-navbar-left navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/mikan-docs/"><div class="navbar__logo"><img src="/mikan-docs/img/logo.svg" alt="Mikan Logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/mikan-docs/img/logo.svg" alt="Mikan Logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">Mikan</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/mikan-docs/introduction/about">Docs</a></div><div class="theme-layout-navbar-right navbar__items navbar__items--right"><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="system mode" aria-label="Switch between dark and light mode (currently system mode)"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" class="toggleIcon_g3eP systemToggleIcon_QzmC"><path fill="currentColor" d="m12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9zm4.95-13.95c1.313 1.313 2.05 3.093 2.05 4.95s-0.738 3.637-2.05 4.95c-1.313 1.313-3.093 2.05-4.95 2.05v-14c1.857 0 3.637 0.737 4.95 2.05z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="theme-layout-main main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/mikan-docs/introduction/about">Introduction</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/mikan-docs/usage/blueprints">Usage</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/mikan-docs/developer/vendor">API</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" href="/mikan-docs/guides/tuto01_basics/tuto01_mikan_basics">Guides</a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret menu__link--active" role="button" aria-expanded="true" tabindex="0" href="/mikan-docs/guides/tuto01_basics/tuto01_mikan_basics">Basics</a></div><ul class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-3 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/mikan-docs/guides/tuto01_basics/tuto01_mikan_basics">Building a Basic Rig</a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/mikan-docs/guides/tuto02_biped/tuto02_mikan_biped_part01_creation&amp;placement">Biped Character Rig</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/mikan-docs/guides/tuto03_branches/mikan_branchs">Branches</a></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-2 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" tabindex="0" href="/mikan-docs/guides/tuto04_modifiers/mikan_modifiers_EN">Modifiers</a></div></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--sublist-caret" role="button" aria-expanded="false" href="/mikan-docs/references/tpl/core/bones">Technical References</a></div></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/mikan-docs/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">Guides</span></li><li class="breadcrumbs__item"><span class="breadcrumbs__link">Basics</span></li><li class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link">Building a Basic Rig</span></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><header><h1>Building a Basic Rig</h1></header>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="main-interface-overview">Main Interface Overview<a href="#main-interface-overview" class="hash-link" aria-label="Direct link to Main Interface Overview" title="Direct link to Main Interface Overview">​</a></h2>
+<p>Mikan&#x27;s interface is divided into <strong>four main tabs</strong>:</p>
+<ul>
+<li>
+<p><strong>Templates</strong> – create rig template modules and edit their options.</p>
+<p><img decoding="async" loading="lazy" alt="templates tab" src="/mikan-docs/assets/images/onglet_template-3b156475f35a975e80ed7e19ec79eb5e.png" width="350" height="557" class="img_ev3q"></p>
+</li>
+<li>
+<p><strong>Deformers</strong> – manage deformation data for your meshes.</p>
+<p><img decoding="async" loading="lazy" alt="deformers tab" src="/mikan-docs/assets/images/onglet_deformers-b578bef9d5d465f0e1123a883ad12a11.png" width="350" height="589" class="img_ev3q"></p>
+</li>
+<li>
+<p><strong>Posing</strong> – create and edit poses for your rig.</p>
+<p><img decoding="async" loading="lazy" alt="posing tab" src="/mikan-docs/assets/images/onglet_posing-c9d39cb2433eea92f28967652ef4bb2f.png" width="350" height="577" class="img_ev3q"></p>
+</li>
+<li>
+<p><strong>Shapes</strong> – edit the appearance of rig controllers.</p>
+<p><img decoding="async" loading="lazy" alt="shapes tab" src="/mikan-docs/assets/images/onglet_shapes-23cb3204986720b2ed16a075fce70dbd.png" width="350" height="595" class="img_ev3q"></p>
+</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="templates-tab-in-detail">Templates Tab in Detail<a href="#templates-tab-in-detail" class="hash-link" aria-label="Direct link to Templates Tab in Detail" title="Direct link to Templates Tab in Detail">​</a></h3>
+<p><img decoding="async" loading="lazy" alt="template add tab" src="/mikan-docs/assets/images/onglet_template_add-e88df17def587a272e349fa28b9b8fae.png" width="350" height="583" class="img_ev3q"></p>
+<ul>
+<li><strong>ACTION Section</strong> – buttons to build or delete a rig, edit shapes, or select elements.</li>
+<li><strong>OUTLINER Section</strong> – hierarchy of the rig currently being built.</li>
+<li><strong>CONSTRUCTION Section</strong>:<!-- -->
+<ul>
+<li><strong>ADD</strong> – choose template modules to add to the rig and set their initial options (these can be modified later).</li>
+<li><strong>EDIT</strong> – update options after a module has been created.</li>
+<li><strong>LOGS</strong> – track progress and messages during the build process.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="creating-your-first-rig">Creating Your First Rig<a href="#creating-your-first-rig" class="hash-link" aria-label="Direct link to Creating Your First Rig" title="Direct link to Creating Your First Rig">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="setting-up-the-first-modules">Setting Up the First Modules<a href="#setting-up-the-first-modules" class="hash-link" aria-label="Direct link to Setting Up the First Modules" title="Direct link to Setting Up the First Modules">​</a></h3>
+<p>The first step is to create the <strong>top node of the rig</strong>: the <strong>asset node</strong>.<br>
+<!-- -->This acts as the <strong>rig container</strong>. It stores all template data (module hierarchy, modifiers, deformation info) and manages their execution.</p>
+<p>To create it:</p>
+<ul>
+<li>go to the <strong>Add</strong> tab in Templates,</li>
+<li>fill in the <strong>Asset</strong> field with your rig&#x27;s name,</li>
+<li>then click the <strong>orange plus button</strong> on the left.</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="add asset" src="/mikan-docs/assets/images/add_asset-15bb755c398319bd2fcd8fc64c0a5e24.png" width="350" height="78" class="img_ev3q"></p>
+<p>With the top node in place, you can begin building your module hierarchy.</p>
+<p>We typically start by adding a <strong>WORLD module</strong>, the base module used to move the entire rig within the scene.</p>
+<p><img decoding="async" loading="lazy" alt="add world module" src="/mikan-docs/assets/images/add_module_world-7f03d278310bc50d3d04a2515c867fb4.png" width="345" height="224" class="img_ev3q"></p>
+<p>This creates the <strong>c_world</strong> controller, along with:</p>
+<ul>
+<li><strong>c_move</strong> – for managing the asset&#x27;s trajectory,</li>
+<li><strong>c_fly</strong> <em>(optional)</em> – similar to move but with a pivot centered on the character&#x27;s center of gravity,</li>
+<li><strong>c_scale</strong> <em>(optional)</em> – for scaling the asset, with squash options and an adjustable pivot.</li>
+</ul>
+<p>Click the <strong>Toggle Shapes</strong> icon to display controllers directly in Maya&#x27;s viewport:</p>
+<p><img decoding="async" loading="lazy" alt="world" src="/mikan-docs/assets/images/viewport_world-446223d6db4e22defac37f3cfb9c84c3.png" width="1000" height="528" class="img_ev3q"></p>
+<p>From there, you can continue adding the modules required for your rig.</p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="example-1--a-simple-fk-chain">Example 1 : A Simple FK Chain<a href="#example-1--a-simple-fk-chain" class="hash-link" aria-label="Direct link to Example 1 : A Simple FK Chain" title="Direct link to Example 1 : A Simple FK Chain">​</a></h3>
+<p>From the <strong>Add Template</strong> dropdown menu:</p>
+<ul>
+<li>select the <strong>Core</strong> type,</li>
+<li>then choose the <strong>Bones</strong> module.</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="template module menu" src="/mikan-docs/assets/images/type_core-02428a041acb59b2684ed5db5b2c0fc7.png" width="350" height="192" class="img_ev3q"></p>
+<p><strong>Main options include</strong>:</p>
+<ul>
+<li>number of joints,</li>
+<li>root placement relative to the parent,</li>
+<li>chain orientation.</li>
+</ul>
+<p>Click <strong>Add Template</strong> to create the module.</p>
+<div class="theme-admonition theme-admonition-tip admonition_xJq3 alert alert--success"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 12 16"><path fill-rule="evenodd" d="M6.5 0C3.48 0 1 2.19 1 5c0 .92.55 2.25 1 3 1.34 2.25 1.78 2.78 2 4v1h5v-1c.22-1.22.66-1.75 2-4 .45-.75 1-2.08 1-3 0-2.81-2.48-5-5.5-5zm3.64 7.48c-.25.44-.47.8-.67 1.11-.86 1.41-1.25 2.06-1.45 3.23-.02.05-.02.11-.02.17H5c0-.06 0-.13-.02-.17-.2-1.17-.59-1.83-1.45-3.23-.2-.31-.42-.67-.67-1.11C2.44 6.78 2 5.65 2 5c0-2.2 2.02-4 4.5-4 1.22 0 2.36.42 3.22 1.19C10.55 2.94 11 3.94 11 5c0 .66-.44 1.78-.86 2.48zM4 14h5c-.23 1.14-1.3 2-2.5 2s-2.27-.86-2.5-2z"></path></svg></span>tip</div><div class="admonitionContent_BuS1"><p>when you modify an option, it turns <strong>blue</strong>.<br>
+<!-- -->👉 Right-click <strong>Reset</strong> to restore the default value.</p><p><img decoding="async" loading="lazy" alt="reset options" src="/mikan-docs/assets/images/options_reset-bf98a5842e94ad0f17c2f1db2eb7e1b9.png" width="400" height="88" class="img_ev3q"></p></div></div>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="example-2--spine-module-for-a-character">Example 2 : Spine Module for a Character<a href="#example-2--spine-module-for-a-character" class="hash-link" aria-label="Direct link to Example 2 : Spine Module for a Character" title="Direct link to Example 2 : Spine Module for a Character">​</a></h3>
+<p>From the <strong>Add Template</strong> dropdown menu:</p>
+<ul>
+<li>select the <strong>Spine</strong> type.</li>
+</ul>
+<p>As with the Bones module, you&#x27;ll find general options (branch, symmetry), plus module-specific options such as:</p>
+<ul>
+<li>number of bones,</li>
+<li>controller orientation,</li>
+<li>pivot of the first IK controller,</li>
+<li>stretch.</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="spine options" src="/mikan-docs/assets/images/spine_options-0ecd875bc608634b49d5617c01a166c9.png" width="348" height="537" class="img_ev3q"></p>
+<hr>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="placing-and-adjusting-modules">Placing and Adjusting Modules<a href="#placing-and-adjusting-modules" class="hash-link" aria-label="Direct link to Placing and Adjusting Modules" title="Direct link to Placing and Adjusting Modules">​</a></h3>
+<p>After creating a module, you can position it relative to your geometry.</p>
+<p>👉 No need to worry about joint orientation – <strong>Mikan automatically adjusts this during the build, based on your chosen options</strong>.</p>
+<p>You can also <strong>rename a module</strong> and <strong>update its options</strong> by double-clicking it in the outliner (this opens the Edit tab).</p>
+<p><img decoding="async" loading="lazy" alt="spine edit options" src="/mikan-docs/assets/images/spine_edit-bc10d6671ad4b0e5e06448283e466bec.png" width="346" height="551" class="img_ev3q"></p>
+<p>At any time, you can test the rig by running a <strong>build</strong> via the rocket icon at the top of the Templates tab.<br>
+<!-- -->Build logs are displayed in the <strong>Logs</strong> tab.</p>
+<p><img decoding="async" loading="lazy" alt="build rig" src="/mikan-docs/assets/images/build_rig-418178205facddaf99a3445c6f297870.png" width="341" height="119" class="img_ev3q"></p>
+<hr>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="customizing-controller-shapes">Customizing Controller Shapes<a href="#customizing-controller-shapes" class="hash-link" aria-label="Direct link to Customizing Controller Shapes" title="Direct link to Customizing Controller Shapes">​</a></h2>
+<p>To display all controller shapes:</p>
+<ol>
+<li>select the <strong>asset top node</strong>,</li>
+<li>click the <strong>Toggle Shapes</strong> icon.</li>
+</ol>
+<p>Then, select the shapes you&#x27;d like to customize and either:</p>
+<ul>
+<li>use the <strong>Shapes</strong> tab,</li>
+<li>or modify them directly in the scene.</li>
+</ul>
+<p>The <strong>Shapes</strong> tab provides:</p>
+<ul>
+<li>a library of preset shapes,</li>
+<li>a color library,</li>
+<li>resizing tools.</li>
+</ul>
+<p><img decoding="async" loading="lazy" alt="shapes tab" src="/mikan-docs/assets/images/onglet_shapes-23cb3204986720b2ed16a075fce70dbd.png" width="350" height="595" class="img_ev3q"></p>
+<div class="theme-admonition theme-admonition-warning admonition_xJq3 alert alert--warning"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 0 0 0 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 0 0 .01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"></path></svg></span>warning</div><div class="admonitionContent_BuS1"><h3 class="anchor anchorWithStickyNavbar_LWe7" id="always-customize-shapes-on-the-template">always customize shapes on the template.<a href="#always-customize-shapes-on-the-template" class="hash-link" aria-label="Direct link to always customize shapes on the template." title="Direct link to always customize shapes on the template.">​</a></h3><p>👉 If you edit shapes directly on the rig, these changes will be lost on the next rebuild since only the template stores the information.
+✨ To preserve your adjustments, use the Rig to Tpl button to push those modifications back into the template.</p><p><img decoding="async" loading="lazy" alt="shapes rig to tpl" src="/mikan-docs/assets/images/shapes_rig_to_tpl-659877269bfe632ece6def7ed938c59f.png" width="477" height="269" class="img_ev3q"></p></div></div>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="binding">Binding<a href="#binding" class="hash-link" aria-label="Direct link to Binding" title="Direct link to Binding">​</a></h2>
+<p>Once your template is ready, the next step is <strong>binding</strong> – linking the rig to the model.</p>
+<p>In complex hierarchies, skin joints can be hard to select.<br>
+<!-- -->From the <strong>Mikan outliner</strong>: right-click → <strong>Select skin joints</strong>.</p>
+<p><img decoding="async" loading="lazy" alt="select skin joints" src="/mikan-docs/assets/images/select_skin_joints-79fa3cd18d7827f41e81ac8dd7d3726d.png" width="350" height="403" class="img_ev3q"></p>
+<p>Then skin your geometry as you normally would.</p>
+<div class="theme-admonition theme-admonition-warning admonition_xJq3 alert alert--warning"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 0 0 0 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 0 0 .01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"></path></svg></span>warning</div><div class="admonitionContent_BuS1"><p>⚠️ <strong>Important</strong>:<br>
+<!-- -->Anything added manually (skinning, clusters, deformers, etc.) will be removed with each <strong>rebuild</strong>, unless those changes are saved in the <strong>blueprint</strong>.</p></div></div>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="backing-up-deformers">Backing Up Deformers<a href="#backing-up-deformers" class="hash-link" aria-label="Direct link to Backing Up Deformers" title="Direct link to Backing Up Deformers">​</a></h3>
+<ol>
+<li>
+<p>Open the <strong>Deformers</strong> tab.</p>
+</li>
+<li>
+<p>Select the <strong>top node</strong> of your modeling hierarchy.</p>
+</li>
+<li>
+<p>Click <strong>Create Backup Group</strong> → this generates a transform node containing your deformation data.</p>
+<p><img decoding="async" loading="lazy" alt="skin backup" src="/mikan-docs/assets/images/create_backup-30347e94967bbb5922a492a21d4b32bc.png" width="350" height="90" class="img_ev3q"></p>
+</li>
+<li>
+<p>Parent this node under the <strong>template group</strong>.</p>
+<p><img decoding="async" loading="lazy" alt="dfm geo" src="/mikan-docs/assets/images/dfm_geo-bffd7942ac250f52654c4c72562f5ec2.png" width="1000" height="541" class="img_ev3q"></p>
+</li>
+</ol>
+<p>This ensures the <strong>blueprint</strong> preserves your deformation data and reapplies it with every rebuild.</p>
+<p><img decoding="async" loading="lazy" alt="deformer infos" src="/mikan-docs/assets/images/infos_deformer-aca79b7d586f9cb8fd683abbf2625a52.png" width="400" height="384" class="img_ev3q"></p>
+<p>You can safely adjust your template, rebuild the rig, and keep your deformations intact.</p>
+<div class="theme-admonition theme-admonition-info admonition_xJq3 alert alert--info"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>info</div><div class="admonitionContent_BuS1"><h3 class="anchor anchorWithStickyNavbar_LWe7" id="good-to-know">Good to Know<a href="#good-to-know" class="hash-link" aria-label="Direct link to Good to Know" title="Direct link to Good to Know">​</a></h3><p>The Add tab gives you access to a set of default template modules provided by Mikan. These modules act as the basic building blocks for creating rigs.</p><p>👉 By combining these modules and enhancing them with modifiers, you can go far beyond simple setups. This allows you to design more complex and customized templates, perfectly suited to your production needs.</p><p>✨ Once created, these templates can be exported and easily reused across different assets, ensuring consistency and saving valuable time throughout the rigging process.</p></div></div>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="conclusion">Conclusion<a href="#conclusion" class="hash-link" aria-label="Direct link to Conclusion" title="Direct link to Conclusion">​</a></h2>
+<p>You&#x27;ve now covered the basics of rigging with Mikan:</p>
+<ul>
+<li>the <strong>template / blueprint / rig</strong> workflow,</li>
+<li>and the seamless process of <strong>building, customizing, and iterating</strong>.</li>
+</ul></div></article><nav class="docusaurus-mt-lg pagination-nav" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/mikan-docs/developer/vendor"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Third-party dependencies and custom patches</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/mikan-docs/guides/tuto02_biped/tuto02_mikan_biped_part01_creation&amp;placement"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Creation and Placement</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#main-interface-overview" class="table-of-contents__link toc-highlight">Main Interface Overview</a><ul><li><a href="#templates-tab-in-detail" class="table-of-contents__link toc-highlight">Templates Tab in Detail</a></li></ul></li><li><a href="#creating-your-first-rig" class="table-of-contents__link toc-highlight">Creating Your First Rig</a><ul><li><a href="#setting-up-the-first-modules" class="table-of-contents__link toc-highlight">Setting Up the First Modules</a></li><li><a href="#example-1--a-simple-fk-chain" class="table-of-contents__link toc-highlight">Example 1 : A Simple FK Chain</a></li><li><a href="#example-2--spine-module-for-a-character" class="table-of-contents__link toc-highlight">Example 2 : Spine Module for a Character</a></li><li><a href="#placing-and-adjusting-modules" class="table-of-contents__link toc-highlight">Placing and Adjusting Modules</a></li></ul></li><li><a href="#customizing-controller-shapes" class="table-of-contents__link toc-highlight">Customizing Controller Shapes</a><ul><li><a href="#always-customize-shapes-on-the-template" class="table-of-contents__link toc-highlight">always customize shapes on the template.</a></li></ul></li><li><a href="#binding" class="table-of-contents__link toc-highlight">Binding</a><ul><li><a href="#backing-up-deformers" class="table-of-contents__link toc-highlight">Backing Up Deformers</a></li><li><a href="#good-to-know" class="table-of-contents__link toc-highlight">Good to Know</a></li></ul></li><li><a href="#conclusion" class="table-of-contents__link toc-highlight">Conclusion</a></li></ul></div></div></div></div></main></div></div></div><footer class="theme-layout-footer footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Docs</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/mikan-docs/introduction/about">About</a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">Community</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://rebrand.ly/mikan-rig-discord" target="_blank" rel="noopener noreferrer" class="footer__link-item">Discord<svg width="13.5" height="13.5" aria-hidden="true" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div><div class="theme-layout-footer-column col footer__col"><div class="footer__title">More</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/citrus-software/mikan" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-hidden="true" class="iconExternalLink_nPIU"><use href="#theme-svg-external-link"></use></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2025 TeamTO Technology. Built with Docusaurus.</div></div></div></footer></div>
+</body>
+</html>
