@@ -1,30 +1,38 @@
-# How to animate a Biped
+---
+sidebar_position: 1
+---
 
-## Context Menu (Right-Click) – Quick Access to All Features
+# Biped Controls
+
+## Context Menu (Right-Click)
 
 Before reviewing each controller, note that a **context menu (right-click)** provides quick access to all rig features.
 
 It includes options such as:
 
-- controller display,
-- quick selection of controller groups,
-- **mirror** or **flip** poses and animations,
-- return to **bind pose** for part or all of the rig,
-- **pinning** hands and feet (to head, hips, or world) via _space switches_,
-- **IK ↔ FK switch** for limbs.
+- Controller display levels
+- Quick selection of controller groups
+- **Mirror** or **flip** poses and animations
+- Return to **bind pose** for part or all of the rig
+- **Pin** hands and feet (to head, hips, or world) via **space switches**
+- **IK/FK switching** for limbs
 
 ![Context Menu](./img/menu_contextuel.png)
 
-## World Control (Global Control)
+## World Controls
 
-The **World Control** is the main controller of your character:
+The **World Control** is the main controller of your character.
 
-- all other controllers are parented to it,
-- moving it moves the entire rig.
+- All other controllers are parented to it.
+- Moving it moves the entire rig.
 
 You use it to position, rotate, and scale the character in your scene.
 
-👉 It also includes a dedicated attribute: **scale_offset**.
+:::note
+It also includes a dedicated attribute: **`scale_offset`**.
+
+This parameter is mainly used for scene-specific adjustments, such as when working on particular shots or sequences that require scale corrections.
+:::
 
 This controller also hosts the **visibility switches** for the various modeling elements that make up your character.
 
@@ -32,144 +40,91 @@ This controller also hosts the **visibility switches** for the various modeling 
 
 Under the World Control, you’ll find the following child controllers:
 
-- **c_move** – to create global motion paths for the character,
-- **c_fly** – similar to _c_move_ but with a pivot centered on the character’s center of gravity,
-- **c_scale** – scales the character, with an attribute to enable/disable squash and adjust the scale pivot.
+- **`c_move`**: used to create global motion paths for the character
+- **`c_fly`**: functions like `c_move` but with a pivot centered on the character’s center of gravity
+- **`c_scale`**: used to scale the character, with attributes to enable or disable squash and to adjust the scale pivot
 
 ![c_scale](./img/c_scale.gif)
 
 ## Spine Controls
 
-- At the base of the spine: **c_cog** (FK pelvis controller). The entire upper body follows it.
-- Then: **c_spine_1** and **c_spine_2** (FK hierarchy).
+The spine hierarchy is organized as follows:
+
+- At the base of the spine: **`c_cog`** (FK pelvis control). The entire upper body follows it.
+- Then: **`c_spine_1`** and **`c_spine_2`** (FK hierarchy)
 - For IK:
-  - **c_pelvisIK** → move the pelvis independently from the upper body.
-  - **c_spineIK** → move the upper spine independently from the lower part.
-
-👉 Right-click to reveal two extra controllers for fine-tuning the spine silhouette:
-
-- **c_spineIK_mid** (middle),
-- **c_pelvis** (bottom).
-
-![Spine Right Click](./img/spine_click_droit.png)
+  - **`c_pelvisIK`**: moves the pelvis independently from the upper body
+  - **`c_spineIK`**: moves the upper spine independently from the lower part
 
 Each controller includes attributes to:
 
-- enable **squash** and **stretch**,
-- adjust **slide** (modifies joint positions to refine the silhouette).
+- enable **`squash`** and **`stretch`**
+- adjust **`slide`** (modifies joint positions to refine the silhouette)
+
+These attributes are shared proxies and are the same across all controllers.
 
 ![Spine Attributes](./img/spine_attr.gif)
 
+Right-click to reveal two extra controllers for fine-tuning the spine silhouette:
+
+- **`c_spineIK_mid`**: middle of the spine curve
+- **`c_pelvis`**: pelvis joint only (without the spine)
+
+![Spine Right Click](./img/spine_click_droit.png)
+
 ## Neck and Head Controls
 
-For the neck:
+The neck and head controls are organized as follows:
 
-- **c_neck** (FK at the base of the neck),
-- **c_head** (IK for the head, controls translate/rotate/scale),
-- **c_head_scale** (head squash & stretch).
+- **`c_neck`**: FK control at the base of the neck
+- **`c_head`**: IK control for the head, drives translation, rotation, and scale
+- **`c_head_scale`**: manages head squash and stretch
 
-:::note
-👉 Right-click on **c_head** to reveal an intermediate controller **c_neckIK_mid** for finer silhouette control.  
-:::
+These controls also includes **`stretch`**, **`squash`**, and **`slide`** attributes, similar to the spine.
 
-**c_neck** also includes **stretch**, **squash**, and **slide** attributes, similar to the spine.
+Right-click on **`c_head`** to reveal an intermediate controller **`c_neckIK_mid`** for finer silhouette control.
 
 ## Arm and Leg Controls
 
-Arms and legs share similar controller structures:
+Arms and legs share similar control structures:
 
-- An **IK controller** at the limb end (e.g. **c_hand_IK_L**), active by default.
-- **Pole vectors** are computed automatically but can be adjusted using the **twist** attribute.
+- An **IK control** at the end of the limb (e.g., **`c_hand_IK_L`**), active by default
+- **Pole vectors** are computed automatically, but can be adjusted via the **`twist`** attribute
 
-### Common Attributes (Arms & Legs):
+### Common Attributes (Arms & Legs)
 
-- enable **stretch / squash**,
-- **min stretch** (minimum stretch value),
-- **soft** (smooth transition between normal and stretched),
-- **follow / pin** (also accessible via right-click),
-- **arc / smooth** to bend the limb,
-- **fix twist** to improve twist deformations.
+- Enable **`stretch`/`squash`** (shared proxy attributes, same as spine and head/neck)
+- **`min_stretch`**: sets the minimum stretch value
+- **`soft`**: smooth transition between normal and stretched
+- **`follow`/`pin`**: space switch attributes, also accessible via right-click
+- **`arc`/`smooth`**: adjusts limb bending
+- **`fix_twist`**: improves twist deformations
 
 :::note
-👉 You can **switch between IK / FK** from the right-click menu.  
+👉 You can **switch between IK and FK** from the right-click menu.
 :::
 
-You can also reveal **extra silhouette controllers** for limbs, featuring attributes such as **pin root** (useful when animating elbows or knees resting on a surface).
+You can also reveal **extra silhouette controls** for limbs, featuring attributes such as **pin root**, useful when animating elbows or knees resting on a surface.
 
 ![Elbow Pin Root](./img/elbow_pinroot.gif)
 
-### Leg-Specific Attributes:
+### Leg-Specific Attributes
 
-- **stomp**,
-- **bank**,
-- **footroll**,
-- and other roll/pivot attributes.
+- **`stomp`**: applies a local stretch and squash on the foot for impact animations
+- **`bank`**: tilts the foot sideways, useful for leaning or turning motions
+- **`foot_roll`**: controls the rolling of the foot from heel to toe
+- Other roll/pivot attributes: manage the position and rotation of the reverse foot setup
 
-### Arm-Specific Features:
+### Arm-Specific Features
 
-- Ability to show **finger controllers** via right-click on the hand IK controller (hidden by default).
-- Example: **c_pinky_meta_L** – easily creates a **cup gesture** by progressively moving all fingers.
+- Ability to show **finger controls** via right-click on the hand IK control (hidden by default)
+- **`c_pinky_meta_L`**: used to progressively move all fingers, making it easy to create a cup gesture
 
 ![Cup Gesture](./img/cup_gesture.gif)
 
-### Clavicles:
+### Clavicles
 
-- **auto_rotate** attribute (automatic rotation follow),
-- **auto_translate** attribute (translation behavior).
+- **`auto_rotate`**: automatically rotates the clavicle to follow the arm (not built by default)
+- **`auto_translate`**: converts clavicle joint rotation into translation, which can help improve deformations, especially on cartoon-style characters
 
 ![Clavicle Auto Rotate](./img/clav_autororient.gif)
-
-## Head & Facial Controls
-
-Right-click on **c_head** to display **facial controllers**.
-
-Under **c_head**, you’ll find:
-
-- **c_skull**, **c_skull_mid**, and **c_skull_dn** – adjust the head and facial silhouette.
-- On **c_skull_mid**, the **slide** attribute controls the follow between skull and skull_dn (e.g. to detach the nose from the jaw).
-
-![Slide Skull Mid](./img/skull_mid_slide.gif)
-
-### Main Facial Controllers:
-
-- **c_mouth** – moves the entire mouth; includes **grab teeth** (separate teeth) and **corner_pinch** (lip corners).  
-  ![Grab Teeth](./img/grabteeth.gif)  
-  ![Corner Pinch](./img/corner_pinch.png)
-- **c_nose** – nose control.
-- **c_eyeroots** – translate/rotate/scale eyes.
-- **c_ears** – ear offsets (+ **c_ear_base** option to slide along the skull).
-- **c_eyebrows** – eyebrow control with **follow_skull** attribute.
-
-![Eyebrows Follow Skull](./img/eyebrows_follow_skull.gif)
-
-## Facial Expressions
-
-Next to the head, you’ll find the **Face UI** and several offset controllers.
-
-### Face UI
-
-- **c_face_dn** – lower face poses (smile, frown, lips roll…), sticky lips, teeth, puffed cheeks.  
-  ![Face UI](./img/faceUI.png)
-- **c_face_up** – eyes and brows poses (blink, eyebrows up/down), iris/pupil size, speculars, auto eyelid follow.  
-  ![Eyelids Follow](./img/eyelids_follow.gif)
-- **c_look** – gaze direction (attributes: cross and dizzy).
-- **c_lipsync** – mouth animation (phonemes).
-
-### Offset Controllers
-
-Used to fine-tune expressions:
-
-- **c_cheeks**,
-- **c_eyebrows**,
-- **c_mouth**,
-- **c_lips**,
-- **c_eyelids**.
-
-### Look-at
-
-In front of the character, you’ll find **look_at controllers** to animate eye direction.
-
-:::tip
-💡 Use the **Face UI** as much as possible to stay _on-model_.  
-The facial controllers are mainly for **fine adjustments** of expressions.
-:::
