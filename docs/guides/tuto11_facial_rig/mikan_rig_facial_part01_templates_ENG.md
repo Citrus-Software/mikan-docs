@@ -1,4 +1,4 @@
-# Simple Facial Rig (skin joints)
+# Simple Facial Rig : Building the Facial Template
 
 ## Introduction
 
@@ -11,8 +11,6 @@ The overall process consists of:
 - adding logic through modifiers to create the actual functioning of the rig,
 - recording facial poses in the animator interface.
 
-## 1. Building the Facial Template
-
 We begin by building the module hierarchy required for the facial rig. The body template is already in place (simple biped), enriched with clothing modules and extra features.
 
 We will now set up the facial template.
@@ -24,7 +22,7 @@ To do this, select the **head hook** of the Neck module, then add a group module
 A group allows you to gather controllers and generate useful menus for animators (select, mirror, flip).
 :::
 
-### Skull, Skull_dn, Skull_mid
+## Skull, Skull_dn, Skull_mid
 
 We begin by creating three modules placed in parallel: **SKULL**, **SKULL_DN**, and **SKULL_MID**, which form the base for manipulating the global shape of the face.
 
@@ -37,9 +35,9 @@ Once they are placed, enable toggle shapes to edit the controller shapes, then r
 
 ![tpl skull](./img/skull_tpls.png)  
 
-### Lower face
+## Lower face
 
-#### Jaw, Jaw_up
+### Jaw, Jaw_up
 
 Next, we add two modules to open the mouth: Jaw and Jaw_up, parented under skull_dn.
 
@@ -50,7 +48,7 @@ For this, we use **core>bones** modules, which create an FK hierarchy, with the 
 
 ![tpl jaw](./img/jaw_tpl.png) 
 
-#### Lips group
+### Lips group
 
 Under skull_dn, we then create a Lips group.
 Like the face group, this group is used to gather all mouth controllers in the animator's right-click menu.
@@ -61,7 +59,7 @@ Then we add:
 - tweakers: **mouth1, 2, 3 up and dn**, plus **mouth4**: core>joints, type joint, to give animators the ability to sculpt the mouth as they wish.
 - second level: **lip1, 2, 3 up and dn + lip4**: core>joints, type joint, scaleParent > on.
 
-#### Tongue and teeth
+### Tongue and teeth
 
 Under **jaw**, we add the lower teeth:
 
@@ -78,7 +76,7 @@ The same logic as the **lower teeth** is used for the upper teeth, parented unde
 
 ![tpl mouthLips](./img/lips_tpls.png)  
 
-#### c_mouth et c_corners
+### c_mouth et c_corners
 
 We add a global controller **c_mouth** as well as **c_corners** for the mouth corners, both using **core>joints** modules, type **transform**, with **flip orient** enabled for the **c_corners**.
 
@@ -86,7 +84,7 @@ We add a global controller **c_mouth** as well as **c_corners** for the mouth co
 👉 They will be connected later through the modifiers to the rest of the rig.
 :::
 
-### Mid face
+## Mid face
 
 We add a nose module and nostrils modules.
 
@@ -97,7 +95,7 @@ They stabilize the nasal area and connect the upper and lower parts of the face.
 
 ![tpl skukll mid](./img/skull_mid_tpl.png)  
 
-### Haut du visage
+## Upper Face
 
 For the upper part of the face, we add:
 
@@ -137,7 +135,7 @@ Eyebrows:
 
 ![tpl face up](./img/eyes_tpl.png)  
 
-### Secondary offsets
+## Secondary offsets
 
 Adding modules to enrich the control over the cheek area:
 
@@ -147,7 +145,7 @@ Adding modules to enrich the control over the cheek area:
 
 ![tpl cheeks](./img/cheeks_tpl.png)  
 
-### look at
+## look at
 
 Next, we add a hierarchy to manage the **look-at system** with:
 
@@ -157,7 +155,7 @@ Next, we add a hierarchy to manage the **look-at system** with:
 
 ![tpl look_at](./img/look_at_tpl.png)  
 
-### Facial interface
+## Facial interface
 
 To set up the **facial interface** intended for animators, we start with:
 
@@ -165,14 +163,14 @@ To set up the **facial interface** intended for animators, we start with:
 
 We then create the rigger section and the animator interface.
 
-#### Rigger section
+### Rigger section
 
 - **shp_lids**: core>xform module where all blink and eyelid-movement parameters will be stored.
 - **shp_lips**: module for lip-related settings.
 - **chan_face**: centralizes and manages all facial-rig connections, in the spirit of the BCS plugin, by aggregating all attributes onto a single controller.
 - **shp_face**: node on which the facial poses will be recorded.
 
-#### Animator section
+### Animator section
 
 On the animator side, we set up the hierarchy used to build the interface:
 
