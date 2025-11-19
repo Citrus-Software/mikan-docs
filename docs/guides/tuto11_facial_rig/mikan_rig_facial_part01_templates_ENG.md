@@ -1,4 +1,4 @@
-# Simple Facial Rig : Building the Facial Template
+# Building the Facial Template
 
 ## Introduction
 
