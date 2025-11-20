@@ -87,6 +87,8 @@ connect:
   node: skull_mid::roots.0@w1
 ```
 
+![rig skull mid](./img/rig_skull_mid.png)  
+
 ## rig mouth
 
 ### mouth hook
@@ -114,6 +116,8 @@ plug:
   node: mouth::mod.hooks.jaw_mid
   w0: {set: $jaw_mid_weight}
 ```
+
+![rig mouth](./img/rig_mouth.png)  
 
 ### lip rechain
 
@@ -833,6 +837,8 @@ constraint:
   up: [0, 0, 0]
   ```
 
+![rig look_at](./img/rig_look_at.png)  
+
 ## look at space switch
 
 We add a **space** modifier to implement a space switch for the look-at control.
@@ -846,6 +852,8 @@ space:
     - "*::space.world"
     - "*::space.move"
 ```
+
+![rig space look_at](./img/rig_space_look_at.png)  
 
 ## 2d eyes rig
 
