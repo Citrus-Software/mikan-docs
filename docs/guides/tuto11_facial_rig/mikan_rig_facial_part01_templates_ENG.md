@@ -1,4 +1,4 @@
-# Building the Facial Template
+# Building the Facial Template Hierarchy
 
 ## Introduction
 
