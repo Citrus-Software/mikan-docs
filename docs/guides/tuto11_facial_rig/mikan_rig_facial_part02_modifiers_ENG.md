@@ -722,32 +722,32 @@ hook:
   targets:
     - teeth_up::skin.0
     - teeth_dn::skin.0
-  node: jaw::mod.loc.teeth_mid
+  node: lips::mod.loc.teeth_mid
   weights: [0.5, 0.5]
 
 #> y: [up, dn]
 #> x: [L, R]
 locator:
   node: teeth_bend_<y>.<x>::poses.0
-  parent: jaw::mod.loc.teeth_mid
+  parent: lips::mod.loc.teeth_mid
   name: copy_teeth_tip_<y>_<x>
   copycat: on
 
 locator:
   node: teeth_tip_<y>::hooks.0
-  parent: jaw::mod.loc.teeth_mid
+  parent: lips::mod.loc.teeth_mid
   name: teeth_tip_<y>
 locator:
   node: teeth_bend_tip_<y>.<x>::hooks.0
-  parent: jaw::mod.loc.copy_teeth_tip_<y>_<x>
+  parent: lips::mod.loc.copy_teeth_tip_<y>_<x>
   name: teeth_tip_<y>_<x>
 
 hook:
-  target: jaw::mod.loc.teeth_tip_<y>
+  target: lips::mod.loc.teeth_tip_<y>
   node: teeth_tip_<y>::roots.0
   weights: [1]
 hook:
-  target: jaw::mod.loc.teeth_tip_<y>_<x>
+  target: lips::mod.loc.teeth_tip_<y>_<x>
   node: teeth_bend_tip_<y>.<x>::roots.0
   weights: [1]
 
