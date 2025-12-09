@@ -20,14 +20,14 @@ This folder contains external Python libraries and scripts bundled directly with
 
 If you contribute or update any of these packages, please document your changes clearly and consider submitting patches upstream.
 
-## cmdx — with local monkey patches
+## cmdx, with local monkey patches
 
 We use a custom version of `cmdx` from the original repo by mottosso, bundled in `vendor/`.
 
 There are **two levels of customization** applied:
 
-1. **Direct edits to the original `cmdx.py`** — small fixes made inline.
-2. **Runtime monkey patch (`mikan/maya/cmdx.py`)** — additional behaviors layered on top of the base implementation, loaded at runtime.
+1. **Direct edits to the original `cmdx.py`**, small fixes made inline.
+2. **Runtime monkey patch (`mikan/maya/cmdx.py`)**, additional behaviors layered on top of the base implementation, loaded at runtime.
 
 This approach lets us isolate core library tweaks while keeping higher-level project logic separate.
 

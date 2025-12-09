@@ -19,7 +19,7 @@ The `plug` modifier allows the creation, editing, or deletion of attributes on r
   - **`enum`** (*list[str]*): List of values for enum-type plugs.
   - **`lock`** (*bool*, default: `off`): Locks the plug to prevent editing.
   - **`flip`** (*bool*, default: `off`): Multiplies `set`, `min`, and `max` values by `-1` on mirrored branches.
-  - **`proxy`** (*node*): Creates a proxy attribute—shared value between two different nodes.
+  - **`proxy`** (*node*): Creates a proxy attribute, shared value between two different nodes.
 
 ## Examples
 

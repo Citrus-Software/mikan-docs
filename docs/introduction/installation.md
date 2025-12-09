@@ -33,9 +33,9 @@
    from mikan.maya.ui import MikanUI
    MikanUI.start()
    ```
-9. In the Script Editor, go to **File → Save Script to Shelf...**
+9. In the Script Editor, go to **File > Save Script to Shelf...**
 10. When prompted, name the shelf button **Mikan**, then click **OK**.
-11. You should now see a **Mikan** button in your chosen shelf tab — click it!
+11. You should now see a **Mikan** button in your chosen shelf tab, click it!
 12. The Mikan UI will appear, docked on the right.
 
 ## Full Setup Guide

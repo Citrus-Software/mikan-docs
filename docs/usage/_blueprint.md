@@ -34,7 +34,7 @@ To generate a rig, Mikan scans the entire hierarchy and plans the construction s
 
 - **Modifiers run before deformers** by default.
 - Execution order follows **node hierarchy** (from top to bottom).
-- **Sibling order is ignored** — Maya supports it, but formats like Alembic do not, so don’t rely on it.
+- **Sibling order is ignored**. Maya supports it, but formats like Alembic do not, so don’t rely on it.
 - **Command priorities**, if defined, are respected.
 - Commands that fail due to unresolved IDs are **retried at the end**.
 - **Build mode** and **node activation state** are taken into account.
@@ -45,7 +45,7 @@ To generate a rig, Mikan scans the entire hierarchy and plans the construction s
 
 Mikan uses a **flexible, flag-based system** to control how rigs are constructed. Instead of a single build mode, multiple modes can be **enabled simultaneously**, allowing for more modular and context-aware builds.
 
-Each mode acts as a **signal** that informs the build process how to behave — whether it's for development, debugging, production delivery, or specific host environments.
+Each mode acts as a **signal** that informs the build process how to behave, whether it's for development, debugging, production delivery, or specific host environments.
 
 ### Mode Categories
 

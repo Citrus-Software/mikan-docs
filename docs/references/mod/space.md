@@ -20,7 +20,7 @@ This modifier sets up a space-switching system allowing a controller to dynamica
 
 ## Attribute Name Resolution
 
-Switch attribute names are derived from the target IDs, searching in order of priority: `space`, `hooks`, `ctrls`, then `skin`. If a name cannot be meaningfully resolved (e.g., `leg::skin.0` → `pin_0`), consider:
+Switch attribute names are derived from the target IDs, searching in order of priority: `space`, `hooks`, `ctrls`, then `skin`. If a name cannot be meaningfully resolved (e.g., `leg::skin.0` > `pin_0`), consider:
 
 - Adding a [tag](tag) to the node (`space.name`, for example), or
 - Specifying a custom name via the `names` option.

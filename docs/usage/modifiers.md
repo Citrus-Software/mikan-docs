@@ -6,7 +6,7 @@ sidebar_position: 2
 
 ## Overview
 
-Mikan allows you to describe rig structures abstractly, independently of the DCC that generates them. A key feature of this system is the use of [**identifiers (IDs)**](#mikan-identifiers-ids) to reference nodes and geometry across different commands and tools — particularly modifiers.
+Mikan allows you to describe rig structures abstractly, independently of the DCC that generates them. A key feature of this system is the use of [**identifiers (IDs)**](#mikan-identifiers-ids) to reference nodes and geometry across different commands and tools, particularly modifiers.
 
 Modifiers are procedural instructions that are executed **after the template hierarchy is built**, enabling actions like constraints, driven keys, reparenting, and more. To reference rig elements within these commands, Mikan uses a consistent ID system. This document covers both concepts: how to **write modifiers** and how to **use IDs** effectively within them.
 
@@ -40,19 +40,19 @@ Once added, the modifier appears as an inline **editable text block** in the Edi
 
 🟣 Additionally, a new “Modifiers” entry will appear in the Blueprint Outliner, highlighted in purple for easy identification.
 
-💡 When selecting a node in the rig’s viewport, its Mikan ID(s) will show up in the modifier editor. This provides quick reference to help write valid commands — especially useful when first learning the syntax.
+💡 When selecting a node in the rig’s viewport, its Mikan ID(s) will show up in the modifier editor. This provides quick reference to help write valid commands, especially useful when first learning the syntax.
 
 ---
 
 ### Best Practices
 
-The modifier system is intentionally open-ended — a powerful sandbox that enables complex, creative rig behaviors. But with great flexibility comes the risk of disorder.
+The modifier system is intentionally open-ended, a powerful sandbox that enables complex, creative rig behaviors. But with great flexibility comes the risk of disorder.
 
-Avoid scattering modifiers randomly across the blueprint. Instead, try to **group related modifiers** together logically, and attach them at meaningful points in the hierarchy — ideally under helper nodes when they represent standalone functionality.
+Avoid scattering modifiers randomly across the blueprint. Instead, try to **group related modifiers** together logically, and attach them at meaningful points in the hierarchy, ideally under helper nodes when they represent standalone functionality.
 
 When modifiers contribute to a specific feature or behavior, consider organizing them into **cohesive blocks**. This makes it easier to **reuse**, disable, or remove functionality later without unintended side effects.
 
-We’ll be adding a few guides to showcase best practices and advanced prototyping — for instance, how to build a fully modular eyelid rig using only a few `core.joints` blocks combined with layered modifiers.
+We’ll be adding a few guides to showcase best practices and advanced prototyping, for instance, how to build a fully modular eyelid rig using only a few `core.joints` blocks combined with layered modifiers.
 
 ---
 

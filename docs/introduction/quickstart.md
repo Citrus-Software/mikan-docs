@@ -1,6 +1,6 @@
 # Quickstart Guide
 
-Welcome to **Mikan**, the modular rigging toolkit built for both **Maya** and **Tangerine**. This guide helps you get up and running with Mikan inside Maya — from creating your first rig blueprint to assigning controller shapes and binding geometry with deformers.
+Welcome to **Mikan**, the modular rigging toolkit built for both **Maya** and **Tangerine**. This guide helps you get up and running with Mikan inside Maya, from creating your first rig blueprint to assigning controller shapes and binding geometry with deformers.
 
 By the end, you'll understand the full rig authoring loop: building, binding, and rebuilding rigs that are production-ready and fully modular.
 
@@ -43,7 +43,7 @@ Template modules appear as joint chains in the scene. This means pre-built templ
 
 #### Add Template Modules
 
-With your new asset created, the next step is to populate it with **template modules** — these are the rig building blocks (spine, limbs, props, etc.). Each one must be inserted **manually and hierarchically**, to reflect the structure of your character.
+With your new asset created, the next step is to populate it with **template modules**, these are the rig building blocks (spine, limbs, props, etc.). Each one must be inserted **manually and hierarchically**, to reflect the structure of your character.
 
 #### Step-by-step logic
 
@@ -64,22 +64,24 @@ With your new asset created, the next step is to populate it with **template mod
     You’re free to move, rotate, and align the joints to match your character mesh.
 
 5.  **Configure Template Settings**
-    - Select a template module → go to the `Edit` subtab
+    - Select a template module: go to the `Edit` subtab
     - Adjust build options like joint orientation types, mirror behavior, rotation order, and more
 
 #### 🧍 Quick Guide: Building a Basic Biped
 
 Here’s a minimal and functional template setup to get a humanoid rig up and running:
 
-1.  `world.character` — defines the global root of the character
-2.  `spine.default` — creates the central spine chain under `world.root`
-3.  `leg.default` — add a left and right leg under `spine.hips`
-4.  `arm.default` — add a left and right arm under `spine.torso`
-5.  `neck.default` — add a neck (this module also includes the head)
+1.  `world.character` defines the global root of the character
+2.  `spine.default` creates the central spine chain under `world.root`
+3.  `leg.default` adds a left and right leg under `spine.hips`
+4.  `arm.default` adds a left and right arm under `spine.torso`
+5.  `neck.default` adds a neck (this module also includes the head)
 
 Once these are placed and adjusted in the scene, you’ll have a complete rig structure ready for configuration and controller shaping.
 
-> ⚠️ At this stage, the modules are only skeleton guides. No controllers or visual shapes are generated yet — that comes next.
+:::warning
+At this stage, the modules are only skeleton guides. No controllers or visual shapes are generated yet, that comes next.
+:::
 
 📁 You can find a working example of this setup in `examples/tpl_biped.ma`.
 It’s a great starting point or reference if you want to see the result in context.
@@ -120,7 +122,9 @@ To make changes:
 - Click the **broom icon** to wipe the rig and go back to the editable template
 - Then make edits and rebuild as needed
 
-> ♻️ This fast iteration loop is one of Mikan’s core strengths. You can build, adjust, and rebuild with minimal friction.
+:::note
+This fast iteration loop is one of Mikan’s core strengths. You can build, adjust, and rebuild with minimal friction.
+:::
 
 ## 🔗 Binding Geometry
 
@@ -137,7 +141,9 @@ This can be configured later using custom build options, but the initial setup a
 
 You can now perform a standard Maya `Bind Skin` operation.
 
-> 🧩 Mikan supports many Maya deformers, though not all are fully covered yet. See the [Deformers Guide](../usage/deformers/overview.md) for details.
+:::info
+Mikan supports many Maya deformers, though not all are fully covered yet. See the [Deformers Guide](../usage/deformers/overview.md) for details.
+:::
 
 ## 💾 Saving & Reinjecting Deformer Data
 
@@ -151,8 +157,10 @@ Once binding is done, you'll want to **save the skinning weights** (and any defo
 
    This generates a group at the root of the scene, which includes all the relevant deformer metadata (skin, wrap, lattice, etc.)
 
-   > 📌 At this stage, the group is just a neutral transform and not yet part of the rig blueprint.
-
+   :::note
+   📌 At this stage, the group is just a neutral transform and not yet part of the rig blueprint.
+   :::
+   
 3. To link it with the rig:
 
 - Parent the backup group into your Mikan **template group** in the scene
@@ -163,7 +171,9 @@ From now on:
 - Rebuilding the rig will **automatically restore** your deformers
 - Wiping the rig will **also remove** those deformers
 
-> ⚠️ It’s crucial to ensure backups are properly saved in the rig blueprint before rebuilding — otherwise, you risk losing your skin weights.
+:::warning
+It’s crucial to ensure backups are properly saved in the rig blueprint before rebuilding, otherwise, you risk losing your skin weights.
+:::
 
 ## ✅ What’s Next?
 

@@ -1,4 +1,4 @@
-# Using branches
+# Using Branches
 
 ## Introduction
 
@@ -33,7 +33,7 @@ For some template modules where symmetry is obvious (for example **arms** and **
 When building the rig:
 
 - Each defined label automatically generates a variant of the module.
-- Example: `[L, R]` → one module for the left side and one for the right side.
+- Example: `[L, R]`, one module for the left side and one for the right side.
 
 ### Notes and Modifiers
 
@@ -49,8 +49,8 @@ Example:
 
 This means:
 
-- no need to copy notes for the right side,
-- a **clean, consistent, and easy-to-maintain** setup, even on complex rigs.
+- No need to copy notes for the right side.
+- A **clean, consistent, and easy-to-maintain** setup, even on complex rigs.
 
 ## Adapting branches to an asymmetric rig
 
