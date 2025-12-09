@@ -31,3 +31,6 @@ Thumbs.db
 *.iml
 .codesandbox/
 sandbox.config.json
+
+# dev
+/*.bat
