@@ -74,13 +74,13 @@ Then we create the tongue:
 
 The same logic as the **lower teeth** is used for the upper teeth, parented under **jaw_up**.
 
-![tpl mouthLips](./img/lips_tpls.png)  
+![tpl mouthLips](./img/lips_tpls.png)
 
 ### c_mouth et c_corners
 
 We add a global controller **c_mouth** as well as **c_corners** for the mouth corners, both using **core>joints** modules, type **transform**, with **flip orient** enabled for the **c_corners**.
 
-:::notes
+:::note
 👉 They will be connected later through the modifiers to the rest of the rig.
 :::
 
@@ -129,7 +129,7 @@ Eyebrows:
 - **eyebrow_base**: core>joint, type transform, used to control the global movement of the eyebrow, then
 - **eyebrow1, 2 and 3**: core>joints, type joint, nb : 3, unchain, flip orient, for finer control.
 
-:::notes
+:::note
 👉 As always: for each template module, enable parent scale when needed, flip orient for branches, and do pose when required.
 :::
 

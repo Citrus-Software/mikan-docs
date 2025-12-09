@@ -1,4 +1,4 @@
-# Using branches
+# Using Branches
 
 ## Introduction
 

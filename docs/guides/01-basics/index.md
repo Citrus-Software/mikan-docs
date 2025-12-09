@@ -173,10 +173,7 @@ From the **Mikan outliner**: right-click → **Select skin joints**.
 Then skin your geometry as you normally would.
 
 :::warning
-
-⚠️ **Important**:  
 Anything added manually (skinning, clusters, deformers, etc.) will be removed with each **rebuild**, unless those changes are saved in the **blueprint**.
-
 :::
 
 ### Backing Up Deformers
@@ -198,7 +195,6 @@ This ensures the **blueprint** preserves your deformation data and reapplies it 
 You can safely adjust your template, rebuild the rig, and keep your deformations intact.
 
 :::info
-
 ### Good to Know
 
 The Add tab gives you access to a set of default template modules provided by Mikan. These modules act as the basic building blocks for creating rigs.
@@ -206,7 +202,6 @@ The Add tab gives you access to a set of default template modules provided by Mi
 👉 By combining these modules and enhancing them with modifiers, you can go far beyond simple setups. This allows you to design more complex and customized templates, perfectly suited to your production needs.
 
 ✨ Once created, these templates can be exported and easily reused across different assets, ensuring consistency and saving valuable time throughout the rigging process.
-
 :::
 
 ## Conclusion
