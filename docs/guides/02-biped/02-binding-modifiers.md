@@ -34,22 +34,20 @@ Then parent this node under your template hierarchy, usually under a **helper** 
 
 ![dfm all](./img/dfm_all.png)
 
-This way, the skinCluster data is preserved and won't be lost during a future rebuild — only the nodes placed under the **template group** are kept between builds.
+This way, the skinCluster data is preserved and won't be lost during a future rebuild, only the nodes placed under the **template group** are kept between builds.
 
 ## Rig Customization with Modifiers
 
-**Modifiers** allow you to customize your template beyond the base hierarchy by injecting actions during the build — similar to procedural rigging.  
+**Modifiers** allow you to customize your template beyond the base hierarchy by injecting actions during the build, similar to procedural rigging.  
 They are executed after the rig is built and let you adjust or extend the result.  
-You can add constraints, driven keys, re-parenting, visibility setups — any kind of logic you want on top of your rig.
+You can add constraints, driven keys, re-parenting, visibility setups, any kind of logic you want on top of your rig.
 
-### Example 1 : Finger Visibility
+### Example 1: Finger Visibility
 
 In this example, we'll add a modifier to create a right-click menu for animators to switch the visibility of the finger controls.
 
 :::tip
-
-👉 Build the rig beforehand, as you'll then have access to the **IDs** of the rig elements selected in Mikan's **Edit** tab. This makes writing modifier notes much easier.
-
+Build the rig beforehand, as you'll then have access to the **IDs** of the rig elements selected in Mikan's **Edit** tab. This makes writing modifier notes much easier.
 :::
 
 You can also refer to the [Mikan documentation](https://citrus-software.github.io/mikan-docs/).
@@ -59,7 +57,7 @@ To add the modifier:
 - Right-click on the **fingers** group,
 - Choose **Add Helper Node** to create a node where we'll write the modifier note.
 
-Since we're working with a mirrored fork template, you only need to write the note on the left side — Mikan will handle the right side automatically.
+Since we're working with a mirrored fork template, you only need to write the note on the left side. Mikan will handle the right side automatically.
 
 Once the helper node is created and named:
 
@@ -88,7 +86,7 @@ If you rebuild your rig, you will now see a visibility switch menu for the finge
 
 ![fingers vis](./img/visFingers.png)
 
-### Example 2 : Adjusting Arm Shear Attributes
+### Example 2: Adjusting Arm Shear Attributes
 
 If you explore the member attributes in a Mikan rig, you'll find **shear** attributes exposed in the IK controller's shape of the arm.  
 These attributes allow you to cleverly adjust the silhouette of bends and compensate for volume loss.
@@ -101,7 +99,7 @@ We'll fix this in the template by creating a modifier that gives us a cleaner be
 Procedure:
 
 - Select the **arm** template,
-- Right-click → **Add Helper Node**,
+- Right-click > **Add Helper Node**,
 - Then add a **plug** modifier, which will allow us to define shear values when the rig is built.
 
 ![sample plug](./img/sample_plug.png)
@@ -118,7 +116,7 @@ plug:
  shear_dn_tip_3: {set: $shear_dn_tip_3}
 ```
 
-As you can see in this note, I'm introducing GEM variables (e.g. **$shear_up_base_0**).  
+As you can see in this note, I'm introducing **`gem`** variables (e.g. `$shear_up_base_0`).  
 These are custom attributes created directly on the Helper node where the modifier note is written.
 
 :::warning
@@ -128,10 +126,8 @@ To be recognized by Mikan, they must be prefixed with **gem_var**.
 ![gem var](./img/gem_var.png)
 
 :::tip
-
-👉 instead of manually creating the attributes on the Helper node, just build the rig.  
+Instead of manually creating the attributes on the Helper node, just build the rig.  
 Mikan will automatically create the attributes, and you'll only need to set their values.
-
 :::
 
 Once your custom attributes are edited, you can rebuild the rig.  
@@ -139,5 +135,4 @@ The shear values will then be correctly updated in the final rig.
 
 Thanks to modifiers, you can customize every aspect of your rig template.
 
-You now know how to set up a simple biped rig and start adapting it to your needs.  
-👉 Your turn!
+You now know how to set up a simple biped rig and start adapting it to your needs. Your turn!

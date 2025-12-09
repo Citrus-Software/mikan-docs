@@ -232,7 +232,7 @@ drive:
 
 ### teeth subtransform _ grab teeth
 
-Following the same logic, we rig the **teeth** so they can **follow — or not — c_mouth**.
+Following the same logic, we rig the **teeth** so they can **follow (or not) c_mouth**.
 We create a **virtual hierarchy** between c_mouth and c_teeth, using the weight option to enable or disable the transform constraint.
 
 We then add an attribute on c_mouth to control the weight of this constraint.
@@ -926,7 +926,7 @@ gem_var_amp_Ry : 30
 gem_cross_var : 0.15
 
 :::tip
-You do not need to manually create gem_var attributes — Mikan automatically generates missing ones using the proper naming convention during the build process.
+You do not need to manually create `gem_var` attributes. Mikan automatically generates missing ones using the proper naming convention during the build process.
 :::
 
 And we add a **constraint** modifier on **loc_look**:

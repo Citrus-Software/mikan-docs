@@ -22,7 +22,7 @@ Two methods are available:
 - use the **Posing** tab to create the poses directly;  
 - or edit a **modifier plug** on a node, where you list all the poses you want to create.
 
-### Method 1 — Creating Poses Through the Posing Tab
+### Method 1: Creating Poses Through the Posing Tab
 
 1. In the **Pose Editor** window, right-click under the pose editing buttons to create a pose.  
    Example: *open mouth*.
@@ -37,7 +37,7 @@ Two methods are available:
 
 ![save mods](./img/save_mods.png)
 
-### Method 2 — Creating Poses Using a Modifier Plug
+### Method 2: Creating Poses Using a Modifier Plug
 
 Create a helper node on *shp_face* and add a **modifier plug**, where you will write the full list of poses to generate.
 

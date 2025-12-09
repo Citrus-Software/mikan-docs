@@ -8,7 +8,7 @@ This modifier allows you to drive plug values via animation curves based on a co
 
 - The **Mikan interface** provides a drive command generator under the **"Posing"** tab. It creates the driven key curves and generates the necessary `drive` commands for rig rebuilding.
 - You can also **convert any animation curve** (manual or not) using a utility in the **Mikan rig toolbox**. The command will output the required YAML block directly in the Script Editor.
-- ⚠️ Only the **recommended syntax** is documented here. You may encounter legacy variations in older rigs — they remain supported but are not advised.
+- ⚠️ Only the **recommended syntax** is documented here. You may encounter legacy variations in older rigs, they remain supported but are not advised.
 
 ## Options
 

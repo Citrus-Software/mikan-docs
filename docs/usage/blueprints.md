@@ -84,7 +84,7 @@ Mirrored branches automatically invert axes and apply the necessary flipping to 
 
 ## Helper Nodes
 
-Any node whose name begins with an underscore (`_`) is considered a **Helper Node**. These nodes are skipped by the template parser, meaning they are not treated as part of a module’s hierarchy — but they can still be used to carry controller shapes, modifiers or deformers.
+Any node whose name begins with an underscore (`_`) is considered a **Helper Node**. These nodes are skipped by the template parser, meaning they are not treated as part of a module’s hierarchy, but they can still be used to carry controller shapes, modifiers or deformers.
 
 If a node is named with double underscores (e.g. `__meta__`), it becomes an **Internal Helper Node**, completely hidden from the interface.
 
@@ -112,7 +112,7 @@ Mikan scans the full hierarchy and plans construction in logical order.
 
 Mikan uses a **flexible flag-based system** to control construction behavior. Multiple modes can be active simultaneously.
 
-Each mode signals the build system how to act — whether for dev, debug, or production.
+Each mode signals the build system how to act, whether for dev, debug, or production.
 
 ### Mode Categories
 

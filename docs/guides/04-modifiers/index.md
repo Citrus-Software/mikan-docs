@@ -176,7 +176,7 @@ drive:
   weight: hoodie_side.L::ctrls.0@follow_clav
 ```
 
-👉 The drive now responds to the **follow_clav** slider.
+The drive now responds to the `follow_clav` attribute.
 
 :::note  
 This setup allows animators to control how strongly the hoodie follows the clavicle using the custom attribute.  
@@ -209,16 +209,18 @@ Recap of the steps:
 
 - Create a group for the hoodie + visibility menu,
 - Attach the hoodie to the main rig with a parent modifier,
-- Add a **follow_clav** attribute to the control,
+- Add a `follow_clav` attribute to the control,
 - Implement the behavior with a **drive** or, preferably, an **expression**, connected to the follow attribute.
 
-💡 **Recommendation:** prefer _expression_ over _drive_ — it is lighter, cleaner, and more responsive.
+:::tip
+Prefer `expression` over `drive`. It is easier to edit and slighly lighter in evaluation.
+:::
 
 :::info
 When modifier notes are placed under **branches**, Mikan automatically duplicates them.  
-You only need to write them once, on the left side — Mikan applies the same logic to the right side.
+You only need to write them once, on the left side. Mikan applies the same logic to the right side.
 
-✅ No need to copy and paste.  
+No need to copy and paste!
 :::
 
 ## Conclusion

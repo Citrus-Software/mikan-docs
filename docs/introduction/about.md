@@ -9,7 +9,7 @@ Welcome to the Mikan documentation. This project aims to provide a flexible Pyth
 
 ## What is Mikan
 
-**Mikan** is a modern rigging toolkit developed for **Autodesk Maya** and **Tangerine**, a high-performance animation platform originally built in-house at **TeamTO** and now available to external partners. Mikan enables the creation of robust, software-agnostic rig blueprints — from guide placement to advanced deformation setups.
+**Mikan** is a modern rigging toolkit developed for **Autodesk Maya** and **Tangerine**, a high-performance animation platform originally built in-house at **TeamTO** and now available to external partners. Mikan enables the creation of robust, software-agnostic rig blueprints, from guide placement to advanced deformation setups.
 
 Born from years of production experience, Mikan combines **performance**, **modularity**, and **ergonomics** to deliver consistent, scalable rigs that are ready for demanding pipelines.
 
@@ -19,13 +19,13 @@ Born from years of production experience, Mikan combines **performance**, **modu
   A fast, user-friendly autorig system capable of generating high-quality, customizable rigs with minimal friction.
 
 - **Round-Trip Workflow**  
-  Mikan supports a seamless **template → rig → template** feedback loop. Any changes — from control tweaks to deformation adjustments — are performed directly on the blueprint, then rebuilt and propagated across both Maya and Tangerine.
+  Mikan supports a seamless **template > rig > template** feedback loop. Any changes, from control tweaks to deformation adjustments, are performed directly on the blueprint, then rebuilt and propagated across both Maya and Tangerine.
 
 - **Pipeline-Ready by Design**  
   Mikan industrializes rigging: it guarantees consistent, predictable outputs ready for external production teams and partners.
 
 - **Modular Blueprint Prototyping**  
-  Mikan allows fast and scalable prototyping of rig mechanisms. Thanks to its modular design, technical artists can easily author and iterate on reusable components, enabling precise control over the structure and behavior of rigs — from simple props to advanced facial systems.
+  Mikan allows fast and scalable prototyping of rig mechanisms. Thanks to its modular design, technical artists can easily author and iterate on reusable components, enabling precise control over the structure and behavior of rigs, from simple props to advanced facial systems.
 
 - **Software-Agnostic Rigging**  
   A single, unified blueprint drives rig generation across both Maya and Tangerine. These blueprints can also be exported in neutral formats such as **Alembic**, ensuring compatibility with any DCC tools.
@@ -72,7 +72,7 @@ Creating a rig with Mikan follows an iterative authoring loop. The blueprint rem
 2. **Rig Build**
 
    - Mikan generates a functional rig from the current state of the blueprint.
-   - This includes controller creation, constraints, and deformers — everything needed for a working setup.
+   - This includes controller creation, constraints, and deformers, everything needed for a working setup.
 
 3. **Binding and Manual Adjustments**
 
@@ -90,7 +90,7 @@ This workflow makes it easy to iterate, collaborate, and ensure consistency acro
 
 ## Pipeline Integration
 
-Once a blueprint is complete, Mikan offers flexible options for integrating it into production pipelines. The blueprint becomes a deployable artifact that can be exported, processed, and adapted to meet the needs of various departments — whether in Maya or Tangerine.
+Once a blueprint is complete, Mikan offers flexible options for integrating it into production pipelines. The blueprint becomes a deployable artifact that can be exported, processed, and adapted to meet the needs of various departments, whether in Maya or Tangerine.
 
 To target Tangerine, the blueprint is exported as an Alembic file and processed using Mikan's API to generate the final animation-ready rig. This process can be customized to include updated modeling, versioned assets, and other pipeline-specific logic.
 
@@ -98,4 +98,4 @@ The same approach can be applied to Maya scenes, depending on the project's stru
 
 Mikan’s API is intentionally lightweight and modular, making it easy to embed into studio-specific tools or batch scripts. The system is designed to be extensible, encouraging studios to build their own wrappers around it if needed.
 
-In addition, Mikan supports **rig variations** within a single blueprint — enabling multiple rig builds (e.g. for layout, animation, FX, etc.) to be generated from the same source file. These variations are fully customizable and can be tailored to match production workflows.
+In addition, Mikan supports **rig variations** within a single blueprint, enabling multiple rig builds (e.g. for layout, animation, FX, etc.) to be generated from the same source file. These variations are fully customizable and can be tailored to match production workflows.

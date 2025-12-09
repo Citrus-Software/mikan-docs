@@ -21,7 +21,7 @@ All other modules (spine, limbs) are built on top of this structure.
 The *world.character* template is intentionally simple:
 
 - The root joint defines the global position of the rig.
-- No joint orientation is required—orientation is handled automatically.
+- No joint orientation is required, orientation is handled automatically.
 - After the rig is built, all other modules are parented under the world hierarchy.
 
 Despite its simplicity, this module is essential for maintaining compatibility across the entire animation pipeline.
