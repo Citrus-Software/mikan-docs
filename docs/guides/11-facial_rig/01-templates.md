@@ -1,84 +1,110 @@
-# Building the Facial Template Hierarchy
+# Template Hierarchy
 
-## Introduction
+In this guide, we will build a facial rig based on skin joint deformation. This approach is generally more constrained than blendshape-based systems, but it offers significant advantages in terms of flexibility, robustness, and reusability. Historically, this type of setup has been well suited to television series production, where short schedules and
+frequent model iterations require rigs that can adapt quickly.
 
-Using the base building blocks provided by Mikan, it is possible to create a simple facial rig based on skin joints.
-Although this type of rig does not rely on shapes, it has been successfully used in many audiovisual productions and provides an excellent foundation.
+Joint-based facial rigs are a proven solution. They have been used successfully on many productions and provide a solid, predictable foundation on which more complex behaviors can be layered. While they may require a bit more discipline in their construction, they tend to scale better across assets and episodes.
 
-The overall process consists of:
+In the following chapters, we will go through the core steps required to assemble such a system using Mikan:
 
-- building a template-module hierarchy for the facial rig and its animator interface,
-- adding logic through modifiers to create the actual functioning of the rig,
-- recording facial poses in the animator interface.
-
-We begin by building the module hierarchy required for the facial rig. The body template is already in place (simple biped), enriched with clothing modules and extra features.
-
-We will now set up the facial template.
-
-On the **Neck** module, we add a **core>group** module named **face**.
-To do this, select the **head hook** of the Neck module, then add a group module.
+- Building a template module hierarchy for the facial rig and its animator interface
+- Adding logic through modifiers to create the actual functioning of the rig
+- Recording facial poses and linking them to the animator controls
 
 :::note
-A group allows you to gather controllers and generate useful menus for animators (select, mirror, flip).
+Even if you are more familiar with blendshape-based facial rigs, following this guide is still relevant. The type of system presented here is fully compatible with blendshapes, and many of the concepts apply regardless of the deformation method. While some sections may not need to be followed in detail, the parts related to pose connections and the animator
+interface remain essential.
 :::
 
-## Skull, Skull_dn, Skull_mid
+## Anchoring
 
-We begin by creating three modules placed in parallel: **SKULL**, **SKULL_DN**, and **SKULL_MID**, which form the base for manipulating the global shape of the face.
+Before building any facial structure, we first need to decide where the facial rig will attach to the rest of the character. It must be anchored to an existing part of the body hierarchy so that transforms, space, and evaluation remain consistent.
 
-These modules are created using **core>joints** with the following options:
+In our case, the body template is already set up. It consists of a simple biped, augmented with clothing modules and additional features. The head controller has already been created as part of the `neck.legacy` module, and it provides a natural attachment point for the facial rig.
 
-**type**: **transform**, each element is parented in a simple hierarchy and scales accumulate,
-**parentScale**: **off**, unnecessary with the transform type.
+This attachment point will serve as the root of the entire facial setup.
+
+### Using a Group Module as a Facial Root
+
+Rather than connecting facial modules directly to the head controller, we introduce an intermediate `core.group` module. This group acts as the root container for the facial rig.
+
+Group modules serve several purposes:
+
+- They provide a clean structural boundary for a rig subsystem
+- They allow all facial controllers to be selected at once
+- They help organize the animator interface hierarchy
+- They are used by animator tools that operate on controller groups (mirror, select, key...)
+
+In practice, this makes the group module an essential building block for both rig organization and animator workflow, even if it does not introduce any deformation or logic by itself.
+
+### Creating the Facial Group Module
+
+To set up the facial template:
+
+1. Select the head hook output of the `neck.legacy` module
+2. Add a `core.group` module at this connection point
+3. Name the group module **`face`**
+
+![add_group](./img/add_group.png)
+
+This face group now becomes the root of the facial rig hierarchy. All subsequent facial modules and controls will be created under this group, ensuring that the facial system remains clearly organized, easy to manage, and properly integrated with the existing body rig.
+
+## Skull hierarchy
+
+The facial base starts with three parallel modules: **`skull`**, **`skull_mid`**, and **`skull_dn`**. These form the foundation for controlling the overall shape and motion of the face. This separation gives you the flexibility to create subtle rotations, offsets, and squash/stretch without affecting unrelated areas.
+
+These modules are created using `core.joints` with the following option:
+
+- **Type**: `transform`, each element is parented in a simple hierarchy and scales accumulate,
 
 Once they are placed, enable toggle shapes to edit the controller shapes, then repeat the operation for each module.
 
-![tpl skull](./img/skull_tpls.png)  
+![tpl skull](./img/skull_tpls.png)
 
 ## Lower face
 
-### Jaw, Jaw_up
+### Jaws hierarchy
 
-Next, we add two modules to open the mouth: Jaw and Jaw_up, parented under skull_dn.
+Next, we add two modules to open the mouth: **`jaw`** and **`jaw_up`**, parented under **`skull_dn`**.
 
-For this, we use **core>bones** modules, which create an FK hierarchy, with the following options:
+For this, we use `core.bones` modules, which create an FK hierarchy, with the following options:
 
-**rotate order**: **ZXY** (to reduce gimbal issues);
-**add pose node**: **on** (to anticipate the creation of facial poses for mouth opening).
+- **Rotate order**: `zxy` (to reduce gimbal issues)
+- **Add pose node**: `on` (to anticipate the creation of facial poses for mouth opening)
 
-![tpl jaw](./img/jaw_tpl.png) 
+![tpl jaw](./img/jaw_tpl.png)
 
 ### Lips group
 
-Under skull_dn, we then create a Lips group.
-Like the face group, this group is used to gather all mouth controllers in the animator's right-click menu.
+Under **`skull_dn`**, we then create a **`lips`** group.
+Like the `face` group, this group is used to gather all mouth controllers in the animator's right-click menu.
 
 Then we add:
 
-- **lip_up, lip_dn**: core>joints, type transform, to handle upper and lower lip movements.
-- tweakers: **mouth1, 2, 3 up and dn**, plus **mouth4**: core>joints, type joint, to give animators the ability to sculpt the mouth as they wish.
-- second level: **lip1, 2, 3 up and dn + lip4**: core>joints, type joint, scaleParent > on.
+- **`lip_up`**, **`lip_dn`**: `core.joints`, type `transform`, to handle upper and lower lip movements.
+- Tweakers: **`mouth1`**, **`2`**, **`3`**, **`up`** and **`dn`**, and **`mouth4`**: `core.joints`, type `joint`, to give animators the ability to sculpt the mouth as they wish.
+- Second level: **`lip1`**, **`2`**, **`3` `up`** and **`dn`**, and **`lip4`**: `core.joints`, type `joint`, scale parent: `on`.
 
-### Tongue and teeth
+### Teeth and tongue
 
-Under **jaw**, we add the lower teeth:
+Under **`jaw`**, we add the lower teeth:
 
-- **teeth_dn**, **teeth_dn_tip**, **teeth_bend**, **teeth_bend_tip**
-        - All created as **core>joints**, type joint, with parent scale enabled.
-        - Flip orient enabled for the teeth bend L/R.
+- **`teeth_dn`**, **`teeth_dn_tip`**, **`teeth_bend`**, **`teeth_bend_tip`**
+  - All created as `core.joints`, type `joint`, with parent scale `on`.
+  - Flip orient enabled for the teeth bend L/R.
 
 Then we create the tongue:
 
-- **tongue_base**, type transform, to scale the entire tongue,
-- a chain of **core>bones with 3 joints** for the rest of the tongue, auto-oriented, with up axis X and up dir +X.
+- **`tongue_base`**, type `transform`, to scale the entire tongue,
+- a chain **`tongue`** with `core.bones` of 3 joints for the rest of the tongue, auto-oriented, with up axis X and up dir +X.
 
-The same logic as the **lower teeth** is used for the upper teeth, parented under **jaw_up**.
+The same logic as the **`teeth_dn`** is used for the **`teeth_up`**, parented under **`jaw_up`**.
 
 ![tpl mouthLips](./img/lips_tpls.png)
 
-### c_mouth et c_corners
+### Lips controllers
 
-We add a global controller **c_mouth** as well as **c_corners** for the mouth corners, both using **core>joints** modules, type **transform**, with **flip orient** enabled for the **c_corners**.
+We add a global controller **`mouth`** as well as **`lips_corner`** for the mouth corners, both using `core.joints` modules, type `transform`, with flip orient `on` for the **`lips_corner`**.
 
 :::note
 👉 They will be connected later through the modifiers to the rest of the rig.
@@ -93,7 +119,7 @@ We add a nose module and nostrils modules.
 
 They stabilize the nasal area and connect the upper and lower parts of the face.
 
-![tpl skukll mid](./img/skull_mid_tpl.png)  
+![tpl skukll mid](./img/skull_mid_tpl.png)
 
 ## Upper Face
 
@@ -133,7 +159,7 @@ Eyebrows:
 👉 As always: for each template module, enable parent scale when needed, flip orient for branches, and do pose when required.
 :::
 
-![tpl face up](./img/eyes_tpl.png)  
+![tpl face up](./img/eyes_tpl.png)
 
 ## Secondary offsets
 
@@ -143,7 +169,7 @@ Adding modules to enrich the control over the cheek area:
 - **flip orient** enabled,
 - **do pose** enabled (anticipation of facial poses).
 
-![tpl cheeks](./img/cheeks_tpl.png)  
+![tpl cheeks](./img/cheeks_tpl.png)
 
 ## look at
 
@@ -153,7 +179,7 @@ Next, we add a hierarchy to manage the **look-at system** with:
 - a **look_at** module, identical but placed in front of the face, controlling the gaze direction of both eyes,
 - a **look_target** module, used to control each eye individually.
 
-![tpl look_at](./img/look_at_tpl.png)  
+![tpl look_at](./img/look_at_tpl.png)
 
 ## Facial interface
 
@@ -175,11 +201,11 @@ We then create the rigger section and the animator interface.
 On the animator side, we set up the hierarchy used to build the interface:
 
 - **frame_look**, a core>xform module providing a 2D interface for eye animation.
-        - a look **core>joints** module for the global movement of both eyes,
-        - a look_eye **core>joints** module for the individual movement of each eye,
-        - a loc_look **core>xform** used to collect the movements of both c_look and c_look_eye.
+  - a look **core>joints** module for the global movement of both eyes,
+  - a look_eye **core>joints** module for the individual movement of each eye,
+  - a loc_look **core>xform** used to collect the movements of both c_look and c_look_eye.
 - **frame_lipsync**, a core>xform module for the 2D mouth-movement interface.
-        - a **lipsync** core>joints module to handle mouth opening.
+  - a **lipsync** core>joints module to handle mouth opening.
 - **face_up**, a core>joints module grouping all upper-face poses (eyes, eyebrows).
 - **face_dn**, a core>joints module grouping all lower-face poses (mouth, teeth, cheeks).
 

@@ -1,4 +1,4 @@
-# Setting Up the Modifiers
+# Adding Modifiers
 
 Now that the hierarchy is in place, we move on to the most interesting part: adding all the mechanics with the modifiers.
 

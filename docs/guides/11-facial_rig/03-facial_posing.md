@@ -1,4 +1,4 @@
-# Setting Up Facial Poses on the FACE UI
+# Facial Poses and UI
 
 ## Creating Poses on *shp_face*
 
