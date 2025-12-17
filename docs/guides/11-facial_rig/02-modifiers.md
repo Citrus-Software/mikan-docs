@@ -2,7 +2,7 @@
 
 Now that the hierarchy is in place, we move on to the most interesting part: adding all the mechanics with the modifiers.
 
-:::info
+:::note
 Reminder: in Mikan, we do not use direct constraints in Maya.
 We use modifiers, which are instructions read by Mikan during the rig build.
 This keeps the template clean and flexible.
@@ -13,12 +13,12 @@ This keeps the template clean and flexible.
 Let's start with simple modifiers to add visibility groups to the facial-rig controllers.
 
 Groups in the hierarchy gather controllers for select/mirror/flip, but they do not create visibility menus.
-So we add a **helper node _face_vis** on the face group, then a **group modifier** to create the visibility menus.
+So we add a **helper node** named `_face_vis` on the face group, then a [group](/references/mod/group.md) modifier to create the visibility menus.
 
 ```yaml
 [mod]
 # -- facial visibility groups
-#? neck::ctrls.head
+#?neck::ctrls.head
 
 group: 
   vis: neck::ctrls.head 
@@ -51,7 +51,16 @@ group:
   tag: vis.cheeks
 ```
 
-## rig skull mid
+A few important points to keep in mind when working with controller groups:
+
+The command `#?neck::ctrls.head` ensures that the block only executes if the specified object exists. At first glance, it may seem unnecessary, but it becomes very useful when you want to reuse or extend this template for different characters, allowing you to safely run commands without affecting other rigs that may not share the same hierarchy.
+
+Another option is to declare a variable like that: `#>ctrl: neck::ctrls.head`. This lets you replace all occurrences of this controller in the block with `<ctrl>`, making it easy to edit all commands at once using a single variable.
+
+The triple-colon notation in `face:::ctrls` is used to select the group and all of its children. Using `face::ctrls` (double colon) would select only the direct members of the face group, but in our setup, the face group itself contains no controllers. Extending the selection with `:::` ensures that all controllers within the hierarchy are included in the operation.
+
+
+## Skull hooks
 
 Let's add the modifiers required to rig **skull_mid**.
 We first attach skull_mid using a **hook** modifier between **skull** and **jaw_up**.
@@ -73,7 +82,6 @@ We then create an attribute to **manage the follow** between the two targets, us
 
 ```yaml
 [mod]
-
 plug:
   node: skull_mid::ctrls.0
   slide: {k: on, min: 0, max: 1, set: $slide}
@@ -89,9 +97,9 @@ connect:
 
 ![rig skull mid](./img/rig_skull_mid.png)  
 
-## rig mouth
+## Mouth
 
-### mouth hook
+### Hooks
 
 We want **c_mouth** to be attached to **jaw** and **jaw_up**.
 We create a **hook** modifier, synchronize its weights via a **connect**, and add a **plug** to easily adjust the blend.
@@ -119,19 +127,21 @@ plug:
 
 ![rig mouth](./img/rig_mouth.png)  
 
-### lip rechain
+### Lips rechain
 
 We want **mouth** and the **lips** to **follow jaw**, **jaw_up**, and **c_mouth**. To achieve this, we create a **_lips_mod** helper node on the lips group.
 
-👉 This cannot be done with simple parenting or constraints, as it would break the hierarchical dependencies.
+:::note
+This cannot be done with simple parenting or constraints, as it would break the hierarchical dependencies.
+:::
 
-We use a **rig.rechain** modifier to create a parallel virtual hierarchy and accumulate the influences.
-First, we parent lip_up under jaw_up and lip_dn under jaw.
-Then we add the rig.rechain so that the lips also follow c_mouth.
+We use a [rig.rechain](/references/mod/rig/rechain.md) modifier to create a parallel virtual hierarchy and accumulate the influences.
+First, we parent `lip_up` under `jaw_up` and `lip_dn` under `jaw`.
+Then we add the rig.rechain so that the lips also follow `mouth` controller.
 
 ```yaml
 [mod]
-#! -10
+#!-10
 
 parent: lip_up::roots.0 jaw_up::skin.0
 parent: lip_dn::roots.0 jaw::skin.0
@@ -153,7 +163,7 @@ rig.rechain:
    - lip_dn::roots.0
 ```
 
-### lips hooks
+### Lips hooks
 
 On the same helper node, we add modifiers to hook the c_mouth controllers with weight attributes, so we can manage the follow between mouth and lip_up / lip_dn.
 
@@ -201,7 +211,7 @@ plug:
   w0: {set: $mouth<n>_<side>_weight}
 ```
 
-### sticky corner switch _ pinch
+### Lips corner pinch
 
 Still on the same helper, we add the modifiers to build a **sticky corner** system.
 We create a **corners_pinch attribute**, then connect it to the **weights** of the hooks for mouth2 and mouth3.
@@ -230,7 +240,7 @@ drive:
     -1: 1
 ```
 
-### teeth subtransform _ grab teeth
+### Teeth rechain and teeth grab
 
 Following the same logic, we rig the **teeth** so they can **follow (or not) c_mouth**.
 We create a **virtual hierarchy** between c_mouth and c_teeth, using the weight option to enable or disable the transform constraint.
@@ -274,7 +284,7 @@ connect:
   node: teeth_dn::roots.0@weight
 ```
 
-### lips corner rig
+### Combining lips corner tweakers
 
 We now set up the connections so that mouth3 up/dn and mouth4 are driven by both c_mouth and c_corner, while still following lip_up and lip_dn.
 
@@ -320,7 +330,7 @@ rig.rechain:
    - mouth<lip>.L::roots.0
 ```
 
-### Sticky Lips Rig
+### Sticky lips
 
 We start by creating the sticky attributes on **shp_lips**, which will later be connected to chan_face for animator access.
 
@@ -705,7 +715,7 @@ connect:
   node: lip3_dn.R::infs.0@w0
 ```
 
-### Sticky teeth Rig
+### Sticky teeth
 
 The principle is the **same** as with the sticky lips, except the sticky should **activate uniformly** across all teeth.
 We create a **_sticky_teeth helper node** under the Lips group to store these modifiers.
@@ -773,7 +783,7 @@ connect:
   op: reverse
 ```
 
-## rig cheeks
+## Cheeks
 
 Next, we rig the **cheeks** by attaching their controllers to the facial structure.
 We add **hook** modifiers on a helper node placed under skull_mid.
@@ -818,128 +828,9 @@ hook:
   name: jaw_up_nose
 ```
 
-## rig look at
-
-We now move on to the **look-at rig**.
-We add a **constraint** modifier to create an aim constraint between eye_ball and look_target.
-
-```yaml
-[mod]
-# -- look at rig
-
-constraint:
-  type: aim
-  node: eye_ball.L::roots.0
-  targets: look_target.L::ctrls
-  maintain_offset: on
-  flip: on
-  aim: [0, 0, 1]
-  up: [0, 0, 0]
-  ```
-
-![rig look_at](./img/rig_look_at.png)  
-
-## look at space switch
-
-We add a **space** modifier to implement a space switch for the look-at control.
-
-```yaml
-[mod]
-space:
-  node: look_at::ctrls.0
-  rest_name: eyes
-  targets:
-    - "*::space.world"
-    - "*::space.move"
-```
-
-![rig space look_at](./img/rig_space_look_at.png)  
-
-## 2d eyes rig
-
-Now let's create the 2D eye rig.
-We connect the **frame_look** (look + look_eye) interface to the eyes, and add two attributes: **cross** and **dizzy**.
-
-We create a helper on look, add a plug, then drive modifiers.
-
-```yaml
-[mod]
-# -- 2d eyes rig
-
-plug:
-  t.x: {min: -1, max: 1}
-  t.y: {min: -1, max: 1}
-  t.z: {l: on, k: off}
-  r: {k: off, l: on}
-  s: {k: off, l: on}
-  cross: {k: on}
-  dizzy: {k: on}
-
-drive:
-  plug: look::ctrls.0@cross
-  eye_ball.L::poses.0:
-    r.y: {0: 0, -1: $amp_ry}
-  eye_ball.R::poses.0:
-    r.y: {0: 0, -1: $amp_ry}
-
-drive:
-  plug: look::ctrls.0@dizzy
-  eye.L::poses.0:
-    r.z: {0: 0, -1: 30}
-  eye.R::poses.0:
-    r.z: {0: 0, 1: 30}
 
 
-drive:
-  plug: loc_look.L::node@t.x
-  driven:
-    eye_ball.L::poses.0:
-      r.y: {0: 0, 1: $amp_ry}
-drive:
-  plug: loc_look.R::node@t.x
-  driven:
-    eye_ball.R::poses.0:
-      r.y: {0: 0, -1: $amp_ry}
-
-drive:
-  plug: loc_look.L::node@t.y
-  driven:
-    eye_ball.L::poses.0:
-      r.x: {0: 0, -1: $amp_rx}
-drive:
-  plug: loc_look.R::node@t.y
-  driven:
-    eye_ball.R::poses.0:
-      r.x: {0: 0, -1: $amp_rx}
-
-[mod]
-#!~dev, ~debug
-#!-10
-plug:
-  cross: $cross
-```
-
-If you look at the notes, you will see the introduction of **gem_var variables**, which we will set as follows:
-
-gem_var_amp_Rx : 30
-gem_var_amp_Ry : 30
-gem_cross_var : 0.15
-
-:::tip
-You do not need to manually create `gem_var` attributes. Mikan automatically generates missing ones using the proper naming convention during the build process.
-:::
-
-And we add a **constraint** modifier on **loc_look**:
-
-```yaml
-[mod]
-constraint:
-  type: point
-  node: loc_look.L::node
-  target: look_eye.L::ctrls.0
-```
-
-## rig eyebrows
+## Eyebrows
 
 We finish with the eyebrows rig.
 We add a **hook** constraint so the eyebrows can either **follow or ignore** the eyeroots.
