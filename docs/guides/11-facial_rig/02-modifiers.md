@@ -62,13 +62,15 @@ The triple-colon notation in `face:::ctrls` is used to select the group and all 
 
 ## Skull hooks
 
-Let's add the modifiers required to rig **skull_mid**.
-We first attach skull_mid using a **hook** modifier between **skull** and **jaw_up**.
+We now move on to the constraints used to deform the skull. The goal here is to allow the face to **bend and adapt** as the upper and lower parts of the head move independently. To achieve this, we define two constraint targets: `skull` for the upper part of the head, and `jaw_up` for the lower part.
+
+The actual constraint is created using the [hook](/references/mod/hook.md) modifier, which internally works as a matrix-based constraint. This allows `skull_mid` to interpolate cleanly between its two parents and provides a stable foundation for flexible head deformation.
+
+To do this, create a **helper node** named `_face_hooks` on the face group and add the following commands:
 
 ```yaml
 [mod]
 # -- skull mid hooks
-
 hook:
   nodes:
    - skull_mid::roots
@@ -78,10 +80,13 @@ hook:
   self: on
 ```
 
-We then create an attribute to **manage the follow** between the two targets, using a **plug** modifier.
+For cartoon rigs in particular, it is often useful to give animators control over how malleable the middle of the face is. Depending on the shot, you may want the mid-face to follow the skull rigidly, follow the jaw more closely, or blend between the two. To support this, we add a **blend control on the constraint weights**.
+
+Using the [plug](/references/mod/plug.md) command, we add an animation attribute to the `skull_mid` controller. The `hook` modifier creates two weight attributes, `w0` and `w1`, corresponding to the two constraint targets. By default, both weights are set to **1**. We then connect the animator-facing slider so that a value of **0** drives `w0` to **1** and `w1` to **0**, and a value of **1** does the opposite. This effectively allows the animator to switch, or smoothly blend, the parent influence between `skull` and `jaw_up`.
+
+This setup gives direct artistic control over mid-face deformation while keeping the underlying rig structure simple and predictable.
 
 ```yaml
-[mod]
 plug:
   node: skull_mid::ctrls.0
   slide: {k: on, min: 0, max: 1, set: $slide}
@@ -91,8 +96,8 @@ connect:
   node: skull_mid::roots.0@w0
 connect:
   input: skull_mid::ctrls.0@slide
-  op: reverse
   node: skull_mid::roots.0@w1
+  op: reverse
 ```
 
 ![rig skull mid](./img/rig_skull_mid.png)  
@@ -101,8 +106,17 @@ connect:
 
 ### Hooks
 
-We want **c_mouth** to be attached to **jaw** and **jaw_up**.
-We create a **hook** modifier, synchronize its weights via a **connect**, and add a **plug** to easily adjust the blend.
+We can now move on to the **mouth deformation rig**. In this section, we install the system that allows the jaws to drive the lip controllers and the various mouth tweakers that shape the deformation.
+
+We start by constraining the main `mouth` controller between `jaw` and `jaw_up` using a [hook](/references/mod/hook.md) modifier, following the same approach used earlier with `skull_mid`. As before, we add a switch on this controller to define how it is attached by default, allowing us to blend or switch its parent influence.
+
+In addition, we introduce an **adjustable variable** on the helper node. This variable can be used directly inside the command, making it possible to expose only the default switch value to the artists responsible for assembling the rig, without requiring them to dig into the command logic.
+
+To do this, we simply declare a `$variable` in the command in place of a numeric value. The rig builder will automatically look for the corresponding attribute named `gem_var_variable` on the helper node. If the attribute does not exist, it will be created automatically and initialized to **0**.
+
+This approach keeps the commands flexible while making default behavior easy to adjust at build time.
+
+Create a **helper node** named `_mouth_hook` under `mouth` module and add the following commands:
 
 ```yaml
 [mod]
@@ -129,20 +143,25 @@ plug:
 
 ### Lips rechain
 
-We want **mouth** and the **lips** to **follow jaw**, **jaw_up**, and **c_mouth**. To achieve this, we create a **_lips_mod** helper node on the lips group.
+Now that the mouth controller is properly constrained, we can see that the main lip controllers (`lip_up`, `lip_dn`) and the mouth corners (`lips_corner.L`, `lips_corner.R`) do not automatically follow it. A straightforward solution would be to parent everything directly under `mouth`, but that would be too limiting. In practice, we want `lip_up` and `lip_dn` to continue following their respective jaws, while still being influenced by the global mouth control.
 
-:::note
-This cannot be done with simple parenting or constraints, as it would break the hierarchical dependencies.
-:::
+To achieve this, we introduce the concept of a **virtual hierarchy** using the [`rig.rechain`](/references/mod/rig/rechain.md) modifier. This modifier can be a bit unintuitive at first, but once properly understood, it becomes a very powerful tool.
 
-We use a [rig.rechain](/references/mod/rig/rechain.md) modifier to create a parallel virtual hierarchy and accumulate the influences.
-First, we parent `lip_up` under `jaw_up` and `lip_dn` under `jaw`.
-Then we add the rig.rechain so that the lips also follow `mouth` controller.
+The idea is simple: the physical hierarchy remains driven by the jaws, while an additional virtual parent allows the lips to inherit motion from the `mouth` controller.
+
+We first create a helper node to host all commands related to the lip rig. This helper is parented under the `lips` group and named `_lips_rig`.
+
+We then add commands to parent `lip_up` under `jaw_up` and `lip_dn` under `jaw`. This ensures that each lip controller follows its corresponding jaw by default. Once this physical hierarchy is in place, we use `rig.rechain` to make both lip controllers also follow the `mouth` controller, effectively inserting it as a virtual parent.
+
+This is also a good opportunity to introduce the notion of **execution priority**. The build process does not strictly follow a deterministic order based on hierarchy. While parent-child relationships define dependencies, the order in which sibling nodes are parsed cannot be guaranteed. When a specific sequence is required, timing offsets must be used to enforce it.
+
+In this case, we want to make sure that all constraint-related setup for the lips has already been built before applying the rechain logic. We therefore delay execution slightly using `#!-10`.
+
+The resulting setup allows the lips to correctly inherit motion from both the jaws and the global mouth controller, without compromising the underlying hierarchy.
 
 ```yaml
 [mod]
 #!-10
-
 parent: lip_up::roots.0 jaw_up::skin.0
 parent: lip_dn::roots.0 jaw::skin.0
 
