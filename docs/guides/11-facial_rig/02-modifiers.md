@@ -295,7 +295,7 @@ How it works:
 
 This system allows the corners of the mouth to drive the tweakers without breaking previous lip constraints. It demonstrates the flexibility of Mikan: you can insert helper locators, virtual parents, or control nodes wherever needed, keeping the rig adaptable and maintainable.
 
-To do this, create another helper node named `_lips_corner_rig` under `lips` group and add the following:
+To do this, create another helper node named `_lips_corner_rig` under `lips_corner` module and add the following:
 
 ```yaml
 [mod]
