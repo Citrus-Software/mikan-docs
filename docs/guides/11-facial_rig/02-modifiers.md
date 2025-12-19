@@ -161,6 +161,7 @@ The resulting setup allows the lips to correctly inherit motion from both the ja
 
 ```yaml
 [mod]
+# -- lip up/dn rechain
 #!-10
 parent: lip_up::roots.0 jaw_up::skin.0
 parent: lip_dn::roots.0 jaw::skin.0
@@ -211,7 +212,7 @@ In the following setup, `n` and `side` are list-based variables used to generate
 ```yaml
 [mod]
 # -- lips up/dn hooks
-#>n: ['2', '3', '4']
+#>n: [2, 3, 4]
 #>last: 5
 #>side: [up, dn]
 
@@ -285,13 +286,6 @@ drive:
 
 The final step of the mouth controller setup is to attach the corner tweakers to the `lips_corner` controllers. First, we need to reparent the `lips_corner` under the global `mouth` controller. In the template, they were placed in the `lips` group to be associated with animator tools, but for the final rig structure, we need to establish the proper hierarchy. This also shows the flexibility of Mikan: you can move elements in the template without breaking the rig.
 
-```yaml
-[mod]
-parent:
-  - lips_corner::roots
-  - mouth::hooks.0
-```
-
 Next, we want to virtually reparent the tweakers, `mouth4_up`, `mouth4_dn`, and `mouth5`, to follow the `lips_corner` while keeping the existing hook weights intact. To do this, we use the [`rig.rechain`](/references/mod/rig/rechain.md) modifier, which requires temporary reference objects. Instead of creating additional template modules, we can generate these on the fly using the [`locator`](/references/mod/locator.md) modifier. This is ideal for small helper nodes or groups needed to complete the rig, without cluttering the template hierarchy. If the locator duplicates an existing rig object, this approach works perfectly.
 
 How it works:
@@ -301,11 +295,17 @@ How it works:
 
 This system allows the corners of the mouth to drive the tweakers without breaking previous lip constraints. It demonstrates the flexibility of Mikan: you can insert helper locators, virtual parents, or control nodes wherever needed, keeping the rig adaptable and maintainable.
 
+To do this, create another helper node named `_lips_corner_rig` under `lips` group and add the following:
+
 ```yaml
 [mod]
 # -- mouth corner rig
-#!-10
-#>lip: ['4_up', '5', '4_dn']
+#!-20
+#> lip: [4_up, 5, 4_dn]
+
+parent:
+  - lips_corner::roots.0
+  - mouth::hooks.0
 
 # create locators for the original and destination positions
 locator:
