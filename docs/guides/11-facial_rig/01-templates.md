@@ -120,7 +120,7 @@ At this stage, none of these controls are connected to deformation logic. The go
 
 We then add a set of mouth segmentation controllers using `core.joints` modules:
 
-`mouth1_up`, `mouth2_up`, `mouth3_up`, `mouth4`, `mouth3_dn`, `mouth2_dn`, `mouth1_dn`
+`mouth1_up`, `mouth2_up`, `mouth3_up`, `mouth4_up`, `mouth5`, `mouth4_dn`, `mouth3_dn`, `mouth2_dn`, `mouth1_dn`
 
 :::note
 For the lip zone controllers, we’ve set up a default of `mouth1` > `mouth4` for segmentation. This provides a minimal setup that works for most cases.
@@ -136,7 +136,7 @@ All of these controllers share the following options:
   Again, this favors consistent translation behavior when manipulating symmetric controller pairs.
 - _Add pose node_: `on`
 
-For `mouth2`, `mouth3`, and `mouth4`, we also enable:
+For `mouth2`, `mouth3`, `mouth4`, and `mouth5`, we also enable:
 
 - _Branches_: `[L, R]`
 
@@ -156,7 +156,7 @@ Make sure the joints are aligned logically along the lip curve and follow the na
 
 For each mouth segmentation controller, we create a corresponding lip tweak controller. Each lip controller is parented to its respective mouth segmentation controller and positioned at the same location.
 
-`lip1_up`, `lip2_up`, `lip3_up`, `lip4`, `lip3_dn`, `lip2_dn`, `lip1_dn`
+`lip1_up`, `lip2_up`, `lip3_up`, `lip4_up`, `lip5`, `lip4_dn`, `lip3_dn`, `lip2_dn`, `lip1_dn`
 
 - _Parent scale_: `on`<br/>
   This allows lip controls to inherit scale from the mouth segmentation layer and can also be exploited for animation-specific behaviors.

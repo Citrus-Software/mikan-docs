@@ -182,23 +182,38 @@ rig.rechain:
    - lip_dn::roots.0
 ```
 
-### Lips hooks
+### Lip tweakers hooks
 
-On the same helper node, we add modifiers to hook the c_mouth controllers with weight attributes, so we can manage the follow between mouth and lip_up / lip_dn.
+For the lip deformation rig, we now focus on how the mouth segmentation controllers follow the main mouth and lip controls.
 
-The intended behavior is:
+The first step is to constrain all mouth tweak controllers to the global `mouth` controls. This is done using `hook` modifiers, with a specific weight assigned to each controller to control how much it follows. To keep the setup efficient, we group several tweak controllers under a single hook modifier whenever possible, instead of computing identical constraints multiple times.
 
-- **mouth1** fully follows the lips,
-- **mouth4** stays entirely on mouth,
-- **intermediate controllers** have **progressive follow values**.
+On the same helper node, we add modifiers to hook the `mouth*` controllers, exposing weight attributes that control how each segment blends between `mouth` and `lip_up` / `lip_dn`.
 
-This gives a coherent and smooth deformation across the entire mouth line.
+The intended behavior is as follows:
+- `mouth1` fully follows the lips,
+- `mouth5` follows only the mouth controller,
+- intermediate controllers use progressively interpolated weights.
+
+This creates a smooth and coherent deformation along the entire mouth line, allowing global mouth motion and local lip articulation to blend naturally.
+
+At this stage, we introduce the notion of **loops**, which allows a set of commands to be duplicated automatically using list-based variables. This is especially useful when you need to apply similar connections or constraints to multiple elements without repeating the same code over and over.
+
+To do this, we declare a variable at the beginning of the command block using the `#>` syntax, for example: `#>v: [0, 1, 2, 3]`.
+When a variable is defined as a list, any modifier that references it using `<v>` will be executed once for each value in the list.
+
+A declared variable does not have to be a list to be useful. If the variable contains a single value, it can still be referenced in the modifiers in exactly the same way. In that case, the commands are executed only once, but you still benefit from having a single entry point to configure a whole set of modifiers.
+
+This is particularly convenient when you want to parameterize a group of commands internally, without exposing it to an attribute. It lets you adjust indices, limits, or special cases in one place, while keeping the rest of the block generic and readable.
+
+In the following setup, `n` and `side` are list-based variables used to generate repeated hooks and connections, while `last` is a single-value variable used to handle the end controller of the mouth line explicitly. All of this is part of the same rig construction logic, not a separate example.
 
 ```yaml
 [mod]
 # -- lips up/dn hooks
-#> n: ['2', '2b', '3']
-#> side: [up, dn]
+#>n: ['2', '3', '4']
+#>last: 5
+#>side: [up, dn]
 
 hook:
   node: mouth1_<side>::roots.0
@@ -214,11 +229,11 @@ hook:
   group: on
   name: lip<n>_<side>
 hook:
-  nodes: mouth4::roots.0
+  nodes: mouth<last>::roots.0
   targets:
    - mouth::skin.0
   group: on
-  name: lip4
+  name: lip<last>
 
 connect:
   input: lips::mod.hooks.lip<n>_<side>@w0
@@ -232,13 +247,20 @@ plug:
 
 ### Lips corner pinch
 
-Still on the same helper, we add the modifiers to build a **sticky corner** system.
-We create a **corners_pinch attribute**, then connect it to the **weights** of the hooks for mouth2 and mouth3.
+At this stage, a natural question arises: so far, we haven’t actually set the weights for our lip tweak controllers. That’s intentional. We first built the structure and relationships. Now we introduce a global control to adjust the mouth’s behavior.
+
+The shape and opening of the mouth corners are sensitive parameters. They often require fine-tuning during skinning and deformation, and animators may want to tweak them directly during animation too. Rather than hard-coding these values into the rig, we expose a dedicated control that lets you adjust the "corner pinch" of the lips.
+
+This system allows smooth transitions between a highly cartoonish mouth, wide and exaggerated, and a more realistic mouth where corners remain stable, or pinched inward.
+
+We achieve this by adding an animation attribute to the main mouth controller, then using it to drive the weights of the lip tweak hooks. Default weight values remain defined via exposed template variables (with `$`), while the distribution logic uses the loop variables introduced earlier. Both systems work together seamlessly.
+
+The following block extends the previous exercise:
 
 ```yaml
 [mod]
 # -- sticky corner switch
-#> n: ['2', '2b']
+#> n: ['2', '3', '4']
 #> side: [up, dn]
 plug:
   node: mouth::ctrls.0
@@ -259,73 +281,33 @@ drive:
     -1: 1
 ```
 
-### Teeth rechain and teeth grab
-
-Following the same logic, we rig the **teeth** so they can **follow (or not) c_mouth**.
-We create a **virtual hierarchy** between c_mouth and c_teeth, using the weight option to enable or disable the transform constraint.
-
-We then add an attribute on c_mouth to control the weight of this constraint.
-
-```yaml
-[mod]
-# -- teeth subtransform
-
-rig.rechain:
-  roots:
-   - mouth::roots.0
-  ctrls:
-   - mouth::skin.0
-  nodes:
-   - teeth_up::roots.0
-  weight: on
-
-rig.rechain:
-  roots:
-   - mouth::roots.0
-  ctrls:
-   - mouth::skin.0
-  nodes:
-   - teeth_dn::roots.0
-  weight: on
-
-plug:
-  node: mouth::ctrls.0
-  grab_teeth:
-    k: on
-    min: 0
-    max: 1
-
-connect:
-  input: mouth::ctrls.0@grab_teeth
-  node: teeth_up::roots.0@weight
-connect:
-  input: mouth::ctrls.0@grab_teeth
-  node: teeth_dn::roots.0@weight
-```
-
 ### Combining lips corner tweakers
 
-We now set up the connections so that mouth3 up/dn and mouth4 are driven by both c_mouth and c_corner, while still following lip_up and lip_dn.
-
-To do this, we again use rig.rechain, which allows us to build a virtual hierarchy without breaking existing dependencies.
-
-The order of the constraints is essential:
-the mouth controllers must follow c_corner first, then lip_up/dn.
-
-We proceed as follows:
-
-1. Create locators under sk_mouth.
-2. Create additional locators under the hooks of mouth3 and mouth4, replacing the controllers.
-3. Reparent the mouth controllers under c_corner.
-4. Rebuild the hierarchy between the hooks and controllers using rig.rechain.
+The final step of the mouth controller setup is to attach the corner tweakers to the `lips_corner` controllers. First, we need to reparent the `lips_corner` under the global `mouth` controller. In the template, they were placed in the `lips` group to be associated with animator tools, but for the final rig structure, we need to establish the proper hierarchy. This also shows the flexibility of Mikan: you can move elements in the template without breaking the rig.
 
 ```yaml
 [mod]
-# -- mouth corner rig (subtransforms)
+parent:
+  - lips_corner::roots
+  - mouth::hooks.0
+```
 
+Next, we want to virtually reparent the tweakers, `mouth4_up`, `mouth4_dn`, and `mouth5`, to follow the `lips_corner` while keeping the existing hook weights intact. To do this, we use the [`rig.rechain`](/references/mod/rig/rechain.md) modifier, which requires temporary reference objects. Instead of creating additional template modules, we can generate these on the fly using the [`locator`](/references/mod/locator.md) modifier. This is ideal for small helper nodes or groups needed to complete the rig, without cluttering the template hierarchy. If the locator duplicates an existing rig object, this approach works perfectly.
+
+How it works:
+- The `locator` modifier generates two reference objects for each tweaker: one for the original position, and one attached to the `lips_corner` hook.
+- The `parent` command sets the tweaker under the appropriate controllers so the hierarchy exists for the rechain.
+- `rig.rechain` then virtually re-parents the tweakers to follow `lips_corner` while preserving the influence of the weighted hooks.
+
+This system allows the corners of the mouth to drive the tweakers without breaking previous lip constraints. It demonstrates the flexibility of Mikan: you can insert helper locators, virtual parents, or control nodes wherever needed, keeping the rig adaptable and maintainable.
+
+```yaml
+[mod]
+# -- mouth corner rig
 #!-10
-#> lip: ['3_up', '4', '3_dn']
+#>lip: ['4_up', '5', '4_dn']
 
+# create locators for the original and destination positions
 locator:
   node: mouth<lip>.L::ctrls.0
   parent: mouth::skin.0
@@ -336,10 +318,12 @@ locator:
   parent: lips::mod.hooks.lip<lip>
   name: mouth_<lip>
 
+# parent the tweaker under the lips_corner controller
 parent:
   - mouth<lip>.L::roots.0
   - lips_corner.L::skin.0
 
+# use rig.rechain to create a virtual hierarchy
 rig.rechain:
   roots:
    - lips_corner.L::mod.loc.orig_mouth_<lip>
@@ -732,6 +716,51 @@ expression:
 connect:
   input: lip3_up.R::infs.0@w0
   node: lip3_dn.R::infs.0@w0
+```
+
+
+### Teeth rechain and teeth grab
+
+Following the same logic, we rig the **teeth** so they can **follow (or not) c_mouth**.
+We create a **virtual hierarchy** between c_mouth and c_teeth, using the weight option to enable or disable the transform constraint.
+
+We then add an attribute on c_mouth to control the weight of this constraint.
+
+```yaml
+[mod]
+# -- teeth subtransform
+
+rig.rechain:
+  roots:
+   - mouth::roots.0
+  ctrls:
+   - mouth::skin.0
+  nodes:
+   - teeth_up::roots.0
+  weight: on
+
+rig.rechain:
+  roots:
+   - mouth::roots.0
+  ctrls:
+   - mouth::skin.0
+  nodes:
+   - teeth_dn::roots.0
+  weight: on
+
+plug:
+  node: mouth::ctrls.0
+  grab_teeth:
+    k: on
+    min: 0
+    max: 1
+
+connect:
+  input: mouth::ctrls.0@grab_teeth
+  node: teeth_up::roots.0@weight
+connect:
+  input: mouth::ctrls.0@grab_teeth
+  node: teeth_dn::roots.0@weight
 ```
 
 ### Sticky teeth
