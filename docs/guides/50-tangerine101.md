@@ -41,9 +41,13 @@ Alembic does not support material definitions. Mikan uses a metadata bridge to r
 
 **How to export Shader Data**: You must run a process that reads the shaders assigned to your geometry and injects a structure into a `gem_shaders` metadata attribute on the group.
 
-**Option A**: **UI Method** Navigate to **Tools > Export > Save Shaders Data**. [Insert Screenshot of the Tools/Export menu here]
+**Option A**: **UI Method** 
+1. Select geometry groups to process.
+2. Navigate to **Tools > Export > Save Shaders Data**.
 
-**Option B**: **Python Method** You can execute the following code to inject the data programmatically:
+**Option B**: **Python Method**
+
+You can execute the following code to inject the data programmatically:
 
 ```python
 from mikan.maya.lib.shaders import export_shaders
