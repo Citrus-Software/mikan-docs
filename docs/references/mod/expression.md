@@ -19,22 +19,26 @@ It is the preferred way to perform complex logic or vector operations in Mikan.
 - Booleans: `true`, `false`, or aliases `on`, `off`
 - Constants: `e`, `pi`
 - Vectors: `[x, y, z]`
-  - Access components using `.x`, `.y`, `.z`
 - Keywords:
-  - `frame`, `time`: Current frame number
-  - `flip`: Equals `1` by default, `-1` for mirrored branches
+    - `frame`, `time`: Current frame number
+    - `flip`: Equals `1` by default, `-1` for mirrored branches
+- Components:
+    - Vector: `.x`, `.y`, `.z`
+    - Quaternion: `.x`, `.y`, `.z`, `.w`
+    - Matrix: *not yet implemented*
+    - Transform: *not yet implemented*
 
-### Conditional expressions
+### Conditions
 
 Use the ternary syntax:
 
-```jade
+```cpp
 condition ? true_value : false_value
 ```
 
 You can nest conditions with parentheses:
 
-```jade
+```cpp
 cond1 ? (cond2 ? val2 : val3) : val1
 ```
 
@@ -45,7 +49,7 @@ Works with scalars and vectors alike.
 ### Scalar functions
 
 | Function                           | Description                                        |
-| ---------------------------------- | -------------------------------------------------- |
+|------------------------------------|----------------------------------------------------|
 | `inverse(x)`                       | 1 / x                                              |
 | `exp(x)`                           | e^x                                                |
 | `sqrt(x)`                          | Square root                                        |
@@ -58,15 +62,28 @@ Works with scalars and vectors alike.
 | `cos(a)`, `sin(a)`, `tan(a)`       | Trigonometric functions                            |
 | `acos(v)`, `asin(v)`, `atan(v)`    | Inverse trig functions                             |
 | `noise(v)`                         | Noise (simplex in Tang, Perlin in Maya)            |
-| `dnoise(v)`                        | Directional noise \[-1, 1]                         |
+| `dnoise(v)`                        | Directional noise (-1 to 1)                        |
 | `switch(v, a, b, c...)`            | Enum-style value selection                         |
-| `int(v)` / `bool(v)`               | Type conversion                                    |
 | `value(v)`                         | Gets value at build time (won’t update at runtime) |
+
+### Conversion functions
+
+| Function                      | Description           |
+|-------------------------------|-----------------------|
+| `bool(v)`                     | Integer               |
+| `int(v)`                      | Boolean               |
+| `vector(x, y, z)`             | Vector                |
+| `quat(x, y, z, w)`            | Quaternion            |
+| `quat([x, y, z], ro)`         | Quaternion from Euler |
+| `euler(x, y, z, ro)`          | Euler                 |
+| `matrix(x, y, z, t)`          | Matrix 4*4            |
+| `matrix(v00, v01, v02, ... )` | Matrix 4*4            |
+| `transform(t, r, s)`          | Transform             |
 
 ### Vector functions
 
 | Function           | Description                          |
-| ------------------ | ------------------------------------ |
+|--------------------|--------------------------------------|
 | `len(v)`           | Vector length                        |
 | `distance(v1, v2)` | Distance between two points          |
 | `angle(v1, v2)`    | Angle in degrees between two vectors |
@@ -74,6 +91,11 @@ Works with scalars and vectors alike.
 | `dot(v1, v2)`      | Dot product                          |
 | `cross(v1, v2)`    | Cross product                        |
 | `lerp(v1, v2, w)`  | Linear interpolation between vectors |
+
+### Quaternion functions
+| Function         | Description         |
+|------------------|---------------------|
+| `slerp(a, b, t)` | Slerp interpolation |
 
 ## Examples
 
