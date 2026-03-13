@@ -6,10 +6,6 @@ This modifier supports common constraint types such as `orient`, `aim`, `point`,
 
 It supports multiple targets and offers fine control over offsets, blending, and skipped channels.
 
-### ⚠️ Notes
-
-- For **aim constraints**, `maintain_offset` is not currently supported in Tangerine when using `up_object` or `up_vector`.
-- Blending is useful only if the constrained node does **not** already have its SRT attributes connected.
 
 ## Options
 
@@ -33,11 +29,9 @@ Aim constraint options (`type: aim`)
 - **`up`** (*str* | *vector*, optional): Local up axis of the constrained node.
 - **`up_vector`** (*str* | *vector*, optional, default: `null`): World or object space up vector for the constraint.
   - If `up_object` is set, this behaves as the *object rotation up vector*.
-  - If not, it is treated as a world space vector (*vector* mode).\
-    ⚠️ `maintain_offset` is not supported in Tangerine in this case yet.
+  - If not, it is treated as a world space vector (*vector* mode).
 - **`up_object`** (*node*, optional): Reference object for the up vector.
-  - If `up_vector` is **not** set, this node is used as the target up object (*object up* mode).\
-    ⚠️ `maintain_offset` is not supported in Tangerine in this case yet.
+  - If `up_vector` is **not** set, this node is used as the target up object (*object up* mode).
   - If `up_vector` **is** set, it's used *in object rotation up* mode.
 - **`flip`** (*bool*, default: `false`): Inverts the aim and up axes.
 
