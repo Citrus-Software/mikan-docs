@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # Quickstart Guide
 
 Welcome to **Mikan**, the modular rigging toolkit built for both **Maya** and **Tangerine**. This guide helps you get up and running with Mikan inside Maya, from creating your first rig blueprint to assigning controller shapes and binding geometry with deformers.
@@ -18,7 +22,7 @@ MikanUI.start()
 The Mikan interface is divided into several tabs, each aligned with a core phase of the rigging process:
 
 | Tab           | Purpose                                | Features                                                  |
-| ------------- | -------------------------------------- | --------------------------------------------------------- |
+|---------------|----------------------------------------|-----------------------------------------------------------|
 | **Templates** | Build and organize the rig blueprint   | Rig Outliner, Add/Edit tools, build logs                  |
 | **Shapes**    | Assign and customize controller shapes | Preset library, color and size adjustments                |
 | **Deformers** | Save and manage deformation data       | SkinClusters, wrap deformers, backups, metadata injection |
