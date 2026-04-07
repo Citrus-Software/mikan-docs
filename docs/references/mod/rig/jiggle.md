@@ -99,7 +99,7 @@ To achieve the exact look you want, you will need to adjust these two main param
 
 Below is a comparison of different settings applied to the exact same chain:
 
-|               |                   Goal: 0.2                    |                   Goal: 0.5                    |                   Goal: 0.8                    |
-|:-------------:|:----------------------------------------------:|:----------------------------------------------:|:----------------------------------------------:|
-| **Damp: 0.5** | ![Goal 0.2 Damp 0.5](./img/jiggle_g02-d05.gif) | ![Goal 0.5 Damp 0.5](./img/jiggle_g05-d05.gif) | ![Goal 0.8 Damp 0.5](./img/jiggle_g08-d05.gif) |
-| **Damp: 0.8** | ![Goal 0.2 Damp 0.8](./img/jiggle_g02-d08.gif) | ![Goal 0.5 Damp 0.8](./img/jiggle_g05-d08.gif) | ![Goal 0.8 Damp 0.8](./img/jiggle_g08-d08.gif) |
+|               |                  Goal: 0.2                   |                  Goal: 0.5                   |                  Goal: 0.8                   |
+|:-------------:|:--------------------------------------------:|:--------------------------------------------:|:--------------------------------------------:|
+| **Damp: 0.5** | ![Goal 0.2 Damp 0.5](img/jiggle_g02-d05.gif) | ![Goal 0.5 Damp 0.5](img/jiggle_g05-d05.gif) | ![Goal 0.8 Damp 0.5](img/jiggle_g08-d05.gif) |
+| **Damp: 0.8** | ![Goal 0.2 Damp 0.8](img/jiggle_g02-d08.gif) | ![Goal 0.5 Damp 0.8](img/jiggle_g05-d08.gif) | ![Goal 0.8 Damp 0.8](img/jiggle_g08-d08.gif) |
