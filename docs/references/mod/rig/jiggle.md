@@ -17,6 +17,8 @@ The Maya evaluation of this dynamic solver requires **Bifrost 2.1** minimum (**2
 
 To work properly, the result of the dynamics must be connected to a **child of the controller**. The `rig.jiggle` modifier connects the dynamics to this specific child node (parameter `dyn`), which uses an aim constraint to look at a `target` node.
 
+### Chaining Rules
+
 1. **Targeting the Chain:** When setting up a chain of jiggles, the `target` for a given joint is typically the *next* root joint in the hierarchy.
 2. **Handling the Tip:** Be careful with the last joint of your chain. Since it doesn't have a subsequent root to aim at, you must target the template's tip object (e.g., `bone::hooks.tip`).
 3. **Attribute Delegation:** By default, all activation and tuning attributes are added to the main `ctrl`. However, you can split this logic by assigning the activation to a `ctrl_main` and the dynamic settings (goal, damp) to a `ctrl_dyn`.
@@ -33,54 +35,64 @@ To save time, use the **Add nodes** option in your template configuration and se
 
 ### Core Parameters
 
-- **`ctrl`** (*id*) : The controller that drives the joint and activates the dynamics.
-- **`dyn`** (*id*) : The child node where the actual dynamics will be connected and evaluated.
-- **`target`** (*id*) : The node determining the target position for the spring's aim constraint.
-- **`name`** (*str*, optional) : Base name used for the generated IDs and rig components.
+| Parameter | Type  | Default  | Description                                                               |
+|-----------|-------|----------|---------------------------------------------------------------------------|
+| `ctrl`    | *id*  |          | The controller that drives the joint and activates the dynamics.          |
+| `dyn`     | *id*  |          | The child node where the actual dynamics will be connected and evaluated. |
+| `target`  | *id*  |          | The node determining the target position for the spring's aim constraint. |
+| `name`    | *str* | optional | Base name used for the generated IDs and rig components.                  |
 
 ### Controller Mapping
 
-- **`ctrl_main`** (*id*, optional, default: `ctrl`) : The controller where the activation attributes will be added.
-- **`ctrl_dyn`** (*id*, optional, default: `ctrl`) : The controller where the dynamic tuning attributes (`goal`, `damp`) will be added.
+| Parameter   | Type | Default | Description                                                                            |
+|-------------|------|---------|----------------------------------------------------------------------------------------|
+| `ctrl_main` | *id* | `ctrl`  | The controller where the **activation** attributes will be added.                      |
+| `ctrl_dyn`  | *id* | `ctrl`  | The controller where the **dynamic tuning** attributes (`goal`, `damp`) will be added. |
 
 ### Dynamics Settings
 
-- **`start_frame`** (*int*, default: 1) : The frame at which the dynamics are initialized.
-- **`weight`** (*float*, default: 1.0) : Determines the weight of the spring constraint on the final result (range: 0 to 1).
-- **`goal`** (*float*, default: 0.5) : Determines the stiffness of the spring. The closer the value is to 1, the faster the spring will move towards its target (range: 0 to 1).
-- **`damp`** (*float*, default: 0.5) : Determines the attenuation of the spring's inertia. The closer the value is to 1, the less the spring will bounce (range: 0 to 1).
+| Parameter     | Type    | Default | Description                                                                                                           |
+|---------------|---------|---------|-----------------------------------------------------------------------------------------------------------------------|
+| `start_frame` | *int*   | `1`     | The frame at which the dynamics are initialized.                                                                      |
+| `weight`      | *float* | `1.0`   | Weight of the spring constraint on the final result. Use this to blend between full dynamics and none. Range: 0 to 1. |
+| `goal`        | *float* | `0.5`   | Stiffness of the spring. Closer to `1.0` = faster snap to target. Range: 0 to 1.                                      |
+| `damp`        | *float* | `0.5`   | Attenuation of the spring's inertia. Closer to `1.0` = less bounce. Range: 0 to 1.                                    |
 
 ## Examples
 
-### 4-Joint Chain Setup
+:::info Demo Scene
+You can explore a ready-to-use example of this modifier. Download the **`mod_jiggle.ma`** demo scene from our [Google Drive folder](https://drive.google.com/drive/folders/1tDXJmNxd-3ev1BwvZMm4Gl7tbnJTWJcn?usp=drive_link).
+:::
 
-Adding default jiggle dynamics to a 4-joint chain using the `core.bones` template. Notice how the targets shift to the next root, and the final joint targets the tip.
+### Bone Chain Setup
+
+Adding default jiggle dynamics to a bone chain using the `core.bones` template. Notice how the targets shift to the next root, and the final joint targets the tip.
 
 ![core.bones settings](img/jiggle_core_bones_settings.png)
 
 ```yml
-# Joint 0
+# Bone 0
 rig.jiggle:
   ctrl_main: bone::ctrls.0
   ctrl: bone::ctrls.0
   target: bone::roots.1
   dyn: chain::dyns.0
 
-# Joint 1
+# Bone 1
 rig.jiggle:
   ctrl_main: bone::ctrls.0
   ctrl: bone::ctrls.1
   target: bone::roots.2
   dyn: chain::dyns.1
 
-# Joint 2
+# Bone 2
 rig.jiggle:
   ctrl_main: bone::ctrls.0
   ctrl: bone::ctrls.2
   target: bone::roots.3
   dyn: chain::dyns.2
 
-# Joint 3 (Tip)
+# Bone 3 (Tip)
 rig.jiggle:
   ctrl_main: bone::ctrls.0
   ctrl: bone::ctrls.3
@@ -90,14 +102,18 @@ rig.jiggle:
 
 #### Tuning the Dynamics
 
-With the basic setup above, no tuning has been done yet. The dynamics will be evaluated using the default values (`goal: 0.5` and `damp: 0.5` for all controllers).
+With the With the setup above, dynamics are evaluated using the default values (`goal: 0.5`, `damp: 0.5`). To dial in the look you want, adjust these two parameters:
 
-To achieve the exact look you want, you will need to adjust these two main parameters:
+- `goal` (Stiffness): Controls the rigidity of the spring. The closer to `1.0`, the faster the spring snaps back to its target.
+- `damp` (Attenuation): Controls the loss of inertia. The closer to `1.0`, the less the spring will bounce and oscillate.
 
-- `goal` (Stiffness) : Determines the rigidity of the spring. The closer to `1.0`, the faster the spring snaps back to its target.
-- `damp` (Attenuation) : Determines the loss of inertia. The closer to `1.0`, the less the spring will bounce and oscillate.
+As a rule of thumb: a low `goal` + low `damp` gives a slow, floppy, oscillating spring. A high `goal` + high `damp` gives a rigid, snappy motion with no overshoot.
 
-Below is a comparison of different settings applied to the exact same chain:
+:::tip Blending with weight
+Use `weight` to blend between full spring dynamics (`1.0`) and no dynamics (`0.0`). This is useful for making the effect toggleable or partially active on specific joints.
+:::
+
+Below is a comparison of `goal` and `damp` combinations applied to the same chain:
 
 |               |                  Goal: 0.2                   |                  Goal: 0.5                   |                  Goal: 0.8                   |
 |:-------------:|:--------------------------------------------:|:--------------------------------------------:|:--------------------------------------------:|
