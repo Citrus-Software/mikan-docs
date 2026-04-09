@@ -23,7 +23,7 @@ A constraint modifier defines a specific constraint setup that can be applied to
 The modifier will abort and refuse to apply the command if a blend setup already exists on the targeted channels.
 :::
 
-:::info 🚀 Coming Soon
+:::info Coming Soon
 A dedicated tool is on the roadmap! It will automatically convert constraints applied manually in your viewport into YAML modifier notes.
 :::
 
@@ -31,33 +31,34 @@ A dedicated tool is on the roadmap! It will automatically convert constraints ap
 
 ### Core Parameters
 
-- **`type`** (*str*) : Type of constraint. Must be one of: `orient`, `aim`, `point`, `parent`, `scale`.
-- **`node`** (*node*, optional) : Node being constrained.
-- **`nodes`** (*list[node]*, optional) : List of nodes being constrained (if applying the exact same setup to multiple objects).
-- **`target`** (*node*) : Main constraint driver.
-- **`targets`** (*list[node]*, optional) : Additional constraint drivers. If both `target` and `targets` are provided, they are combined.
+| Parameter | Type         | Default | Description                                                                                    |
+|-----------|--------------|---------|------------------------------------------------------------------------------------------------|
+| `type`    | *str*        |         | Type of constraint. Must be one of: `orient`, `aim`, `point`, `parent`, `scale`.               |
+| `node`    | *node*       |         | Node being constrained.                                                                        |
+| `nodes`   | *list[node]* |         | List of nodes being constrained (if applying the exact same setup to multiple objects).        |
+| `target`  | *node*       |         | Main constraint driver.                                                                        |
+| `targets` | *list[node]* |         | Additional constraint drivers. If both `target` and `targets` are provided, they are combined. |
 
 ### Behavior & Offsets
 
-- **`weights`** (*list[float]*, optional, default: 1.0) : Weights per target.
-- **`maintain_offset`** (*bool*, default: false) : Maintains the current offset between the target and the node.
-- **`blend`** (*bool*, default: false) : Forces the addition of `blend_translate` / `blend_orient` attributes to the constrained node (if they don't already exist).
-- **`skip`** (*str*, optional) : Channels to skip during connection. Use axes like `x`, `y`, `z`, or `xy`.
-- **`skip_translate`** (*str*, optional) : Same as `skip`, but strictly applies to translate channels (useful for `parent` constraints).
-- **`skip_rotate`** (*str*, optional) : Same as `skip`, but strictly applies to rotate channels.
-- **`skip_scale`** (*str*, optional) : Same as `skip`, but strictly applies to scale channels.
+| Parameter         | Type          | Default | Description                                                                                                                 |
+|-------------------|---------------|---------|-----------------------------------------------------------------------------------------------------------------------------|
+| `weights`         | *list[float]* | `1.0`   | Weights per target.                                                                                                         |
+| `maintain_offset` | *bool*        | `False` | Maintains the current offset between the target and the node.                                                               |
+| `blend`           | *bool*        | `False` | Forces the addition of `blend_translate` / `blend_orient` attributes to the constrained node (if they don't already exist). |
+| `skip`            | *str*         |         | Channels to skip during connection. Use axes like `x`, `y`, `z`, or `xy`.                                                   |
+| `skip_translate`  | *str*         |         | Same as `skip`, but strictly applies to translate channels (useful for `parent` constraints).                               |
+| `skip_rotate`     | *str*         |         | Same as `skip`, but strictly applies to rotate channels.                                                                    |
 
 ### Aim Specific Parameters (`type: aim`)
 
-- **`aim`** (*str* | *vector*, default: x) : Main aim axis of the constrained node.
-- **`up`** (*str* | *vector*, optional, default: y) : Local up axis of the constrained node.
-- **`up_vector`** (*str* | *vector*, optional, default: null) : World or object space up vector for the constraint.
-    - If `up_object` is set, this behaves as the *object rotation up vector*.
-    - If not, it is treated as a world space vector (*vector* mode).
-- **`up_object`** (*node*, optional) : Reference object for the up vector.
-    - If `up_vector` is **not** set, this node is used as the target up object (*object up* mode).
-    - If `up_vector` **is** set, it's used in *object rotation up* mode.
-- **`flip`** (*bool*, default: false) : Inverts the aim and up axes if the mod is executed in a mirrored branch.
+| Parameter   | Type            | Default | Description                                                                                                                                                                                                                  |
+|-------------|-----------------|---------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `aim`       | *str \| vector* | `x`     | Main aim axis of the constrained node.                                                                                                                                                                                       |
+| `up`        | *str \| vector* | `y`     | Local up axis of the constrained node.                                                                                                                                                                                       |
+| `up_vector` | *str \| vector* | `null`  | World or object space up vector for the constraint.<ul><li>If `up_object` is set, this behaves as the *object rotation up vector*.</li><li>If not, it is treated as a world space vector (*vector* mode).</li></ul>          |
+| `up_object` | *node*          |         | Reference object for the up vector.<ul><li>If `up_vector` is **not** set, this node is used as the target up object (*object up* mode).</li><li>If `up_vector` **is** set, it's used in *object rotation up* mode.</li></ul> |
+| `flip`      | *bool*          | `False` | Inverts the aim and up axes if the mod is executed in a mirrored branch.                                                                                                                                                     |
 
 :::tip Vector formatting
 Whenever a parameter expects a vector, you can provide it as:
@@ -74,6 +75,10 @@ The generated constraint node follows this naming convention:
 Its target weights will be automatically exposed on plugs: `@w0`, `@w1`, `@w2`, etc.
 
 ## Examples
+
+:::info Demo Scene
+You can explore a practical example of aim constraints. Download the [**`mod_lookat_rig.ma`**](https://drive.google.com/file/d/1LABmwIZQnVOQE-o-ufjGXdS3PHPCdY_l/view?usp=drive_link) demo scene from our [Google Drive folder](https://drive.google.com/drive/folders/1tDXJmNxd-3ev1BwvZMm4Gl7tbnJTWJcn?usp=drive_link).
+:::
 
 ### Basic Aim Constraint
 
