@@ -9,17 +9,19 @@ Reparents one or more nodes in the scene hierarchy.
 
 This modifier provides a quick and straightforward way to restructure your rig's hierarchy without needing complex matrix setups or constraint modifiers. It behaves similarly to Maya's native parent command.
 
-:::info Node Order
-Just like in standard Maya scripting, the order of the nodes is critical. You must always specify the **child node first**, followed by the **destination parent**.
-:::
-
 ## Parameters
 
 Unlike most modifiers that require a dictionary of parameters, `parent` accepts its arguments directly either as a space-separated string or a YAML list.
 
-| Parameter        | Type             | Description                                             |
-|:-----------------|:-----------------|:--------------------------------------------------------|
-| *(Direct Value)* | *str / list[id]* | The nodes to process, ordered as `child` then `parent`. |
+| Parameter        | Type       | Description                                                    |
+|:-----------------|:-----------|:---------------------------------------------------------------|
+| *(Direct Value)* | *list[id]* | The nodes to process. The last node is the destination parent. |
+
+:::info Node Order
+
+- If two nodes are provided: The first is the **child**, the second is the **parent**.
+- If more than two nodes are provided: The **last node** in the list becomes the parent of **all preceding nodes**.
+  :::
 
 ## Examples
 
@@ -37,6 +39,8 @@ If you prefer a more readable vertical format, you can provide the child and par
 
 ```yml
 parent:
-  - hair::roots.0
+  - hair_A::roots.0
+  - hair_B::roots.0
+  - hair_C::roots.0
   - skull::skin.0
 ```
