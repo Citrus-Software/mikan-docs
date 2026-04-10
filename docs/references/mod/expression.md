@@ -1,48 +1,77 @@
+---
+title: expression
+description: Connects multiple plugs using a custom mathematical expression.
+---
+
 # expression
 
-> Connects multiple plugs using a custom mathematical expression.
+Connects multiple plugs using a custom mathematical expression.
 
-This modifier allows for advanced control by combining plug values through expressions, offering greater flexibility than standard math operators.
+This modifier allows for advanced control by combining plug values through mathematical and logical operations. It offers significantly more flexibility than standard math operators and is the preferred way to perform complex logic, vector operations, or conditional setups in Mikan.
 
-It is the preferred way to perform complex logic or vector operations in Mikan.
+:::info Node Graph vs. Expression Node
+Unlike Maya's native `expression` node, this modifier **does not** create a heavy, script-based node. Instead, it parses your formula and generates a **pure DG node graph** (using `multiplyDivide`, `plusMinusAverage`, etc.). This ensures maximum evaluation performance and compatibility with Parallel Evaluation.
+:::
 
-## Options
+## Parameters
 
-- **`op`** (*str*): The expression string.
-- **`<[a-z0-9]>`** (*plug*): Plug references used as variables within the expression.
+| Parameter | Type                           | Default | Description                                                                                                                                 |
+|:----------|:-------------------------------|:--------|:--------------------------------------------------------------------------------------------------------------------------------------------|
+| `op`      | *str*                          |         | The expression string to evaluate.                                                                                                          |
+| `<var>`   | *plug \| float \| int \| bool* |         | Any alphanumeric key (e.g., `a`, `x`, `val1`) acts as a variable in your expression. Assign a plug reference, a float, or an integer to it. |
 
 ## Syntax
 
-- Assignments use `=`
-- Math operators: `+`, `-`, `*`, `/`, `^` (power), `%` (modulo), parentheses `()`
-- Logical operators: `|` (or), `&` (and), `!` (not)
-- Booleans: `true`, `false`, or aliases `on`, `off`
-- Constants: `e`, `pi`
-- Vectors: `[x, y, z]`
-- Keywords:
-    - `frame`, `time`: Current frame number
-    - `flip`: Equals `1` by default, `-1` for mirrored branches
-- Components:
-    - Vector: `.x`, `.y`, `.z`
-    - Quaternion: `.x`, `.y`, `.z`, `.w`
-    - Matrix: *not yet implemented*
-    - Transform: *not yet implemented*
+The expression engine parses a custom syntax designed specifically for rigging needs.
 
-### Conditions
+* **Assignments:** Use `=` to assign the result of the expression to your target variable.
+* **Math Operators:** `+`, `-`, `*`, `/`, `^` (power), `%` (modulo), and parentheses `()`.
+* **Logical Operators:** `|` (OR), `&` (AND), `!` (NOT).
+* **Booleans:** `true`, `false`, or aliases `on`, `off`.
+* **Constants:** `e`, `pi`.
+* **Vectors:** Declared using brackets, e.g., `[x, y, z]`.
 
-Use the ternary syntax:
+### Keywords
+
+Built-in variables you can use anywhere in your expressions without declaring them:
+
+* `frame` / `time`: The current scene time/frame.
+* `flip`: Evaluates to `1` by default, and `-1` when the modifier runs in a mirrored branch.
+
+### Components
+
+You can extract specific components from multi-dimensional data using the dot notation:
+
+* **Vector:** `.x`, `.y`, `.z` *(e.g., `my_vec.y`)*
+* **Quaternion:** `.x`, `.y`, `.z`, `.w`
+* **Matrix:** *(Not yet implemented)*
+* **Transform:** *(Not yet implemented)*
+
+### Conditions (Ternary)
+
+The engine supports ternary operators to create branching logic. Unlike some permissive languages, a condition here must be **explicit** and systematically include three elements:
+
+1. A first value.
+2. A comparison operator (`==`, `!=`, `<`, `<=`, `>`, `>=`).
+3. A second value.
+
+**Syntax:** `value1 operator value2 ? true_value : false_value`
+
+The returned values (`true_value` and `false_value`) can seamlessly be either **scalars** or **vectors**.
 
 ```cpp
-condition ? true_value : false_value
+// Explicit comparison returning scalars
+v > 0.5 ? 1.0 : 0.0
+
+// Explicit comparison returning vectors
+v == 1 ? [0, 1, 0] : [1, 0, 0]
 ```
 
-You can nest conditions with parentheses:
+Conditions can also be safely nested using parentheses:
 
 ```cpp
-cond1 ? (cond2 ? val2 : val3) : val1
+val1 == val2 ? (val3 > 0 ? resultA : resultB) : resultC
 ```
-
-Works with scalars and vectors alike.
 
 ## Available Functions
 
@@ -70,15 +99,15 @@ Works with scalars and vectors alike.
 
 | Function                      | Description           |
 |-------------------------------|-----------------------|
-| `bool(v)`                     | Integer               |
-| `int(v)`                      | Boolean               |
-| `vector(x, y, z)`             | Vector                |
-| `quat(x, y, z, w)`            | Quaternion            |
+| `bool(v)`                     | Convert to Boolean    |
+| `int(v)`                      | Convert to Integer    |
+| `vector(x, y, z)`             | Create Vector         |
+| `quat(x, y, z, w)`            | Create Quaternion     |
 | `quat([x, y, z], ro)`         | Quaternion from Euler |
-| `euler(x, y, z, ro)`          | Euler                 |
-| `matrix(x, y, z, t)`          | Matrix 4*4            |
-| `matrix(v00, v01, v02, ... )` | Matrix 4*4            |
-| `transform(t, r, s)`          | Transform             |
+| `euler(x, y, z, ro)`          | Convert to Euler      |
+| `matrix(x, y, z, t)`          | Create Matrix 4*4     |
+| `matrix(v00, v01, v02, ... )` | Create Matrix 4*4     |
+| `transform(t, r, s)`          | Create Transform      |
 
 ### Vector functions
 
@@ -93,13 +122,29 @@ Works with scalars and vectors alike.
 | `lerp(v1, v2, w)`  | Linear interpolation between vectors |
 
 ### Quaternion functions
+
 | Function         | Description         |
 |------------------|---------------------|
 | `slerp(a, b, t)` | Slerp interpolation |
 
 ## Examples
 
-Squash & Stretch interpolation:
+### Vector Interpolation (lerp)
+
+A simple setup to blend two positions.
+
+```yml
+expression:
+  op: out = lerp(a, b, factor)
+  out: target::node@t
+  a: driver1::node@t
+  b: driver2::node@t
+  factor: master::ctrl@blend
+```
+
+### Stretch & Squash
+
+Interpolating dynamically using mathematical functions (`sqrt` and `lerp`).
 
 ```yml
 expression:
@@ -109,7 +154,21 @@ expression:
   f: driver::ctrls.0@squash
 ```
 
-Using quaternions in expressions:
+### Procedural Noise
+
+Using the built-in `time` variable combined with `noise` to create an automated idle motion.
+
+```yml
+expression:
+  op: out = noise(time * speed) * amp
+  out: tail::poses.0@r.z
+  speed: 2.0
+  amp: 15.0
+```
+
+### Quaternions
+
+Extracting the `z` component of a generated quaternion to drive a corrective joint.
 
 ```yml
 expression:
