@@ -1,20 +1,41 @@
+---
+title: parent
+description: Reparents one or more nodes in the hierarchy.
+---
+
 # parent
 
-> Reparents one or more nodes (one-liner style).
+Reparents one or more nodes in the scene hierarchy.
 
-This modifier provides a quick way to reparent one or more nodes to a new parent node. It supports both shorthand and expanded YAML syntax.
+This modifier provides a quick and straightforward way to restructure your rig's hierarchy without needing complex matrix setups or constraint modifiers. It behaves similarly to Maya's native parent command.
 
-## Example
+:::info Node Order
+Just like in standard Maya scripting, the order of the nodes is critical. You must always specify the **child node first**, followed by the **destination parent**.
+:::
 
-**Inline syntax**
+## Parameters
+
+Unlike most modifiers that require a dictionary of parameters, `parent` accepts its arguments directly either as a space-separated string or a YAML list.
+
+| Parameter        | Type             | Description                                             |
+|:-----------------|:-----------------|:--------------------------------------------------------|
+| *(Direct Value)* | *str / list[id]* | The nodes to process, ordered as `child` then `parent`. |
+
+## Examples
+
+### Inline Syntax (One-liner)
+
+For a quick reparenting, you can write the child and the new parent separated by a space on a single line:
+
 ```yml
-[mod]
 parent: clothes::roots.0 spine::skin.7
 ```
 
-**Expanded syntax**
+### Expanded Syntax (List)
+
+If you prefer a more readable vertical format, you can provide the child and parent as a standard YAML list:
+
 ```yml
-[mod]
 parent:
   - hair::roots.0
   - skull::skin.0
