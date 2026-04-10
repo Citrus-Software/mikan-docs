@@ -40,7 +40,9 @@ The generated curve supports seamless reparenting. Moving it to a different grou
 Explore how to build a procedural setup where a curve is generated from a joint rig, with a controller attached via a motion path. Download the [**`mod_curve.ma`**](https://drive.google.com/file/d/1vOWPyFqXK1RPV4M_QXdwsJqRD0I8beKE/view?usp=drive_link) demo scene from our [Google Drive folder](https://drive.google.com/drive/folders/1tDXJmNxd-3ev1BwvZMm4Gl7tbnJTWJcn?usp=drive_link).
 :::
 
-Creates a cubic helper curve driven by three spine controllers and parented under a specific hook.
+### Spine curve helper
+
+Creates a quadratic helper curve driven by three spine controllers and parented under a specific hook.
 
 ```yml
 curve:

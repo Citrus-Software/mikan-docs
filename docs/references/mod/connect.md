@@ -14,7 +14,7 @@ This means that if a plug is already driven, you only need to provide *one* addi
 :::
 
 :::warning Legacy Modifier
-This modifier is considered legacy for math operations. For more advanced and flexible usage, prefer using the [**expression**](./expression.md) modifier.
+This modifier is considered legacy for math operations. For more advanced and flexible usage, prefer using the [**`expression`**](./expression.md) modifier.
 :::
 
 ## Parameters
@@ -45,7 +45,7 @@ You can use the strings `'time'` or `'frame'` in your inputs. The modifier will 
 
 | Parameter          | Type                  | Default | Description                                                                          |
 |--------------------|-----------------------|---------|--------------------------------------------------------------------------------------|
-| `op` / `operation` | *str*                 |         | Math operation to apply (see supported operations [below](#supported-operations-op). |
+| `op` / `operation` | *str*                 |         | Math operation to apply (see [supported operations](#supported-operations-op) below. |
 | `clamp`            | *tuple[float, float]* |         | Clamps the final result between `[min, max]`.                                        |
 | `flip`             | *bool*                | `False` | Applies a `-1` multiplier on mirrored branches only.                                 |
 
@@ -57,7 +57,7 @@ The behavior and validation depend on the total number of inputs (Total Inputs =
 
 * *(None)*: Direct connection.
 * **`reverse`**: `1 - a`
-* **`remap`**: Remaps a value from an old range to a new range (requires additional parameters, see [below](#remap-parameters)).
+* **`remap`**: Remaps a value from an old range to a new range (requires [additional parameters](#remap-parameters), see below).
 
 **Requires exactly 2 total inputs:**
 
