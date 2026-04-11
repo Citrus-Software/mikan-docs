@@ -1,76 +1,107 @@
+---
+title: plug
+description: Creates, edits, or deletes attributes (plugs) on rig nodes.
+---
+
 # plug
 
-> Edits or adds plugs (attributes) to one or more nodes.
+Creates, edits, or deletes attributes (plugs) on rig nodes.
 
-The `plug` modifier allows the creation, editing, or deletion of attributes on rig nodes. It's especially useful for exposing controls to animators, adjusting values, or mirroring behavior.
+The `plug` modifier is the primary tool for managing the interface of your controllers. It allows you to expose custom attributes for animators, set default values, manage min/max limits, or lock/hide transform channels to clean up the Channel Box.
 
-## Options
+## Parameters
 
-- **`node`**, **`nodes`** (*node* | *list[node]*): The target node(s) on which the plugs will be edited or created.
-- **`<plug_name>`** (*dict* | *value*): Each plug is defined by its name and configuration. A shorthand form (`<plug_name>: <value>`) is accepted to directly set a simple value.
-  - **`type`** (*str*, default: `float`): The data type of the plug. Required if the plug doesn't exist yet.
-    - Valid values: `float`, `int`, `bool`, `enum`
-  - **`set`** (*float* | *int* | *bool*): Assigns the plug a value.
-  - **`keyable`**, **`k`**, **`show`** (*bool*, default: `off`): Makes the plug visible and keyable for animation.
-  - **`hide`** (*bool*, default: `off`): Hides the plug from animation.
-  - **`min`** (*float* | *int*): Sets a minimum value.
-  - **`max`** (*float* | *int*): Sets a maximum value.
-  - **`nice_name`** (*str*): UI-friendly display name.
-  - **`enum`** (*list[str]*): List of values for enum-type plugs.
-  - **`lock`** (*bool*, default: `off`): Locks the plug to prevent editing.
-  - **`flip`** (*bool*, default: `off`): Multiplies `set`, `min`, and `max` values by `-1` on mirrored branches.
-  - **`proxy`** (*node*): Creates a proxy attribute, shared value between two different nodes.
+### Core Parameters
+
+| Parameter        | Type                | Default | Description                                                                                         |
+|:-----------------|:--------------------|:--------|:----------------------------------------------------------------------------------------------------|
+| `node` / `nodes` | *node / list[node]* |         | The target node(s) on which the plugs will be edited or created.                                    |
+| `<plug_name>`    | *dict / value*      |         | The name of the attribute to create or edit. See [Plug Configurations](#plug-configurations) below. |
+
+### Plug Configurations
+
+To define a plug, add its name directly as a key within the `plug` dictionary (e.g., `my_attr:` or `t.x:`). Its value can be a direct value (shorthand for setting its value) or a dictionary of configurations:
+
+| Option                   | Type                        | Default | Description                                                                                                           |
+|:-------------------------|:----------------------------|:--------|:----------------------------------------------------------------------------------------------------------------------|
+| *(Direct Value)*         | *float / int / bool*        |         | Shorthand syntax. Directly assigns the value to the plug.                                                             |
+| `type`                   | *str*                       | `float` | The data type. Required only if the plug doesn't exist yet. Valid values: `float`, `int`, `bool`, `enum`.             |
+| `set`                    | *float / int / bool / list* |         | Assigns the plug a value. If setting a vector plug (`t`, `r`, `s`), provide a list of 3 values `[x, y, z]`.           |
+| `keyable` / `k` / `show` | *bool*                      | `False` | Makes the plug visible and keyable for animation in the Channel Box.                                                  |
+| `hide`                   | *bool*                      | `False` | Hides the plug from the Channel Box and makes it non-keyable.                                                         |
+| `lock` / `l`             | *bool*                      | `False` | Locks the plug to prevent any editing.                                                                                |
+| `min`                    | *float / int*               |         | Sets a minimum value limit.                                                                                           |
+| `max`                    | *float / int*               |         | Sets a maximum value limit.                                                                                           |
+| `nice_name`              | *str*                       |         | UI-friendly display name for the Channel Box.                                                                         |
+| `enum`                   | *list[str] / dict*          |         | List of values for `enum` plugs (e.g., `['A', 'B']`). Also accepts a dict to map specific integer indices to strings. |
+| `flip`                   | *bool*                      | `False` | Automatically multiplies `set`, `min`, and `max` values by `-1` when executed on mirrored branches.                   |
+| `proxy`                  | *plug*                      |         | Creates a proxy attribute, sharing the exact value of the target plug without creating a separate connection.         |
 
 ## Examples
 
-### Add a boolean plug and make it keyable
+### Channel Box Cleanup
+
+A standard operation to lock and hide scales and visibility on a controller. Notice the shorthand syntax for `vis`.
 
 ```yml
-[mod]
 plug:
-  node: leaf_base::ctrls.0
-  toto:
-    type: bool
-    set: on
-    keyable: on
+  node: my_ctrl::node
+  s.x: { lock: true, hide: true }
+  s.y: { lock: true, hide: true }
+  s.z: { lock: true, hide: true }
+  vis: off
 ```
 
-### Assign a simple static value
+### Set value
+
+The simplest way to edit an attribute of an object in the rig.
 
 ```yml
-[mod]
 plug:
   node: msh_wonderbra->xfo
   vis: off
 ```
 
-### Add multiple animated plugs with min/max constraints
+### Vector Expansion
+
+You can target vectors directly (e.g., `t`, `r`, `s`). The modifier will automatically expand them to their `.x`, `.y`, and `.z` components.
 
 ```yml
-[mod]
 plug:
-  node: shp_face::node
-  m_open: {type: float, k: on}
-  m_close: {type: float, k: on}
-  t.x: {set: 2, min: 0, max: 5, k: 0}
+  node: offset::roots.0
+  t: [ 0, 5.5, 0 ]
 ```
 
-### Create an enum plug
+### Custom Animated Attributes
+
+Creates custom floating-point attributes with limits, making them keyable for the animator.
 
 ```yml
-[mod]
+plug:
+  node: shp_face::node
+  m_open: { type: float, k: on }
+  m_close: { type: float, k: on }
+  t.x: { set: 2, min: 0, max: 5, k: 0 }
+```
+
+### Enum Menus
+
+Creates a dropdown enum menu for controllers.
+
+```yml
 plug:
   node: camera::ctrls.camera
   mask:
     type: enum
-    enum: ['16/9', '4/3']
+    enum: [ '16/9', '4/3', '2.35' ]
     keyable: on
 ```
 
-### Create a proxy plug
+### Proxy Attributes
+
+A proxy attribute allows a controller to display and drive an attribute that physically lives on another node, acting as a direct shortcut.
 
 ```yml
-[mod]
 plug:
   node: source::ctrls.0
   weight:
