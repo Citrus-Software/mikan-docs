@@ -1,36 +1,64 @@
+---
+title: space
+description: Creates a constraint-based space switch system on a controller's parent.
+---
+
 # space
 
-> Creates a constraint switch on a controller's parent.
+Creates a constraint switch system on a controller's parent (or a specified root node).
 
-This modifier sets up a space-switching system allowing a controller to dynamically change its parent based on a list of targets. It is useful for animators who need to change follow behavior (e.g., switching from world space to head or pelvis space).
+This modifier sets up a space-switching system allowing a controller to dynamically change its space of influence based on a list of targets. This is critical for animators who need to change a controller's follow behavior (e.g., switching an IK hand from world space to head space or pelvis space).
 
-## Options
+Beyond creating the constraints, this modifier also automatically builds the necessary UI network nodes, ensuring that Mikan's right-click Anim menu can perform **seamless space-matching** out of the box.
 
-- **`node`** (*node*, optional): The controller where the switch attributes will be created. Defaults to the modifier's `node`.
-- **`root`** (*node*, optional): The node that receives the actual constraint. Defaults to the parent of the `node`.
-<!-- -->
-- **`orient`** (*bool*, default: `false`): Enables rotation-only constraints. The switch will be named `follow`.
-- **`point`** (*bool*, default: `false`): Enables position-only constraints. The switch will be named `pin`. Ignored if `orient` is enabled.
-<!-- -->
-- **`target`**, **`targets`** (*node* | *list[node]*): List of nodes acting as constraint targets (drivers for the switch).
-- **`default`** (*list[float]*, optional): Default weights for each target. Defaults to `[0, 0, ...]`.
-<!-- -->
-- **`rest_name`** (*str*, default: `parent`): Name of the fallback switch state (when no targets are active).
-- **`names`** (*dict[node]: str*, optional): Dictionary mapping target IDs to custom attribute names for the switch.
+## Parameters
 
-## Attribute Name Resolution
+### Targets & Nodes
 
-Switch attribute names are derived from the target IDs, searching in order of priority: `space`, `hooks`, `ctrls`, then `skin`. If a name cannot be meaningfully resolved (e.g., `leg::skin.0` > `pin_0`), consider:
+| Parameter            | Type                | Default          | Description                                                                                                                      |
+|:---------------------|:--------------------|:-----------------|:---------------------------------------------------------------------------------------------------------------------------------|
+| `node`               | *node*              |                  | The controller where the switch attributes will be exposed to the animator.                                                      |
+| `root`               | *node*              | Parent of `node` | The actual node that receives the constraint. Usually the buffer group right above the controller.                               |
+| `target` / `targets` | *node / list[node]* |                  | List of nodes acting as the drivers for the space switch.                                                                        |
+| `default`            | *list[float]*       | `[0.0, ...]`     | Default weights for each target upon build. If omitted, all targets start at 0 (meaning the controller stays in its rest space). |
 
-- Adding a [tag](tag) to the node (`space.name`, for example), or
-- Specifying a custom name via the `names` option.
+### Constraint Type
 
-If no ID is present, the name is inferred from the node name with type prefixes removed.
+| Parameter | Type   | Default | Description                                                                                                               |
+|:----------|:-------|:--------|:--------------------------------------------------------------------------------------------------------------------------|
+| `orient`  | *bool* | `False` | Forces an `orientConstraint` (rotation only). Generated attributes will be prefixed with `follow_`.                       |
+| `point`   | *bool* | `False` | Forces a position-only constraint. Generated attributes will be prefixed with `pin_`. *(Ignored if `orient` is enabled).* |
 
-## Example
+*(If neither `orient` nor `point` is specified, a full `parentConstraint` (Translate + Rotate) is created, and attributes are prefixed with `pin_`).*
+
+### UI & Naming
+
+| Parameter   | Type              | Default  | Description                                                                                             |
+|:------------|:------------------|:---------|:--------------------------------------------------------------------------------------------------------|
+| `rest_name` | *str*             | `parent` | The UI label for the fallback state (when all targets are at 0).                                        |
+| `names`     | *dict[node: str]* |          | A dictionary allowing you to explicitly map target nodes to custom attribute names for the Channel Box. |
+
+### Attribute Name Resolution
+
+If you do not explicitly provide a custom name via the `names` dictionary, Mikan tries to generate a clean, UI-friendly attribute name based on the target node's internal ID.
+
+It searches the target's tags in this priority order: `space` > `hooks` > `ctrls` > `skin`.
+For example, if your target has the ID `leg::space.world`, Mikan will generate the attribute `pin_world`.
+
+If a name cannot be meaningfully resolved automatically (e.g., resulting in ugly names like `pin_skin_0`), you should:
+
+- Tag the target properly (e.g., give it a `space.custom_name` tag using the [**`tag`**](./tag) modifier).
+- Or explicitly define its name using the `names` parameter.
+
+## Examples
+
+### Classic World/Pelvis/Head Switch
+
+Creates a standard translation and rotation space switch for an IK arm. By default, it stays in its hierarchical parent space (labeled "root").
 
 ```yml
 space:
+  node: arm.L::ctrl.ik
   rest_name: root
   targets:
     - *::space.world
@@ -39,3 +67,16 @@ space:
     - *::space.head
 ```
 
+### Orient-Only Switch (Follow)
+
+Creates a rotation-only space switch for a head controller, allowing it to follow the neck or stay locked to the world. We explicitly map the world target to the name "global" to avoid bad auto-naming.
+
+```yml
+space:
+  node: neck::ctrls.head
+  orient: on
+  rest_name: local
+  targets:
+    - *::space.world
+    - *::space.move
+```
