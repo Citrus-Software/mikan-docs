@@ -73,6 +73,33 @@ Conditions can also be safely nested using parentheses:
 val1 == val2 ? (val3 > 0 ? resultA : resultB) : resultC
 ```
 
+## Input Plugs & Data Types
+
+When declaring variables, the expression engine naturally understands standard data types (`float`, `int`, `bool`). However, to remain **DCC-agnostic** (independent of Maya's specific naming conventions), Mikan uses a unified syntax for vectors and matrices.
+
+### Vectors (SRT)
+
+Do not use Maya's native attribute names (like `.tx` or `.translateX`). Instead, use Mikan's standard dot notation for transforms:
+
+- **Translate:** `@t.x`, `@t.y`, `@t.z`, or the full vector `@t`
+- **Rotate:** `@r.x`, `@r.y`, `@r.z`, or the full vector `@r`
+- **Scale:** `@s.x`, `@s.y`, `@s.z`, or the full vector `@s`
+
+### Matrices
+
+Matrix operations are fully supported (e.g., multiplying two matrices, or multiplying a vector by a matrix). To easily access common matrices without relying on DCC-specific plugs, Mikan provides the following aliases:
+
+| Alias    | Description           | Maya Equivalent (Internal) |
+|:---------|:----------------------|:---------------------------|
+| `@xfo`   | Local Matrix          | `matrix`                   |
+| `@wxfo`  | World Matrix          | `worldMatrix[0]`           |
+| `@pxfo`  | Parent Matrix         | `parentMatrix[0]`          |
+| `@ixfo`  | Inverse Local Matrix  | `inverseMatrix`            |
+| `@wixfo` | World Inverse Matrix  | `worldInverseMatrix[0]`    |
+| `@pixfo` | Parent Inverse Matrix | `parentInverseMatrix[0]`   |
+
+The expression engine automatically respects type operations. For instance, multiplying two matrices will output a matrix, and multiplying a vector by a matrix will correctly transform the vector.
+
 ## Available Functions
 
 ### Scalar functions
@@ -177,4 +204,16 @@ expression:
   rx: arm.L::j.clavicle@r.x
   ry: arm.L::j.clavicle@r.y
   rz: arm.L::j.clavicle@r.z
+```
+
+### Matrix Multiplication
+
+Using the DCC-agnostic matrix aliases to calculate a custom local offset (multiplying a world matrix by a parent inverse matrix), completely avoiding standard constraint nodes.
+
+```yml
+expression:
+  op: local_matrix = target_world * node_parent_inv
+  local_matrix: my_node::node@xfo
+  target_world: my_target::node@wxfo
+  node_parent_inv: my_node::node@pixfo
 ```
