@@ -1,6 +1,7 @@
 ---
 title: driver.distance
 description: Calculates the distance between two nodes to dynamically drive rig attributes (correctives, collisions, stretch).
+sidebar_position: 1
 ---
 
 # driver.distance
@@ -12,7 +13,11 @@ squash/stretch setups, or muscle contractions).
 
 The shape of this activation area is controlled by **Falloffs**, which define how smoothly the effect fades in and out as the objects move around the target.
 
-![visual demo gif](img/testleg.gif)
+<img
+src={require('./img/testleg.gif').default}
+alt="visual demo gif"
+width="50%"
+/>
 
 *(For specific activation behaviors like collision spheres or stretch limits, see [Common Falloff Strategies](#common-falloff-strategies). To understand the exact math pipeline and how to build this setup visually from A to Z in Maya, see the [Debug Workflow & Under the Hood](#the-debug-workflow-helpers) sections at the bottom of this page).*
 
@@ -22,28 +27,28 @@ The shape of this activation area is controlled by **Falloffs**, which define ho
 
 These parameters define the two points in space being measured.
 
-| Parameter           | Type          | Default     | Description                                                                                                                                                                                                                                      |
-|:--------------------|:--------------|:------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `name`              | *str*         |             | Base name for the distance system (e.g., `skirt_leg_collision`).                                                                                                                                                                                 |
-| `input1` / `input2` | *node*        |             | The two nodes used to calculate the distance.                                                                                                                                                                                                    |
-| `pos1` / `pos2`     | *list[float]* | `[0, 0, 0]` | Optional local offsets for `input1` and `input2`. Allows measuring from a specific point relative to the node.                                                                                                                                   |
-| `parent`            | *node*        | `::rig`     | The node under which the generated technical groups will be parented.                                                                                                                                                                            |
-| `targets`           | *dict*        |             | A dictionary defining the distance rules. Each key is a custom `<target_name>` (e.g., `compression`) containing both [**Rules**](#target-rules) (`target_distance`, `falloffs...`) and [**Outputs**](#remaps-operations) (`remaps`, operations). |
-| `helpers`           | *bool*        | `false`     | Forces the creation of visual debug locators (automatically `true` if Mikan is run in debug mode).                                                                                                                                               |
+| Parameter           | Type          | Default     | Description                                                                                                                                                                                                                                                      |
+|:--------------------|:--------------|:------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `name`              | *str*         |             | Base name for the distance system (e.g., `skirt_leg_collision`).                                                                                                                                                                                                 |
+| `input1` / `input2` | *node*        |             | The two nodes used to calculate the distance.                                                                                                                                                                                                                    |
+| `pos1` / `pos2`     | *list[float]* | `[0, 0, 0]` | Optional local offsets for `input1` and `input2`. Allows measuring from a specific point relative to the node.                                                                                                                                                   |
+| `parent`            | *node*        | `::rig`     | The node under which the generated technical groups will be parented.                                                                                                                                                                                            |
+| `targets`           | *dict*        |             | A dictionary defining the distance rules. Each key is a custom `<target_name>` (e.g., `compression`) containing both [**Rules**](#target-rules) (`target_distance`, `falloffs...`) and [**Outputs**](#target-outputs-remaps--operations) (`remaps`, operations). |
+| `helpers`           | *bool*        | `false`     | Forces the creation of visual debug locators (automatically `true` if Mikan is run in debug mode).                                                                                                                                                               |
 
 ### Target Rules
 
 A single distance measurement can drive multiple rules (targets). Inside a specific `<target_name>` dictionary, these parameters define the mathematical shape of the distance activation curve.
 
-| Option            | Type           | Description                                                                                                                                     |
-|:------------------|:---------------|:------------------------------------------------------------------------------------------------------------------------------------------------|
-| `target_distance` | *float*        | The exact distance where the effect is at 100% (its peak).                                                                                      |
-| `falloff_before`  | *float*        | The distance *before* the target where the effect fades to 0.                                                                                   |
-| `falloff_after`   | *float*        | The distance *after* the target where the effect fades to 0.                                                                                    |
-| `falloff_tangent` | *str*          | Transition curve style: `linear` (abrupt) or `plateau` (smooth ease-in/out). Default is `linear`.                                               |
-| `weight`          | *float / plug* | A multiplier for the final value before remapping. Can be a static number or connected to an animatable plug (e.g., a collision ON/OFF switch). |
+| Option            | Type           | Default  | Description                                                                                                                                     |
+|:------------------|:---------------|----------|:------------------------------------------------------------------------------------------------------------------------------------------------|
+| `target_distance` | *float*        |          | The exact distance where the effect is at 100% (its peak).                                                                                      |
+| `falloff_before`  | *float*        |          | The distance *before* the target where the effect fades to 0.                                                                                   |
+| `falloff_after`   | *float*        |          | The distance *after* the target where the effect fades to 0.                                                                                    |
+| `falloff_tangent` | *str*          | `linear` | Transition curve style: `linear` (abrupt) or `plateau` (smooth ease-in/out).                                                                    |
+| `weight`          | *float / plug* | `1.0`    | A multiplier for the final value before remapping. Can be a static number or connected to an animatable plug (e.g., a collision ON/OFF switch). |
 
-### Remaps & Operations
+### Target Outputs (Remaps & Operations)
 
 Inside each target, you define which attributes are driven and how the 0-1 normalized value is remapped. Also located within the `<target_name>` dictionary, these parameters dictate how the final values are mathematically applied to the rig.
 
@@ -85,6 +90,26 @@ It is extremely difficult to guess the correct `target_distance` and `falloff` v
 ### Step 1: Draft your YAML
 
 Write your modifier but leave the distance and falloff values at dummy numbers (e.g., `0`). Set `helpers: true` (or build your template in Debug Mode).
+
+```yml
+distance:
+  name: test
+  input1: A::node
+  input2: B::node
+  pos1: [ 0, 0, 0 ]   # later
+  pos2: [ 0, 0, 0 ]   # later
+  parent: A::node
+
+  targets:
+    target1:
+      target_distance: 1        # later
+      falloff_before: 1         # later
+      falloff_after: 1          # later
+      falloff_tangent: plateau
+      remaps:
+        out::node@t.x: [ 0, 1 ] # later  
+      op: add
+```
 
 ### Step 2: Build and Use Visual Locators
 
