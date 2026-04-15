@@ -7,7 +7,7 @@ description: Hides a node from the animation interface.
 
 Hides a node from the animator's interface.
 
-:::tip Organizing Controller Visibility
+:::tip[Organizing Controller Visibility]
 If your goal is to manage the display of secondary controller groups or to create visibility toggles for the animator, use the [**`group`**](./group) modifier instead. It is specifically designed to organize the rig's display layers.
 :::
 

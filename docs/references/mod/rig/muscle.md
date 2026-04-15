@@ -85,6 +85,6 @@ rig.muscle:
   shear: 1   # Activates the shear system and sets its default to 100%
 ```
 
-:::info Demo Scene
+:::info[Demo Scene]
 To see this setup in action, download the [**mod_muscle.ma**](https://drive.google.com/file/d/197tvAY1ziUPVOWhrgZD52Xe8vmJVywhT/view?usp=drive_link) demo scene from our [Google Drive folder](https://drive.google.com/drive/folders/1tDXJmNxd-3ev1BwvZMm4Gl7tbnJTWJcn?usp=drive_link).
 :::

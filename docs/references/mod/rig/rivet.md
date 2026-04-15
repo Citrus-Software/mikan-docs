@@ -9,7 +9,7 @@ Constrains a node to a specific point on the surface of a mesh.
 
 This modifier is essential for attaching rigid or secondary elements to a deforming surface. It can be used to pin buttons to a jacket, stick horns to a deforming creature's head, or create sliding collision locators that glide across a skin mesh.
 
-:::warning Freeze Scale Required
+:::warning[Freeze Scale Required]
 The target mesh (`geo`) must have its scale frozen at `(1, 1, 1)`. Unfrozen scaling will cause matrix projection errors and offset the rivet incorrectly.
 :::
 
@@ -21,7 +21,7 @@ Depending on your parameters, the modifier automatically chooses between three c
 2. **Closest Point Projection:** The rivet is not pinned to a specific face. Instead, it dynamically slides across the surface to always remain at the closest physical point to a moving reference node.
 3. **Keepout (Collision):** Similar to Closest Point, but only activates if the reference node penetrates *inside* the mesh volume. It pushes the rivet back to the surface, acting as a fake soft-collision system.
 
-:::tip Hierarchy & Scaling
+:::tip[Hierarchy & Scaling]
 The generated rivet transform is extremely stable and can be re-parented anywhere in your rig. While its position and orientation are mathematically locked to the mesh surface, **its scale is inherited from its parent**.
 
 To ensure your rig scales correctly, choose your `parent` parameter wisely:
@@ -30,7 +30,7 @@ To ensure your rig scales correctly, choose your `parent` parameter wisely:
 - For a rigid object (like a heavy armor plate) that shouldn't squash or stretch with the limb, parent it under a global scaling space (e.g., `world::hooks.root`).
   :::
 
-:::caution Build Order & Deformers
+:::caution[Build Order & Deformers]
 Mikan's standard build pipeline executes in this order: **Template Modules > Modifiers > Deformers**.
 Because `rig.rivet` is a Modifier, targeting a geometry driven by a Deformer (like a SkinCluster) means the deformer might not exist yet when the rivet tries to build.
 

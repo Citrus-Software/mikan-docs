@@ -43,7 +43,7 @@ graph LR
 | `weight`  | *bool*       | `off`   | Automatically generates an animatable `weight` attribute to blend the virtual hierarchy on or off.                                    |
 | `name`    | *str*        |         | Base name used to register the generated IDs.                                                                                         |
 
-:::caution Target Proper Nodes
+:::caution[Target Proper Nodes]
 When using `default.bones` templates, ensure the `nodes` list targets the **root** offset groups (e.g., `joint::roots.0`), NOT the joints or controllers themselves. The modifier needs a clean transform matrix to inject the virtual hierarchy.
 :::
 
@@ -71,7 +71,7 @@ rig.rechain:
 
 ![rechain with riveted joints](img/rechain_rivets.png)
 
-:::info Demo Scene
+:::info[Demo Scene]
 To see this setup in action, download the [**mod_rechain_rivet.ma**](https://drive.google.com/file/d/1s4nhDL5ON7mjj-B8eYKmyFNZElUThVou/view?usp=drive_link) demo scene from our [Google Drive folder](https://drive.google.com/drive/folders/1tDXJmNxd-3ev1BwvZMm4Gl7tbnJTWJcn?usp=drive_link).
 :::
 
@@ -108,6 +108,6 @@ rig.rechain:
 
 ![rechain subchain controllers](img/rechain_subchain.png)
 
-:::info Demo Scene
+:::info[Demo Scene]
 To see this setup in action, download the [**mod_rechain.ma**](https://drive.google.com/file/d/1UDUPH0_wBwxQGF9UsdwDM6YmgAkUjvHh/view?usp=drive_link) demo scene from our [Google Drive folder](https://drive.google.com/drive/folders/1tDXJmNxd-3ev1BwvZMm4Gl7tbnJTWJcn?usp=drive_link).
 :::

@@ -27,7 +27,7 @@ This modifier is a highly versatile utility. It allows you to create custom pivo
 | `name`    | *str* | Source name | Base name of the locator(s). Used for display and IDs.                                |
 | `prefix`  | *str* | `loc`       | Prefix for the created nodes. *(Automatically changes to `sk` if `skin` is enabled).* |
 
-:::caution Reserved Name
+:::caution[Reserved Name]
 Do not use `root` as a value for the `name` parameter. It is reserved by the system for internal ID generation and will trigger a warning.
 :::
 

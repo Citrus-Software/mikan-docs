@@ -90,7 +90,7 @@ If the `io` (Interactive) flag is enabled, standard parameterization is bypassed
 
 Attaches a controller to a curve. `percent: true` ensures the `@u` attribute ranges cleanly from 0 to 1, making it easy to drive via a `plug` modifier.
 
-:::warning Build Order (Priority)
+:::warning[Build Order (Priority)]
 When using `snap: on`, you must ensure that your target node is fully built and bound *before* the modifier moves it to the start of the curve. To enforce this, assign a negative priority (e.g., `#!-10`) to the mod block. This guarantees the path snapping executes after the initial cart setup.
 :::
 
@@ -120,7 +120,7 @@ expression:
   path: cart::ctrls.0@path
 ```
 
-:::info Demo Scene
+:::info[Demo Scene]
 To see this setup in action, download the [**mod_path_cart.ma**](https://drive.google.com/file/d/1BhCEbFqqXz_rApBXBlp86DfsUPNTFRd8/view?usp=drive_link) demo scene from our [Google Drive folder](https://drive.google.com/drive/folders/1tDXJmNxd-3ev1BwvZMm4Gl7tbnJTWJcn?usp=drive_link).
 :::
 

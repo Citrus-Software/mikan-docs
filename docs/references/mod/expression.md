@@ -9,7 +9,7 @@ Connects multiple plugs using a custom mathematical expression.
 
 This modifier allows for advanced control by combining plug values through mathematical and logical operations. It offers significantly more flexibility than standard math operators and is the preferred way to perform complex logic, vector operations, or conditional setups in Mikan.
 
-:::info Node Graph vs. Expression Node
+:::info[Node Graph vs. Expression Node]
 Unlike Maya's native `expression` node, this modifier **does not** create a heavy, script-based node. Instead, it parses your formula and generates a **pure DG node graph** (using `multiplyDivide`, `plusMinusAverage`, etc.). This ensures maximum evaluation performance and compatibility with Parallel Evaluation.
 :::
 

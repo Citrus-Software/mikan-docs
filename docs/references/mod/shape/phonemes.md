@@ -42,7 +42,7 @@ src:
   - face:::ctrls
 ```
 
-:::info The Recursive Syntax (`:::`)
+:::info[The Recursive Syntax (`:::`)]
 Notice the three colons (`:::`) in `face:::ctrls`. In Mikan, a double colon (`::`) targets exact matches within a module. A triple colon (`:::`) is a recursive search: it targets **all** of the child controllers within the `face` module and its sub-modules, ensuring no controller tweak is missed during recording.
 :::
 
@@ -61,7 +61,7 @@ The UI generates a grid of **get** and **set** buttons for every combination.
 - Click `get` on the corresponding cell to capture the values from your `src` nodes and save them to the `poses` dictionary.
 - Click `set` to recall a saved pose back to the rig for further editing.
 
-:::warning Additive Pose Logic
+:::warning[Additive Pose Logic]
 Phoneme recording in Mikan is **cumulative**.
 To output a specific phoneme, the system adds the values of the neutral/base pose to the values of the requested phoneme.
 

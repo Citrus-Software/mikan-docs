@@ -44,13 +44,13 @@
   - `off`: No tweakers.
   - `chained`: Tweakers follow a hierarchy.
   - `unchained`: Tweakers remain independent.
-<!-- -->
+<br/>
 - `bones` (*int*, default: `0`): Number of skin joints to create. Defaults to `2× FK controllers - 1` if unspecified.
 - `bone_length` (*enum*, default: `cvs`): Distribution mode for skin joints.
   - `parametric`: Evenly spaced along the spline parameter.
   - `cvs`: Based on FK controller CV positions.
   - `equal`: Joints evenly spaced by length.
-<!-- -->
+<br/>
 - `uniform_ik` (*bool*, default: `on`): IK controller distribution mode.
   - `on`: Parametric placement.
   - `off`: Uniform length spacing.
@@ -65,7 +65,7 @@
 
 - `do_pose` (*bool*, default: `off`): Adds a pose node above the controller.
 - `add_nodes` (*str* | *list[str]*): Adds custom nodes in the hierarchy.
-<!-- -->
+<br/>
 - `parent_scale` (*bool*, default: `off`): Enables scale propagation between controllers.
 - `flip_orient` (*bool*, default: `off`): Flips controller root orientation for symmetry.
 

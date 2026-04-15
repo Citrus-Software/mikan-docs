@@ -19,7 +19,7 @@ controllers or joints to clarify logical connections within the rig. However, si
 | `degree`  | *int*        | `1`                  | Degree of the resulting NURBS curve (`1` for linear, `2` for quadratic, `3` for cubic).               |
 | `name`    | *str*        | optional             | Custom base name for the curve. Defaults to the formatted nice name of the node tag.                  |
 
-:::caution Minimum Nodes Requirement
+:::caution[Minimum Nodes Requirement]
 To successfully generate a NURBS curve, Maya requires a minimum number of control vertices based on the curve's degree. You must provide at least **`degree + 1`** nodes in your `nodes` list. For example:
 
 - A linear curve (`degree: 1`) requires at least **2** nodes.
@@ -30,13 +30,13 @@ To successfully generate a NURBS curve, Maya requires a minimum number of contro
 
 The generated curve is registered internally and can be accessed through the ID: `<id>::mod.curve.<name>`. In the scene, the physical curve node will be named following the pattern: `cv_<name>_<suffix>`.
 
-:::tip Safe Reparenting
+:::tip[Safe Reparenting]
 The generated curve supports seamless reparenting. Moving it to a different group or hierarchy in your rig will not break its deformations, as the CVs remain robustly driven by the source matrices.
 :::
 
 ## Example
 
-:::info Demo Scene
+:::info[Demo Scene]
 Explore how to build a procedural setup where a curve is generated from a joint rig, with a controller attached via a motion path. Download the [**`mod_curve.ma`**](https://drive.google.com/file/d/1vOWPyFqXK1RPV4M_QXdwsJqRD0I8beKE/view?usp=drive_link) demo scene from our [Google Drive folder](https://drive.google.com/drive/folders/1tDXJmNxd-3ev1BwvZMm4Gl7tbnJTWJcn?usp=drive_link).
 :::
 

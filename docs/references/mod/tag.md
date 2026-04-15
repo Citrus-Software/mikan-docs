@@ -22,7 +22,7 @@ The two primary use cases for this modifier are:
 | `add`            | *str*               |         | The pattern to add to the node's IDs. Mikan automatically prefixes this with the current template ID. If multiple nodes are targeted, an index is automatically appended (e.g., `.0`, `.1`). |
 | `remove`         | *str*               |         | The pattern used to match and remove existing tags from the node.                                                                                                                            |
 
-:::info Smart Controller Hiding
+:::info[Smart Controller Hiding]
 If you use the `remove` command to strip a `::ctrls.` tag from a node, Mikan will automatically find and hide any NURBS curve shapes attached to that node. This safely converts the controller back into a pure, invisible construction group for the animator, without needing an extra `hide` or `plug` modifier.
 :::
 

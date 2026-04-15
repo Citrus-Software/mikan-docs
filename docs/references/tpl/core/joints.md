@@ -16,7 +16,7 @@
   - `joint`: All rig joints are parented under their respective roots, allowing proper scale transmission.
   - `transform`: Controllers form a continuous hierarchy, resulting in cumulative scaling.
 - `unchain` (*bool*, default: `off`): Prevents hierarchical parenting between generated controllers.
-<!-- -->
+<br/>
 - `do_pose` (*bool*, default: `on`): Adds a `pose` node above the controller (for driven key control).
 - `add_nodes` (*yaml*, default: `null`): Injects additional nodes into the controller hierarchy.
   - `inf`: Adds an `inf_{name}` node above the controller.

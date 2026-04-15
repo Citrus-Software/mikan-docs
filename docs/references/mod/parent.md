@@ -17,7 +17,7 @@ Unlike most modifiers that require a dictionary of parameters, `parent` accepts 
 |:-----------------|:-----------|:---------------------------------------------------------------|
 | *(Direct Value)* | *list[id]* | The nodes to process. The last node is the destination parent. |
 
-:::info Node Order
+:::info[Node Order]
 
 - If two nodes are provided: The first is the **child**, the second is the **parent**.
 - If more than two nodes are provided: The **last node** in the list becomes the parent of **all preceding nodes**.

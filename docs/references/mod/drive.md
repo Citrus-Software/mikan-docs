@@ -21,11 +21,11 @@ Writing complex animation curves by hand in YAML can be tedious and prone to err
 
 ![Get Anim Curve Mod Tool](img/anim_to_mod_drive.png)
 
-:::note UI Generators
+:::note[UI Generators]
 **Posing Tab:** For heavy setups like facial rigging involving hundreds of driven keys, use the Posing interface. It allows you to create curves visually and automatically generates the corresponding `drive` commands for the rebuild process.
 :::
 
-:::info Coming Soon
+:::info[Coming Soon]
 We are working on streamlining this process! Future updates will allow you to capture, add, and edit driven key modifications directly from within the Mod Editor interface, bypassing the Script Editor entirely.
 :::
 

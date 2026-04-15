@@ -48,7 +48,7 @@ coordinates.
 | `weight` / `weights` | *float / list* |                      | Constraint weights for each target. Defines the blending between multiple drivers. If explicitly provided, it forces the creation of weight attributes (see [Output](#output). |
 | `name`               | *str*          | optional             | Custom base name for the generated hook node and its ID. Highly recommended for cross-referencing (see [Output](#output)).                                                     |
 
-:::tip Single Target Switch
+:::tip[Single Target Switch]
 By default, if you only have a single `target`, the connection is direct and absolute. However, explicitly defining a `weight` parameter will force the system to generate a weight attribute (`@w0`). This gives you a convenient on/off toggle for the constraint.
 :::
 
@@ -63,11 +63,11 @@ This is where the `name` parameter becomes crucial. Naming your hook allows you 
 
 - `<id>::mod.hooks.<name>`
 
-:::info Best Practice
+:::info[Best Practice]
 Always provide a `name` when `group: true`. If omitted, Mikan will assign a numerical index or an auto-generated string based on the targets. These fallbacks are unpredictable and make it very difficult to reference your new hook group reliably in subsequent modifiers.
 :::
 
-:::info Reparenting Safe
+:::info[Reparenting Safe]
 Because this modifier relies on robust matrix math both the generated hook group and the constrained nodes can be freely reparented anywhere in your rig hierarchy after creation. No parasitic offsets or double-transformations will occur.
 :::
 

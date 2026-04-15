@@ -54,7 +54,7 @@ Allows a single attribute on the controller to drive multiple raw shapes on the 
 
 Combos define shapes that activate only when a combination of parent drivers reaches specified values (e.g., Wide + Smile = Wide_Smile).
 
-:::info Anti-Double Transform (Auto-Subtraction)
+:::info[Anti-Double Transform (Auto-Subtraction)]
 When a combo activates, this modifier **automatically subtracts** its value from the original drivers. For example, if `m_wide` and `m_smile` trigger `m_wide_smile` at 100%, the underlying raw `m_wide` and `m_smile` shapes are automatically driven down to 0% to prevent the geometry from exploding.
 :::
 

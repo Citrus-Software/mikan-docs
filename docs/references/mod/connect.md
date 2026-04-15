@@ -7,13 +7,13 @@ description: Establishes a connection between two plugs, optionally applying bas
 
 Establishes a connection between two plugs, optionally applying basic math operations.
 
-:::note Bridging Existing Connections
+:::note[Bridging Existing Connections]
 If the destination plug is already connected, the modifier **will not overwrite it**. Instead, the existing connection is preserved and automatically injected as the **first input** for the math operation.
 
 This means that if a plug is already driven, you only need to provide *one* additional `input` to perform a 2-input operation (like `add` or `mult`). The modifier will insert the math node between the existing driver and the destination.
 :::
 
-:::warning Legacy Modifier
+:::warning[Legacy Modifier]
 This modifier is considered legacy for math operations. For more advanced and flexible usage, prefer using the [**`expression`**](./expression.md) modifier.
 :::
 
@@ -37,7 +37,7 @@ You must provide a destination. You can either pass explicit plugs directly via 
 | `input`   | *any*  |         | Single source (plug, float, or int).                         |
 | `inputs`  | *list* |         | Multiple sources (used with operators requiring two inputs). |
 
-:::tip Time variables
+:::tip[Time variables]
 You can use the strings `'time'` or `'frame'` in your inputs. The modifier will automatically convert them to connect to the frame number.
 :::
 

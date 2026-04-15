@@ -19,7 +19,7 @@ This modifier solves this elegantly: it projects the controller's tilt direction
 2. **Omnidirectional Banking:** When the animator tilts the `target` controller, the modifier calculates the direction of the tilt, finds the furthest edge on your curve in that direction, and moves the pivot there.
 3. **Axis Locking:** Because this is a tilt-based edge-banking system, the "up" axis (twist) is automatically locked on the controller to prevent conflicting pivot math. You only animate the tilt.
 
-:::info Curve Management
+:::info[Curve Management]
 Because the modifier automatically duplicates your input `curve` into the final rig hierarchy, your original reference curve **must** be kept in a separate geometry or guide group outside of the main rig template.
 :::
 
@@ -47,6 +47,6 @@ rig.bank:
   node: pot_bank::skin.0
 ```
 
-:::info Demo Scene
+:::info[Demo Scene]
 To see this exact setup in action and explore the generated hierarchy, download the [**`mod_bank.ma`**](https://drive.google.com/file/d/14E2Tqjfh_9lR1Ef_dAQFmqweNolpyoTr/view?usp=drive_link) demo scene from our [Google Drive folder](https://drive.google.com/drive/folders/1tDXJmNxd-3ev1BwvZMm4Gl7tbnJTWJcn?usp=drive_link).
 :::

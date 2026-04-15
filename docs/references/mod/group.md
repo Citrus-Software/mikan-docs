@@ -23,7 +23,7 @@ By default, this SHOW/HIDE menu is injected into **all controllers** of the pare
 
 If you use a standard tag, the group acts as a logical selection set. These groups appear in the right-click menu, allowing the animator to instantly select or set keys on all controllers within the group at once.
 
-:::info Further Reading
+:::info[Further Reading]
 For more details on how animators interact with these groups in the viewport, check out the [**Controllers Usage**](/usage/controllers) page.
 :::
 

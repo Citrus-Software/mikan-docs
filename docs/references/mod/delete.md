@@ -9,7 +9,7 @@ Deletes one or more nodes from the scene.
 
 This modifier is straightforward and allows you to remove specific nodes by targeting their IDs.
 
-:::tip Cleanup Helper
+:::tip[Cleanup Helper]
 This is particularly useful at the end of a build process to clean up temporary nodes, helpers, or construction groups that are no longer needed in the final rig.
 :::
 

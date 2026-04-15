@@ -9,7 +9,7 @@ Adds spring dynamics to a joint chain.
 
 This modifier creates automated secondary motion by simulating inertia, stiffness, and attenuation. It is ideal for adding life to appendages like tails, ears, antennas, or loose clothing parts without the need for manual keyframing.
 
-:::caution Requirements
+:::caution[Requirements]
 The Maya evaluation of this dynamic solver requires **Bifrost 2.1** minimum (**2.2+ recommended**).
 :::
 
@@ -27,7 +27,7 @@ To work properly, the result of the dynamics must be connected to a **child of t
 
 While the modifier can be used on any custom rig, it is designed to work seamlessly with Mikan's default joint chain templates (`core.bones`, `core.joints`, `rig.spline`).
 
-:::tip Auto-generate dyn nodes
+:::tip[Auto-generate dyn nodes]
 To save time, use the **Add nodes** option in your template configuration and set its value to `[c, dyn]`. This will automatically create a transform/joint directly parented under the controller, perfectly set up to be used as your `dyn` node.
 :::
 
@@ -60,7 +60,7 @@ To save time, use the **Add nodes** option in your template configuration and se
 
 ## Examples
 
-:::info Demo Scene
+:::info[Demo Scene]
 You can explore a ready-to-use example of this modifier. Download the **`mod_jiggle.ma`** demo scene from our [Google Drive folder](https://drive.google.com/drive/folders/1tDXJmNxd-3ev1BwvZMm4Gl7tbnJTWJcn?usp=drive_link).
 :::
 
@@ -109,7 +109,7 @@ With the With the setup above, dynamics are evaluated using the default values (
 
 As a rule of thumb: a low `goal` + low `damp` gives a slow, floppy, oscillating spring. A high `goal` + high `damp` gives a rigid, snappy motion with no overshoot.
 
-:::tip Blending with weight
+:::tip[Blending with weight]
 Use `weight` to blend between full spring dynamics (`1.0`) and no dynamics (`0.0`). This is useful for making the effect toggleable or partially active on specific joints.
 :::
 
