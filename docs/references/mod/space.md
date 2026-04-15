@@ -26,8 +26,8 @@ Beyond creating the constraints, this modifier also automatically builds the nec
 
 | Parameter | Type   | Default | Description                                                                                                               |
 |:----------|:-------|:--------|:--------------------------------------------------------------------------------------------------------------------------|
-| `orient`  | *bool* | `False` | Forces an `orientConstraint` (rotation only). Generated attributes will be prefixed with `follow_`.                       |
-| `point`   | *bool* | `False` | Forces a position-only constraint. Generated attributes will be prefixed with `pin_`. *(Ignored if `orient` is enabled).* |
+| `orient`  | *bool* | `off`   | Forces an `orientConstraint` (rotation only). Generated attributes will be prefixed with `follow_`.                       |
+| `point`   | *bool* | `off`   | Forces a position-only constraint. Generated attributes will be prefixed with `pin_`. *(Ignored if `orient` is enabled).* |
 
 *(If neither `orient` nor `point` is specified, a full `parentConstraint` (Translate + Rotate) is created, and attributes are prefixed with `pin_`).*
 

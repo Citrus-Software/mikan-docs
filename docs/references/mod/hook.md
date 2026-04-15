@@ -13,11 +13,11 @@ This modifier is a powerful alternative to standard transform constraints. By us
 
 The behavior of this modifier fundamentally changes based on the `group` parameter.
 
-### Direct Connection (`group: false`)
+### Direct Connection (`group: off`)
 
 This is the default behavior. No new nodes are created in the scene hierarchy. The modifier directly drives the transform matrix of the specified nodes using the targets' matrices. This is perfect for seamless, invisible space-switching or blended constraints.
 
-### Hook Group (`group: true`)
+### Hook Group (`group: on`)
 
 The modifier creates a brand new physical transform node (the "hook group") in the hierarchy. This new node is matrix-constrained to the targets, and your driven nodes are physically **re-parented** under it. This is ideal when you need a clean pivot point or a dedicated group to attach a prop, a limb, or a sub-rig without altering the driven node's local
 coordinates.
@@ -42,9 +42,9 @@ coordinates.
 
 | Parameter            | Type           | Default              | Description                                                                                                                                                                    |
 |:---------------------|:---------------|:---------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `group`              | *bool*         | `False`              | Determines the operation mode. If `true`, a physical hook group is created and the nodes are parented under it. If `false`, applies direct matrix connections.                 |
-| `parent`             | *node*         | Parent of `nodes[0]` | *(Only if `group: true`)* The node under which the newly created hook group will be parented.                                                                                  |
-| `maintain_offset`    | *bool*         | `True`               | Maintains the relative spatial offset between the targets and the driven nodes at build time.                                                                                  |
+| `group`              | *bool*         | `off`                | Determines the operation mode. If `on`, a physical hook group is created and the nodes are parented under it. If `off`, applies direct matrix connections.                     |
+| `parent`             | *node*         | Parent of `nodes[0]` | *(Only if `group: on`)* The node under which the newly created hook group will be parented.                                                                                    |
+| `maintain_offset`    | *bool*         | `on`                 | Maintains the relative spatial offset between the targets and the driven nodes at build time.                                                                                  |
 | `weight` / `weights` | *float / list* |                      | Constraint weights for each target. Defines the blending between multiple drivers. If explicitly provided, it forces the creation of weight attributes (see [Output](#output). |
 | `name`               | *str*          | optional             | Custom base name for the generated hook node and its ID. Highly recommended for cross-referencing (see [Output](#output)).                                                     |
 
@@ -58,13 +58,13 @@ By default, if you only have a single `target`, the connection is direct and abs
 If multiple targets are used, or if the `weight` parameter is explicitly provided, the constraint weights are exposed as animatable attributes on the constrained node (e.g., `@w0`, `@w1`, etc.). This allows animators to blend targets or toggle constraints at runtime.
 
 **Generated IDs:**
-If **`group: true`**, the new transform node is prefixed with `hook_` and registered internally.
+If **`group: on`**, the new transform node is prefixed with `hook_` and registered internally.
 This is where the `name` parameter becomes crucial. Naming your hook allows you to easily target it later in your build process:
 
 - `<id>::mod.hooks.<name>`
 
 :::info[Best Practice]
-Always provide a `name` when `group: true`. If omitted, Mikan will assign a numerical index or an auto-generated string based on the targets. These fallbacks are unpredictable and make it very difficult to reference your new hook group reliably in subsequent modifiers.
+Always provide a `name` when `group: on`. If omitted, Mikan will assign a numerical index or an auto-generated string based on the targets. These fallbacks are unpredictable and make it very difficult to reference your new hook group reliably in subsequent modifiers.
 :::
 
 :::info[Reparenting Safe]

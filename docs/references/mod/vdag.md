@@ -23,10 +23,10 @@ The `vdag` modifier fixes this by drawing an invisible, logical link between the
 
 ## Parameters
 
-| Parameter        | Type                | Default | Description                                                                                                                                                                                                            |
-|:-----------------|:--------------------|:--------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `node` / `nodes` | *node / list[node]* |         | The target node(s) whose virtual parenting will be modified.                                                                                                                                                           |
-| `filter`         | *bool*              | `True`  | Ensures pattern safety. If `True`, the system will only allow virtual parenting if the nodes share the same domain (e.g., a `ctrls` to a `ctrls`, or a `skin` to a `skin`). Set to `False` to force an unnatural link. |
+| Parameter        | Type                | Default | Description                                                                                                                                                                                                        |
+|:-----------------|:--------------------|:--------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `node` / `nodes` | *node / list[node]* |         | The target node(s) whose virtual parenting will be modified.                                                                                                                                                       |
+| `filter`         | *bool*              | `on`    | Ensures pattern safety. If `on`, the system will only allow virtual parenting if the nodes share the same domain (e.g., a `ctrls` to a `ctrls`, or a `skin` to a `skin`). Set to `off` to force an unnatural link. |
 
 ### Assignment Modes
 

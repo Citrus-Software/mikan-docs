@@ -25,13 +25,13 @@ Depending on how many `targets` you provide, the modifier automatically adapts i
 
 ### Core Setup
 
-| Parameter        | Type         | Default           | Description                                                                                                                                                            |
-|:-----------------|:-------------|:------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `targets`        | *list[node]* |                   | The nodes acting as the anchors (tendons) of the muscle. Provide 2 nodes for a linear muscle, or 3+ for a curved Spline muscle.                                        |
-| `nodes` / `node` | *list[node]* | `self.node`       | The nodes to be driven by the muscle rig (usually joints or local control groups).                                                                                     |
-| `parent`         | *node*       | `nodes[0].parent` | The node under which the technical muscle rig will be parented.                                                                                                        |
-| `hook`           | *bool*       | `False`           | How the driven `nodes` are attached. If `False`, they are parented inside the muscle hierarchy. If `True`, they remain in place and are driven via matrix constraints. |
-| `name`           | *str*        |                   | Custom name for the muscle rig. Defaults to a combined string of the target names.                                                                                     |
+| Parameter        | Type         | Default           | Description                                                                                                                                                        |
+|:-----------------|:-------------|:------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `targets`        | *list[node]* |                   | The nodes acting as the anchors (tendons) of the muscle. Provide 2 nodes for a linear muscle, or 3+ for a curved Spline muscle.                                    |
+| `nodes` / `node` | *list[node]* | `self.node`       | The nodes to be driven by the muscle rig (usually joints or local control groups).                                                                                 |
+| `parent`         | *node*       | `nodes[0].parent` | The node under which the technical muscle rig will be parented.                                                                                                    |
+| `hook`           | *bool*       | `off`             | How the driven `nodes` are attached. If `off`, they are parented inside the muscle hierarchy. If `on`, they remain in place and are driven via matrix constraints. |
+| `name`           | *str*        |                   | Custom name for the muscle rig. Defaults to a combined string of the target names.                                                                                 |
 
 ### Behaviors & Switches
 
@@ -39,8 +39,8 @@ Adding these parameters to your YAML not only sets their default value but also 
 
 | Option    | Type    | Default | Description                                                                                                             |
 |:----------|:--------|:--------|:------------------------------------------------------------------------------------------------------------------------|
-| `orient`  | *bool*  | `True`  | If `False`, the muscle rig ignores the orientation of the targets and only follows their position.                      |
-| `scale`   | *bool*  | `True`  | If `False`, the muscle rig ignores the scale of the targets.                                                            |
+| `orient`  | *bool*  | `on`    | If `off`, the muscle rig ignores the orientation of the targets and only follows their position.                        |
+| `scale`   | *bool*  | `on`    | If `off`, the muscle rig ignores the scale of the targets.                                                              |
 | `stretch` | *float* | `1.0`   | Default blend value for the stretch behavior (0 to 1).                                                                  |
 | `squash`  | *float* |         | *Activates Squash math.* Default blend value for volume preservation as the muscle compresses.                          |
 | `shear`   | *float* |         | *Activates Shear math.* Default blend value for the shearing effect. Keeps the muscle shape natural when targets twist. |

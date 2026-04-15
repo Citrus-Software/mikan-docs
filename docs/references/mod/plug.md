@@ -27,14 +27,14 @@ To define a plug, add its name directly as a key within the `plug` dictionary (e
 | *(Direct Value)*         | *float / int / bool*        |         | Shorthand syntax. Directly assigns the value to the plug.                                                             |
 | `type`                   | *str*                       | `float` | The data type. Required only if the plug doesn't exist yet. Valid values: `float`, `int`, `bool`, `enum`.             |
 | `set`                    | *float / int / bool / list* |         | Assigns the plug a value. If setting a vector plug (`t`, `r`, `s`), provide a list of 3 values `[x, y, z]`.           |
-| `keyable` / `k` / `show` | *bool*                      | `False` | Makes the plug visible and keyable for animation in the Channel Box.                                                  |
-| `hide`                   | *bool*                      | `False` | Hides the plug from the Channel Box and makes it non-keyable.                                                         |
-| `lock` / `l`             | *bool*                      | `False` | Locks the plug to prevent any editing.                                                                                |
+| `keyable` / `k` / `show` | *bool*                      | `off`   | Makes the plug visible and keyable for animation in the Channel Box.                                                  |
+| `hide`                   | *bool*                      | `off`   | Hides the plug from the Channel Box and makes it non-keyable.                                                         |
+| `lock` / `l`             | *bool*                      | `off`   | Locks the plug to prevent any editing.                                                                                |
 | `min`                    | *float / int*               |         | Sets a minimum value limit.                                                                                           |
 | `max`                    | *float / int*               |         | Sets a maximum value limit.                                                                                           |
 | `nice_name`              | *str*                       |         | UI-friendly display name for the Channel Box.                                                                         |
 | `enum`                   | *list[str] / dict*          |         | List of values for `enum` plugs (e.g., `['A', 'B']`). Also accepts a dict to map specific integer indices to strings. |
-| `flip`                   | *bool*                      | `False` | Automatically multiplies `set`, `min`, and `max` values by `-1` when executed on mirrored branches.                   |
+| `flip`                   | *bool*                      | `off`   | Automatically multiplies `set`, `min`, and `max` values by `-1` when executed on mirrored branches.                   |
 | `proxy`                  | *plug*                      |         | Creates a proxy attribute, sharing the exact value of the target plug without creating a separate connection.         |
 
 ## Examples
@@ -46,9 +46,9 @@ A standard operation to lock and hide scales and visibility on a controller. Not
 ```yml
 plug:
   node: my_ctrl::node
-  s.x: { lock: true, hide: true }
-  s.y: { lock: true, hide: true }
-  s.z: { lock: true, hide: true }
+  s.x: { lock: on, hide: on }
+  s.y: { lock: on, hide: on }
+  s.z: { lock: on, hide: on }
   vis: off
 ```
 

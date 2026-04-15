@@ -38,8 +38,8 @@ If the requested shape is found on any of the `sources`, the connection is estab
 | `default` / `dv` | *float*      | `0.0`   | Default value on the controller.                                                                                                          |
 | `min` / `max`    | *float*      |         | Hard limits for the controller plug.                                                                                                      |
 | `enum`           | *list[str]*  |         | Custom list of names for enum types. *(Automatically extracted from the source node if omitted).*                                         |
-| `sep`            | *bool*       | `False` | Forces the plug to be a visual UI separator. *Shortcut: Naming your plug with `__` (e.g., `__mouth__`) does this automatically.*          |
-| `force`          | *bool*       | `False` | Forces the creation of the plug on the buffer channel, even if no direct source is found.                                                 |
+| `sep`            | *bool*       | `off`   | Forces the plug to be a visual UI separator. *Shortcut: Naming your plug with `__` (e.g., `__mouth__`) does this automatically.*          |
+| `force`          | *bool*       | `off`   | Forces the creation of the plug on the buffer channel, even if no direct source is found.                                                 |
 
 #### Driven Logic (`driven`)
 

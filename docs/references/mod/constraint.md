@@ -17,7 +17,7 @@ A constraint modifier defines a specific constraint setup that can be applied to
 2. **Channel Validation & Blending:** Before applying the constraint, the framework automatically evaluates the state of the target node's channels based on the constraint type:
     - **Free Channels:** If the channels are clear, the connection is made directly.
     - **Connected Channels:** If connections already exist, the modifier automatically creates a blend between the new constraint and the old connections. It adds a `blend_***` attribute (e.g., `blend_translate`, `blend_orient`) to the constrained node.
-    - **Forced Blending:** You can force the creation of a blend attribute even if no prior connections exist by setting `blend: true`. This is very useful for creating manual switches on the constrained node.
+    - **Forced Blending:** You can force the creation of a blend attribute even if no prior connections exist by setting `blend: on`. This is very useful for creating manual switches on the constrained node.
 
 :::warning[Limitation]
 The modifier will abort and refuse to apply the command if a blend setup already exists on the targeted channels.
@@ -44,8 +44,8 @@ A dedicated tool is on the roadmap! It will automatically convert constraints ap
 | Parameter         | Type          | Default | Description                                                                                                                 |
 |-------------------|---------------|---------|-----------------------------------------------------------------------------------------------------------------------------|
 | `weights`         | *list[float]* | `1.0`   | Weights per target.                                                                                                         |
-| `maintain_offset` | *bool*        | `False` | Maintains the current offset between the target and the node.                                                               |
-| `blend`           | *bool*        | `False` | Forces the addition of `blend_translate` / `blend_orient` attributes to the constrained node (if they don't already exist). |
+| `maintain_offset` | *bool*        | `off`   | Maintains the current offset between the target and the node.                                                               |
+| `blend`           | *bool*        | `off`   | Forces the addition of `blend_translate` / `blend_orient` attributes to the constrained node (if they don't already exist). |
 | `skip`            | *str*         |         | Channels to skip during connection. Use axes like `x`, `y`, `z`, or `xy`.                                                   |
 | `skip_translate`  | *str*         |         | Same as `skip`, but strictly applies to translate channels (useful for `parent` constraints).                               |
 | `skip_rotate`     | *str*         |         | Same as `skip`, but strictly applies to rotate channels.                                                                    |
@@ -58,7 +58,7 @@ A dedicated tool is on the roadmap! It will automatically convert constraints ap
 | `up`        | *str \| vector* | `y`     | Local up axis of the constrained node.                                                                                                                                                                                       |
 | `up_vector` | *str \| vector* | `null`  | World or object space up vector for the constraint.<ul><li>If `up_object` is set, this behaves as the *object rotation up vector*.</li><li>If not, it is treated as a world space vector (*vector* mode).</li></ul>          |
 | `up_object` | *node*          |         | Reference object for the up vector.<ul><li>If `up_vector` is **not** set, this node is used as the target up object (*object up* mode).</li><li>If `up_vector` **is** set, it's used in *object rotation up* mode.</li></ul> |
-| `flip`      | *bool*          | `False` | Inverts the aim and up axes if the mod is executed in a mirrored branch.                                                                                                                                                     |
+| `flip`      | *bool*          | `off`   | Inverts the aim and up axes if the mod is executed in a mirrored branch.                                                                                                                                                     |
 
 :::tip[Vector formatting]
 Whenever a parameter expects a vector, you can provide it as:

@@ -39,7 +39,7 @@ These parameters define the pivoting system being measured.
 | `angle_parent` | *node* |         | The base transform used as the center of rotation (e.g., the elbow).                                                                                                                            |
 | `parent`       | *node* | `::rig` | The node under which the generated technical groups will be parented.                                                                                                                           |
 | `targets`      | *dict* |         | A dictionary defining the angle rules. Each key is a custom `<target_name>` (e.g., `bend_up`) containing both [**Rules**](#target-rules) and [**Outputs**](#target-outputs-remaps--operations). |
-| `helpers`      | *bool* | `False` | Forces the creation of visual debug locators and cones (automatically `True` if Mikan is run in debug mode).                                                                                    |
+| `helpers`      | *bool* | `off`   | Forces the creation of visual debug locators and cones (automatically `on` if Mikan is run in debug mode).                                                                                      |
 
 ### Target Rules
 
@@ -99,7 +99,7 @@ Just like `driver.distance`, guessing the correct local Euler rotations and fall
 
 ### Step 1: Draft your YAML
 
-Write your modifier but leave `target_angle` at `[0, 0, 0]` and `falloff` at a dummy number like `45`. Set `helpers: true`.
+Write your modifier but leave `target_angle` at `[0, 0, 0]` and `falloff` at a dummy number like `45`. Set `helpers: on`.
 
 ```yml
 angle:

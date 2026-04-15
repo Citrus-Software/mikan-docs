@@ -47,7 +47,7 @@ You can use the strings `'time'` or `'frame'` in your inputs. The modifier will 
 |--------------------|-----------------------|---------|--------------------------------------------------------------------------------------|
 | `op` / `operation` | *str*                 |         | Math operation to apply (see [supported operations](#supported-operations-op) below. |
 | `clamp`            | *tuple[float, float]* |         | Clamps the final result between `[min, max]`.                                        |
-| `flip`             | *bool*                | `False` | Applies a `-1` multiplier on mirrored branches only.                                 |
+| `flip`             | *bool*                | `off`   | Applies a `-1` multiplier on mirrored branches only.                                 |
 
 #### Supported Operations (`op`)
 

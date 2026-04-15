@@ -13,12 +13,12 @@ This modifier is a highly versatile utility. It allows you to create custom pivo
 
 ### Targets & Hierarchy
 
-| Parameter | Type         | Default          | Description                                                                                                                                            |
-|:----------|:-------------|:-----------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `node`    | *node*       |                  | Single node to duplicate.                                                                                                                              |
-| `nodes`   | *list[node]* |                  | Multiple nodes to duplicate. *(Overrides `node` if both are provided).*                                                                                |
-| `parent`  | *node*       | Parent of source | The node under which the new locator(s) will be parented.                                                                                              |
-| `root`    | *bool*       | `False`          | Adds a "buffer" transform node above the created locator, acting as its immediate parent. *Note: Automatically set to `True` if `copycat` is enabled.* |
+| Parameter | Type         | Default          | Description                                                                                                                                          |
+|:----------|:-------------|:-----------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| `node`    | *node*       |                  | Single node to duplicate.                                                                                                                            |
+| `nodes`   | *list[node]* |                  | Multiple nodes to duplicate. *(Overrides `node` if both are provided).*                                                                              |
+| `parent`  | *node*       | Parent of source | The node under which the new locator(s) will be parented.                                                                                            |
+| `root`    | *bool*       | `off`            | Adds a "buffer" transform node above the created locator, acting as its immediate parent. *Note: Automatically set to `on` if `copycat` is enabled.* |
 
 ### Naming
 
@@ -35,24 +35,24 @@ Do not use `root` as a value for the `name` parameter. It is reserved by the sys
 
 | Parameter        | Type    | Default | Description                                                                                                         |
 |:-----------------|:--------|:--------|:--------------------------------------------------------------------------------------------------------------------|
-| `skin` / `joint` | *bool*  | `False` | Creates a `joint` instead of a standard transform node. Useful for creating extra skinning influences procedurally. |
-| `locator`        | *bool*  | `False` | Adds a locator shape under the transform.                                                                           |
-| `shape`          | *bool*  | `False` | Copies the visual curve/shape from the source node to the new locator.                                              |
+| `skin` / `joint` | *bool*  | `off`   | Creates a `joint` instead of a standard transform node. Useful for creating extra skinning influences procedurally. |
+| `locator`        | *bool*  | `off`   | Adds a locator shape under the transform.                                                                           |
+| `shape`          | *bool*  | `off`   | Copies the visual curve/shape from the source node to the new locator.                                              |
 | `scale`          | *float* | `1.0`   | Affects the scale of the locator shape or the `radius` if it's a joint.                                             |
 
 ### Behavior
 
-| Parameter | Type   | Default | Description                                                                                                                                                                                                                             |
-|:----------|:-------|:--------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `copycat` | *bool* | `False` | Connects the source node's local matrix to the duplicated locator. The locator will constantly mimic the source node's local transforms (translation, rotation, scale, shear). *Forces `root: true` to prevent double transformations.* |
+| Parameter | Type   | Default | Description                                                                                                                                                                                                                           |
+|:----------|:-------|:--------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `copycat` | *bool* | `off`   | Connects the source node's local matrix to the duplicated locator. The locator will constantly mimic the source node's local transforms (translation, rotation, scale, shear). *Forces `root: on` to prevent double transformations.* |
 
 ## Output
 
 The modifier registers the generated nodes internally. Depending on your parameters, the following IDs are created:
 
 - `<id>::mod.loc.<name>` *(The main created node)*
-- `<id>::mod.loc.root.<name>` *(If `root: true` or `copycat: true`)*
-- `<id>::skin.loc.<name>` *(If `skin: true`)*
+- `<id>::mod.loc.root.<name>` *(If `root: on` or `copycat: on`)*
+- `<id>::skin.loc.<name>` *(If `skin: on`)*
 
 ## Examples
 
@@ -64,7 +64,7 @@ Creates a simple transform node with a locator shape at the position of the bone
 locator:
   node: bone::tip
   parent: world::node
-  locator: true
+  locator: on
   name: tip_helper
 ```
 
@@ -76,7 +76,7 @@ Creates a joint instead of a transform, prefixes it with `sk_`.
 locator:
   node: leg.L::skin.dn.0
   root: on
-  skin: true
+  skin: on
   name: knee_volume
 ```
 
@@ -88,6 +88,6 @@ Creates a duplicate of a controller that strictly follows its local matrix. The 
 locator:
   parent: rig_local::node
   node: spine::ctrls.0
-  copycat: true
+  copycat: on
   name: spine_local
 ```

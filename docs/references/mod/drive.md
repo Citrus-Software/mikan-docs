@@ -41,7 +41,7 @@ These parameters define the source driver and global behavior of the modifier.
 | `plug`        | *str*          |          | If `node` refers only to a node, use this to specify which attribute on it acts as the driver.                |
 | `<id>@<plug>` | *dict*         |          | Target plug and its animation curve definition. See [Curve Definitions](#curve-definitions) below.            |
 | `weight`      | *node*         | optional | Creates a `weight` attribute on the specified node to act as a global multiplier for the driven key's output. |
-| `flip`        | *bool*         | `False`  | Multiplies all curve values by `-1` when the modifier is executed in a mirrored branch.                       |
+| `flip`        | *bool*         | `off`    | Multiplies all curve values by `-1` when the modifier is executed in a mirrored branch.                       |
 | `scale`       | *float*        | `1.0`    | Scales all key values. This is particularly useful for rig rescaling operations.                              |
 
 ### Curve Definitions

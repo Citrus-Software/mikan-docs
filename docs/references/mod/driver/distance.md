@@ -34,7 +34,7 @@ These parameters define the two points in space being measured.
 | `pos1` / `pos2`     | *list[float]* | `[0, 0, 0]` | Optional local offsets for `input1` and `input2`. Allows measuring from a specific point relative to the node.                                                                                                                                                   |
 | `parent`            | *node*        | `::rig`     | The node under which the generated technical groups will be parented.                                                                                                                                                                                            |
 | `targets`           | *dict*        |             | A dictionary defining the distance rules. Each key is a custom `<target_name>` (e.g., `compression`) containing both [**Rules**](#target-rules) (`target_distance`, `falloffs...`) and [**Outputs**](#target-outputs-remaps--operations) (`remaps`, operations). |
-| `helpers`           | *bool*        | `false`     | Forces the creation of visual debug locators (automatically `true` if Mikan is run in debug mode).                                                                                                                                                               |
+| `helpers`           | *bool*        | `off`       | Forces the creation of visual debug locators (automatically `on` if Mikan is run in debug mode).                                                                                                                                                                 |
 
 ### Target Rules
 
@@ -89,7 +89,7 @@ It is extremely difficult to guess the correct `target_distance` and `falloff` v
 
 ### Step 1: Draft your YAML
 
-Write your modifier but leave the distance and falloff values at dummy numbers (e.g., `0`). Set `helpers: true` (or build your template in Debug Mode).
+Write your modifier but leave the distance and falloff values at dummy numbers (e.g., `0`). Set `helpers: on` (or build your template in Debug Mode).
 
 ```yml
 distance:

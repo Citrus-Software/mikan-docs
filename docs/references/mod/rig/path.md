@@ -68,11 +68,11 @@ For every node attached, Mikan generates a parent transform named **`path_<geo_n
 
 The generated `path` transform always exposes the following attributes:
 
-- **`@u`**: The parameter driving the position. (Ranging from `0` to `max_u`, or `0` to `1` if `percent: true`). **This is the plug you want to connect to slide the object.**
+- **`@u`**: The parameter driving the position. (Ranging from `0` to `max_u`, or `0` to `1` if `percent: on`). **This is the plug you want to connect to slide the object.**
 - **`@length`**: The live, dynamically calculated length of the curve.
 - **`@length0`**: The original resting length of the curve.
 
-### Interactive Attributes (if `io: true`)
+### Interactive Attributes (if `io: on`)
 
 If the `io` (Interactive) flag is enabled, standard parameterization is bypassed, and the `path` transform exposes an advanced sliding dashboard:
 
@@ -88,7 +88,7 @@ If the `io` (Interactive) flag is enabled, standard parameterization is bypassed
 
 ### Standard Normalized Slider
 
-Attaches a controller to a curve. `percent: true` ensures the `@u` attribute ranges cleanly from 0 to 1, making it easy to drive via a `plug` modifier.
+Attaches a controller to a curve. `percent: on` ensures the `@u` attribute ranges cleanly from 0 to 1, making it easy to drive via a `plug` modifier.
 
 :::warning[Build Order (Priority)]
 When using `snap: on`, you must ensure that your target node is fully built and bound *before* the modifier moves it to the start of the curve. To enforce this, assign a negative priority (e.g., `#!-10`) to the mod block. This guarantees the path snapping executes after the initial cart setup.
