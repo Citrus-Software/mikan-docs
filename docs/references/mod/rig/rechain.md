@@ -1,72 +1,113 @@
+---
+title: rig.rechain
+description: Recreates a virtual Forward Kinematics (FK) hierarchy over disconnected or constrained nodes.
+---
+
 # rig.rechain
 
-> Recreates a virtual FK chain hierarchy over disconnected or constrained nodes.
+Builds a virtual Forward Kinematics (FK) hierarchy over disconnected or constrained nodes.
 
-This modifier allows you to rebuild an FK-style hierarchy virtually, useful for setups like FK joints constrained to rivets, where real parenting is not possible. It supports both a legacy and a new, more explicit method.
+This modifier solves the classic "Necklace Problem" in rigging. Imagine a chain of armor plates or necklace links: you want each link to stick to the deforming body (via [`rig.rivet`](./rivet.md)), but you also want the animator to rotate the top link and have all subsequent links follow it naturally like an FK chain.
 
-## Options
+Because each link is already constrained to a rivet, you cannot physically parent them to one another in the Outliner without breaking the rivet or creating a dependency cycle. `rig.rechain` solves this by mathematically extracting the local matrix rotations of your controllers and cascading them virtually down the chain.
 
-- **`name`** (*str*, optional): Base name used to generate the IDs of the virtual nodes.
-- **`weight`** (*bool*, optional): Adds a weight attribute to enable/disable the transformation constraint (default: `true`).
-<!-- -->
-- **`ctrls`** (*list[node]*): List of controller nodes representing the FK chain.
-- **`roots`** (*list[node]*, optional): Corresponding roots for each controller (only needed if controller matrices aren't complete).
-- **`nodes`** (*list[node]*): List of nodes to be constrained, typically the roots following each controller.
+```mermaid
+graph LR
+    rvt0("(rivet)") --> root0("root.0")
+    root0 --> ctrl0("ctrls.0")
+    ctrl0 --> skin0("skin.0")
+    
+    skin0 --> root1
+    
+    rvt1("(rivet)") --> root1("root.1")
+    root1 --> ctrl1("ctrls.1")
+    ctrl1 --> skin1("skin.1")
+    
+    skin1 --> root2
 
-> ⚠️ Only the local matrix is connected in this method. If using transform hierarchies instead of FK controllers, specify the `roots` list.
+    rvt2("(rivet)") --> root2("root.2")
+    root2 --> ctrl2("ctrls.2")
+    ctrl2 --> skin2("skin.2")
 
-> ⚠️ When using default.bones templates, make sure the `nodes` list only includes root nodes. The modifier will not work with other types.
+    linkStyle 3,7 stroke:#f60,stroke-width:3px;
+    classDef default fill:#fff,stroke:#aaa,stroke-width:2px,color:#333;
+```
 
-> ⚠️ For riveted joints, make sure the hierarchy is broken and nodes are reparented to avoid unwanted scale propagation.
+## Parameters
 
-![DAG graph how rechain works](img/rechain_graph.png)
+| Parameter | Type         | Default | Description                                                                                                                           |
+|:----------|:-------------|:--------|:--------------------------------------------------------------------------------------------------------------------------------------|
+| `ctrls`   | *list[node]* |         | The driver controllers representing the FK chain (the nodes the animator will rotate).                                                |
+| `nodes`   | *list[node]* |         | The driven transform nodes (usually the root offset groups of the subsequent joints). **Must be exactly the same length as `ctrls`.** |
+| `roots`   | *list[node]* |         | Optional. The local reference spaces for each controller. Only necessary if your `ctrls` do not have zeroed-out local matrices.       |
+| `weight`  | *bool*       | `off`   | Automatically generates an animatable `weight` attribute to blend the virtual hierarchy on or off.                                    |
+| `name`    | *str*        |         | Base name used to register the generated IDs.                                                                                         |
+
+:::caution Target Proper Nodes
+When using `default.bones` templates, ensure the `nodes` list targets the **root** offset groups (e.g., `joint::roots.0`), NOT the joints or controllers themselves. The modifier needs a clean transform matrix to inject the virtual hierarchy.
+:::
+
+## Output
+
+### Animatable Attributes
+
+If `weight: on` a **`@weight`** attribute (ranging from `0.0` to `1.0`) is automatically added to each driven node in the `nodes` list. This allows the rig to dynamically disable the FK chain cascade on a per-link basis.
 
 ## Examples
 
-### Multiple subchains driven by a main chain
+### Virtual Hierarchy Between Riveted Joints
 
-To animate multiple subchains using a main chain, start by breaking the original hierarchy:
+In this example, we have 3 joints pinned to a surface. We want `chain::skin.0` to act as the parent of `chain::roots.1`, and `chain::skin.1` to act as the parent of `chain::roots.2`. By feeding the controllers into `ctrls` and the roots into `nodes`, Mikan cascades the offsets.
 
 ```yml
-# Disconnect subchain controllers and parent them to the main chain hooks
-#> n: [0, 1, 2, 3, 4]
-parent: subchain.L::roots.<n> chain::hooks.<n>
+rig.rechain:
+  ctrls:
+    - chain::skin.0
+    - chain::skin.1
+  nodes:
+    - chain::roots.1
+    - chain::roots.2
 ```
 
-Then use `rechain` to rebuild the desired FK behavior:
+![rechain with riveted joints](img/rechain_rivets.png)
+
+:::info Demo Scene
+To see this setup in action, download the [**mod_rechain_rivet.ma**](https://drive.google.com/file/d/1s4nhDL5ON7mjj-B8eYKmyFNZElUThVou/view?usp=drive_link) demo scene from our [Google Drive folder](https://drive.google.com/drive/folders/1tDXJmNxd-3ev1BwvZMm4Gl7tbnJTWJcn?usp=drive_link).
+:::
+
+
+### Subchains Driven by a Main Chain
+
+A more advanced setup: animating multiple subchains using a main structural chain.
+
+First, you break the original physical hierarchy so the subchains can be constrained to the main chain hooks (acting as dynamic rivets). Then, you use rig.rechain to rebuild the lost FK behavior virtually, allowing the animator to pose the subchain controllers directly.
 
 ```yml
+# 1. Disconnect subchain controllers and parent them to the main chain hooks
+#> n: [0, 1, 2, 3, 4]
+parent: side.L::roots.<n> main::hooks.<n>
+
+# 2. Rebuild the FK behavior virtually
 rig.rechain:
   roots:
-    - subchain.L::roots.0
-    - subchain.L::roots.1
-    - subchain.L::roots.2
-    - subchain.L::roots.3
+    - side.L::roots.0
+    - side.L::roots.1
+    - side.L::roots.2
+    - side.L::roots.3
   ctrls:
-    - subchain.L::skin.0
-    - subchain.L::skin.1
-    - subchain.L::skin.2
-    - subchain.L::skin.3
+    - side.L::skin.0
+    - side.L::skin.1
+    - side.L::skin.2
+    - side.L::skin.3
   nodes:
-    - subchain.L::roots.1
-    - subchain.L::roots.2
-    - subchain.L::roots.3
-    - subchain.L::roots.4
+    - side.L::roots.1
+    - side.L::roots.2
+    - side.L::roots.3
+    - side.L::roots.4
 ```
-![viewport example](img/rechain_subchain.png)
 
+![rechain subchain controllers](img/rechain_subchain.png)
 
-### Virtual hierarchy between riveted joints
-
-Here, joint1 controls joint2, and joint2 controls joint3:
-
-```yml
-rig.rechain:
-  ctrls:
-    - joint1::skin.0
-    - joint2::skin.0
-  nodes:
-    - joint2::roots.0
-    - joint3::roots.0
-```
-![viewport example](img/rechain_rivets.png)
+:::info Demo Scene
+To see this setup in action, download the [**mod_rechain.ma**](https://drive.google.com/file/d/1UDUPH0_wBwxQGF9UsdwDM6YmgAkUjvHh/view?usp=drive_link) demo scene from our [Google Drive folder](https://drive.google.com/drive/folders/1tDXJmNxd-3ev1BwvZMm4Gl7tbnJTWJcn?usp=drive_link).
+:::
