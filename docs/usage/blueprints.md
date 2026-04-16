@@ -30,14 +30,18 @@ Template modules are the building blocks of the rig. Each template:
 
 All construction data is stored on the root node (ID, options, etc.). Child nodes under the template root are considered part of it unless explicitly hidden using a name starting with `_`.
 
-> ⚠️ Nodes with `_` are treated as **helper** and ignored during parsing.
+:::warning
+Nodes with `_` are treated as **helper** and ignored during parsing.
+:::
 
 The root node is critical:
 
 - It defines the existence of the template.
 - It stores all configuration attributes (prefixed with `gem_`).
 
-> 🔹 The `gem_` prefix originates from the original engine name "Gemini" and is preserved for compatibility.
+:::info
+The `gem_` prefix originates from the original engine name "Gemini" and is preserved for compatibility.
+:::
 
 Template modules can be easily identified by their blue color in Maya’s Outliner.
 
@@ -133,7 +137,9 @@ Defined by the pipeline. Examples:
 
 These modes help control visibility, performance, or structure depending on the context. For example, an `anim` rig might include deformation controllers, while a `layout` rig might not.
 
-⚠️ These modes should be defined and managed by **production** to match the studio’s specific delivery workflows.
+:::warning
+These modes should be defined and managed by **production** to match the studio’s specific delivery workflows.
+:::
 
 #### Host-Specific
 

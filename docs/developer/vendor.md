@@ -31,7 +31,9 @@ There are **two levels of customization** applied:
 
 This approach lets us isolate core library tweaks while keeping higher-level project logic separate.
 
-> ⚠️ The patched version of `cmdx` is not compatible with the upstream library out-of-the-box. Replacing it may break the tool.
+:::warning
+The patched version of `cmdx` is not compatible with the upstream library out-of-the-box. Replacing it may break the tool.
+:::
 
 See: `mikan/maya/cmdx.py` for details.
 
