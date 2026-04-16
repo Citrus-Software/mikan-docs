@@ -1,6 +1,16 @@
 # Node modules
 node_modules/
 
+# Yarn Modern (v4)
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.yarn/cache
+.pnp.*
+
 # Docusaurus build outputs
 build/
 .docusaurus/

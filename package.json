@@ -44,5 +44,6 @@
   "engines": {
     "node": ">=18.0"
   },
-  "description": "Docusaurus example project"
+  "description": "Mikan Documentation Server",
+  "packageManager": "yarn@4.13.0"
 }
