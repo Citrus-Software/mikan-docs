@@ -5,7 +5,7 @@ This folder contains external Python libraries and scripts bundled directly with
 ## Bundled libraries
 
 | Library       | Notes                                                          | License              |
-| ------------- | -------------------------------------------------------------- | -------------------- |
+|---------------|----------------------------------------------------------------|----------------------|
 | **geomdl**    | Copied and slightly modified to fit project needs.             | MIT                  |
 | **pyparsing** | Included as-is for parsing utilities.                          | MIT                  |
 | **yamllint**  | Included as-is for YAML linting support.                       | GPL version 3        |
