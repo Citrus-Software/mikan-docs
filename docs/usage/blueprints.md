@@ -8,7 +8,7 @@ Mikan is a modular rigging engine built around explicit rig construction hierarc
 
 Each rig is encapsulated in an **Asset**, which acts as the top node containing and orchestrating the entire build process.
 
-## Asset & Hierarchy
+## Asset and Hierarchy
 
 An **Asset** is the top-level container and orchestrator for a rig.
 
@@ -48,15 +48,7 @@ Each template is a self-contained module within the Asset, defined by its positi
 
 When the rig is built, every joint in a template generates a corresponding **rig node** called a **Hook**. Hooks are the connection points: a child template's rig will automatically be parented under its parent’s hook.
 
-### Symmetry and Branches
-
-The `branches` system allows for procedural duplication (e.g., L/R limbs).
-
-- **Suffixes:** Standard pairs like `L/R`, `up/dn`, `ft/bk` are recognized automatically.
-- **Automation:** Mirrored branches automatically invert axes and flip transformations for joints and controllers.
-- **Edit Mode:** You can "freeze" branch placement using **Set branch edit** in the context menu to manually tweak asymmetrical poses.
-
-### Creation & Editing
+### Creation and Editing
 
 - Templates are created via the **"Add"** tab in the Template UI.
 - The name defines the node IDs and must be unique within the Asset.
@@ -73,7 +65,20 @@ Each template instance has configurable **options**:
 - Options are shown in **blue** in the interface if modified.
 - If the value is reset to default, the label turns **dark blue**, but the attribute still exists.
 
-## Shapes & Controllers
+### Symmetry and Branches
+
+The `branches` parameter allows a single template to define multiple instances of itself, automatically handling duplication and mirroring.
+
+- **Duplicating Complexity:** Duplicate entire hierarchical chains at once. Author a complete arm setup with its fingers and internal mechanics once, and Mikan expands it across every branch.
+- **Logic Replication:** All Modifiers or Deformers are automatically replicated. Mikan handles the renaming and ensures custom mechanics work correctly on every branch.
+- **Symmetry & Suffixes:** By listing suffixes (e.g., `[L, R]`), Mikan identifies the branches to build. For standard pairs like `L/R`, `up/dn`, or `ft/bk`, it automatically calculates axis inversions and transformation flipping to ensure symmetrical behavior.
+- **Manual Adjustments:** Branches are virtual by default. To handle asymmetrical needs (like a different limb length), use the "**Build branches template**" function from the Template Outliner's right-click menu. This manifests the branch into the scene for manual placement while keeping it linked to the master logic.
+
+:::info
+For a deeper dive into advanced branch configurations, custom suffix mapping, and complex limb setups, check the [**Branches Guide**](/guides/branches).
+:::
+
+## Shapes and Controllers
 
 Shapes are the visual curves used as animation controllers. In Mikan, they are authored directly within the Blueprint hierarchy.
 
@@ -103,7 +108,7 @@ Since Helpers are "invisible" to the skeletal build but "visible" to the logic b
 
 If you are inspecting a Blueprint and see nodes starting with `_`, you know they are "Logic/Visual" nodes and not part of the final joint chain.
 
-## Scheduler & Build Process
+## Scheduler and Build Process
 
 Mikan uses a specialized **Scheduler** to scan the hierarchy and plan the construction order.
 
