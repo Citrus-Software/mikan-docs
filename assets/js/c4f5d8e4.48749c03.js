@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocusaurus=self.webpackChunkdocusaurus||[]).push([["4823"],{37176(u,s,r){r.r(s),r.d(s,{default:()=>t});var a=r(74848);r(96540);var e=r(56347);function t(){return(0,a.jsx)(e.rd,{to:"about"})}}}]);
