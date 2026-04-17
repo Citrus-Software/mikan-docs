@@ -61,3 +61,5 @@ Ready to dive in?
 * Check out the **[Installation Guide](/introduction/installation.md)** to set up Mikan.
 * Follow the **[Quickstart Tutorial](/introduction/quickstart.md)** to build your first rig.
 * Read about the **[Blueprint Anatomy](/usage/blueprints.md)** to understand the core structure.
+
+![JB the Capybara in Mikan](/img/mikan-banner-001.jpg)
