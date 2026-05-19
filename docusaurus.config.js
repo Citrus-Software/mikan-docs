@@ -107,15 +107,6 @@ const config = {
         style: "dark",
         links: [
           {
-            title: "Docs",
-            items: [
-              {
-                label: "About",
-                to: "/about",
-              },
-            ],
-          },
-          {
             title: "Community",
             items: [
               {
@@ -138,7 +129,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} TeamTO Technology. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Citrus Animation Software. Built with Docusaurus.`,
       },
       prism: {
         theme: prismThemes.oneLight,
