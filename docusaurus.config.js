@@ -135,6 +135,16 @@ const config = {
         theme: prismThemes.oneLight,
         darkTheme: prismThemes.palenight,
       },
+
+      algolia: {
+        appId: 'H22UAVUF6S',
+        apiKey: 'b2a03ef98dc17b72b35b698e2c5ffc4f',
+        indexName: 'mikan-docs',
+        contextualSearch: true,
+        searchParameters: {},
+        searchPagePath: 'search',
+      },
+
     }),
 
   markdown: {
