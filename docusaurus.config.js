@@ -16,7 +16,7 @@ const config = {
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   future: {
-    v4: true, // Improve compatibility with the upcoming Docusaurus v4
+    v4: false, // Improve compatibility with the upcoming Docusaurus v4
   },
 
   // Set the production url of your site here
@@ -140,10 +140,8 @@ const config = {
         appId: 'H22UAVUF6S',
         apiKey: 'b2a03ef98dc17b72b35b698e2c5ffc4f',
         indexName: 'mikan-docs',
-        contextualSearch: false,
-        searchParameters: {
-          facetFilters: [],
-        },
+        contextualSearch: true,
+        searchParameters: {},
         searchPagePath: 'search',
       },
 
