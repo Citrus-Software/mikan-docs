@@ -70,8 +70,12 @@ Do not create pose nodes manually. Enable the `do_pose` option on supported temp
 
 ### 3. Driver Connections
 
-- **Facial Rigs:** Driven key distribution across controls is typically handled via the `shape.channel` modifier.
-- **Pose Space Deformation (PSD):** Connected via custom network nodes (dedicated PSD modifiers are planned for future releases).
+The Driver node acts as an intermediary evaluation layer that routes, remaps, and distributes animation data across rig attributes. It standardizes how complex control values drive lower-level character deformations.
+
+- **Initial Setup & Core Role**: Once the node is initialized, incoming control channels are bound to target attributes. The driver handles evaluation logic, range remapping, and blending before passing values down to the deformation graph.
+- **Multi-Target Mesh Grouping**: A single driver channel can target identical shapes spread across multiple distinct meshes. This allows driving synchronized deformations (such as a mouth shape shared between a face mesh and a mustache mesh) from a single source attribute without duplicating control setups.
+- **Facial Rigs & Combination Logic**: Driving logic, remap curves, and combination shapes (e.g., pose combinations) are handled upstream via specific modifiers like `shape.channel`.
+- **Pose Space Deformation (PSD)**: Connected via custom network nodes to evaluate pose combinations *(dedicated PSD modifiers are planned for future releases)*.
 
 ![Driver Setup](img/init_driver.png)
 
@@ -82,38 +86,44 @@ Do not create pose nodes manually. Enable the `do_pose` option on supported temp
 1. **Initialize the Tools:**
     - Select your driver node (e.g., a locator) and click **Driver**.
     - Keep your driver selected or select any control in your group hierarchy and click **Group** in the Selector Toolbar to auto-detect the parent `core.group`.<br/>
-    ![Init Shape Edsitor](img/init_driver_group.png)
+      ![Init Shape Edsitor](img/init_driver_group.png)
 2. **Add a Pose Attribute:**
     - In the **Pose Editor** panel, right-click inside the attribute list and select **Add Shape** (or use the input field).
     - Enter a name for your attribute (e.g., `mouth_corner_up_L`).<br/>
-    ![Add Pose Attribute](img/add_pose.png)
+      ![Add Pose Attribute](img/add_pose.png)
 3. **Pose Your Controllers:**
     - Manipulate the rig controllers in the viewport to create your desired pose.
 4. **Record the Pose:**
     - Highlight your new attribute in the list and click **Save**. The controller transforms are now recorded onto the underlying pose nodes driven by this attribute value.<br/>
-    ![Save Pose](img/save_pose.png)
+      ![Save Pose](img/save_pose.png)
 5. **Persist to Template:**
     - Click **Save Mods** in the top bar to record these driven keys into your Mikan template modifiers, ensuring they persist across rig rebuilds.<br/>
-    ![Saves Modifiers in Template](img/saved_mods.png)
+      ![Saves Modifiers in Template](img/saved_mods.png)
 
 ### 2. Sculpting a Multi-Mesh Blendshape
 
 The Shape Editor allows a single driver attribute to control blendshape targets across multiple geometries simultaneously.
 
 1. **Select Target Meshes:** Select all base geometries in the viewport that should receive the sculpt.
-2. **Add a Sculpt Target:** Right-click the desired attribute in the **Pose Editor** list and select **Add Sculpt Target**.
+2. **Add a Sculpt Target:** Right-click the desired attribute in the **Pose Editor** list and select **Add Sculpt Target**.<br/>
+   ![Select Target Meshes](img/add_sculpt_target.png)
 3. **Sculpt:**
-    * Set your driver attribute value to `1.0`.
-    * Sculpt adjustments directly on the generated target meshes or base geometry.
+    - Set your driver attribute value to `1.0`.
+    - Toggle Sculpt Target on the desired mesh in the list to sculpt adjustments directly on the geometry.<br/>
+      ![Sculpt](img/toggle_sculpt.png)
+
 4. **Validate:** Dial your driver attribute between `0.0` and `1.0` to verify the deformation across all connected meshes.
 
 ### 3. Fast L/R Pose Splitting with the Pose Shelf
 
 1. **Create the Full Pose:** Sculpt/pose both sides symmetrically on your rig.
-2. **Buffer in Shelf:** In the **Pose Shelf**, click **Save Edit** to temporarily cache this full symmetrical pose as a button preset.
-3. **Isolate One Side:** Zero out or dampen the opposite side controllers using the SRT scale tools (`/2`, `Reset`).
+2. **Buffer in Shelf:** In the **Pose Shelf**, click **Save Edit** to temporarily cache this full symmetrical pose as a button preset.<br/>
+   ![Buffer in Shelf](img/shelf_edit.png)
+3. **Isolate One Side:** Zero out or dampen the opposite side controllers using the SRT scale tools (`/2`, `Reset`).<br/>
+   ![Isolate One Side](img/divide_shape.png)
 4. **Save Left Pose:** Record this single-side pose onto your `_L` driver attribute.
-5. **Flip & Save Right Pose:** Click **Flip** in the **Controllers** panel to mirror the pose onto the opposite side, then save it onto your `_R` driver attribute.
+5. **Flip & Save Right Pose:** Click **Flip** in the **Controllers** panel to mirror the pose onto the opposite side, then save it onto your `_R` driver attribute.<br/>
+   ![Flip Pose](img/flip_shape.png)
 6. **Clean Up:** Delete the temporary pose preset from your shelf once validated.
 
 ## Interface Reference
