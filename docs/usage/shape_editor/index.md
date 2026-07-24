@@ -5,156 +5,193 @@ description: Learn how to manage set driven keys, blendshape collections, and br
 
 # Shape Editor
 
-The **Shape Editor** is designed to manage collection sets for both **Set Driven Key (SDK) poses** and **blendshapes**. It provides a unified interface to build, edit, and seamlessly bridge pose setups into Mikan's template pipeline.
-
-## Prerequisites & Scene Setup
-
-Before using the Shape Editor, make sure your setup meets the following conditions:
-- **The rig must be built.**
-- **A Driver node** is defined.
-- **A Group module** is assigned.
-
-### Driver Setup
-
-The **Driver** is the DAG node that holds the custom attributes used to drive your shapes (similar to Maya’s native *Set Driven Key* driver).
-
-- **Recommended Node:** While any DAG node can act as a driver, it is strongly recommended to use a **Locator** rather than an animation control. This creates a clean separation between animator controls and internal rig logic.
-- **Logic & Connections:**
-  - **Facial Rigging:** Driven key distribution across controls is typically handled using the `shape.channel` modifier.
-  - **Pose Space Deformation (PSD):** Custom network connections are used (dedicated PSD modifiers are planned for future updates).
-
-![Driver Setup](img/init_driver.png)
-
-### Group Setup
-
-Depending on whether you are working with driven key poses or target mesh sculpts (blendshapes), the **Group** setting behaves as follows:
-
-#### 1. Driven Key Poses
-The Group defines the root template module used to scan for controls and pose nodes.
-- Typically, set this to a `core.group` module to easily wrap a sub-hierarchy.
-- When saving a pose, the tool scans all nodes tagged as `*::poses` parented under this group, transferring the control's position onto the corresponding pose transform.
-
-> **Supported Modules:** Pose nodes can be generated automatically from `core.joints`, `core.bones`, `rig.spline`, and `digit.legacy` modules by enabling the `do_pose` option.
-
-#### 2. Blendshapes
-The Group defines the target group name under which blendshape targets are organized within Maya's blendshape nodes.
-- Targets can be created automatically from the editor interface.
-- If created manually (or imported from an external scene), you must manually group them using the exact Group ID name within Maya's Shape Editor.
-
-:::tip Combined Workflow
-You can combine both methods on the same setup by ensuring your blendshape group uses the exact same name as the template module used for driven key poses.
-:::
-
-## Scene Preparation
-
-### 1. Driven Key Poses Setup
-
-To allow the Shape Editor to record driven keys, your rig hierarchy must contain paired pose and control nodes following this naming convention:
-
-- **Pose Node:** `{tpl}::poses.{n}`
-- **Control Node:** `{tpl}::ctrls.{n}`
-
-When saving a pose, the script retrieves the controller's world matrix/transform and applies it directly onto the associated pose node.
-
-:::note Automated Creation
-You don't need to create these manually. Enable the `do_pose` option on any `core.joints`, `core.bones`, `rig.spline`, or `digit.legacy` module during template setup.
-
-![Pose Setup](img/init_pose.png)
-:::
-
-### 2. Blendshapes Setup
-
-- **Internal Creation:** Mesh targets can be generated directly from the Shape Editor interface as long as base meshes exist in the scene.
-- **Ingested Target Pipelines:** When importing external shape scenes, place all target shapes into a group named after the **Group ID** you intend to pass into the interface field.
-
-![Blendshape Group Setup](img/bs_group.png)
-
-> **Key Advantage:** Grouping blendshape poses onto a single driver allows a single attribute to immediately control targets across multiple geometries. The Shape Editor makes multi-mesh blendshape editing straightforward and centralized.
-
-## Interface & Usage
+The **Shape Editor** is a centralized tool within Mikan designed to manage collections of **Set Driven Key (SDK) poses** and **blendshapes**. It provides a unified pipeline to sculpt, edit, driven-key, and store pose setups directly into Mikan template modules.
 
 :::info Working Scene
 All interface screenshots in this section refer to the sample scene available on [Google Drive](https://drive.google.com/file/d/1CTO1OYbdxel6mbV3iUwIjKN33i96Jjpy/view?usp=drive_link).
 :::
 
-The interface is divided into two primary sections:
-- **Left Panel (Control Utilities & Pose Shelf):** Handles control selection sets, transform tools (Reset, Mirror, Flip), value multipliers, and temporary iteration poses.
-- **Right Panel (Driver Management):** Handles driver assignment, custom attribute creation, and saving/deleting shape poses.
+## Key Concepts
+
+To use the Shape Editor efficiently, you only need to understand two main components:
+
+- **Driver:** A DAG node (preferably a dedicated **Locator**) that holds custom attributes. These attributes drive the shapes/poses (similar to Maya's native *Set Driven Key* driver).
+- **Group:** The root template module (typically a `core.group`) that encapsulates all the controllers and pose nodes you want to affect.
+
+```mermaid
+flowchart LR
+    subgraph DRIVER["Driver Node (e.g. Locator)"]
+        ATTR["Custom Attribute<br/><i>(e.g., mouth_up_L = 1.0)</i>"]
+    end
+
+    subgraph GROUP["Template Group (core.group)"]
+        direction TB
+        
+        POSES["Pose Nodes<br/><code>{tpl}::poses.*</code>"]
+        BS["Blendshape Nodes"]
+        
+        subgraph TARGETS["Multi-Mesh Targets"]
+            direction LR
+            M1["msh_head"]
+            M2["msh_eyebrows, ..."]
+        end
+
+        BS --> M1
+        BS --> M2
+    end
+
+    ATTR -->|"Drives (SDK)"| POSES
+    ATTR -->|"Drives target weights"| BS
+```
+
+## Technical Scene Setup
+
+To enable automated pose recording and template persistence, your rig hierarchy must adhere to Mikan's structural conventions.
+
+### 1. Driven Key Pose Nodes
+
+The Shape Editor looks for paired pose and control nodes matching this naming scheme:
+
+- **Pose Node:** `{tpl}::poses.{n}`
+- **Control Node:** `{tpl}::ctrls.{n}`
+
+:::note Automated Generation
+Do not create pose nodes manually. Enable the `do_pose` option on supported template modules (`core.joints`, `core.bones`, `rig.spline`, or `digit.legacy`).
+
+![Pose Setup](img/init_pose.png)
+:::
+
+### 2. Blendshape Ingestion Setup
+
+- **Internal Creation:** Generated directly via **Add Sculpt Target** if base meshes exist in the scene.
+- **External Ingestion:** When importing shape scenes from external packages, group target geometries under a transform group matching the exact **Group ID** passed to the interface field.
+
+![Blendshape Group Setup](img/bs_group.png)
+
+### 3. Driver Connections
+
+- **Facial Rigs:** Driven key distribution across controls is typically handled via the `shape.channel` modifier.
+- **Pose Space Deformation (PSD):** Connected via custom network nodes (dedicated PSD modifiers are planned for future releases).
+
+![Driver Setup](img/init_driver.png)
+
+## Step-by-Step Guides
+
+### 1. Creating Your First Driven Key Pose
+
+1. **Initialize the Tools:**
+    - Select your driver node (e.g., a locator) and click **Driver**.
+    - Keep your driver selected or select any control in your group hierarchy and click **Group** in the Selector Toolbar to auto-detect the parent `core.group`.<br/>
+    ![Init Shape Edsitor](img/init_driver_group.png)
+2. **Add a Pose Attribute:**
+    - In the **Pose Editor** panel, right-click inside the attribute list and select **Add Shape** (or use the input field).
+    - Enter a name for your attribute (e.g., `mouth_corner_up_L`).<br/>
+    ![Add Pose Attribute](img/add_pose.png)
+3. **Pose Your Controllers:**
+    - Manipulate the rig controllers in the viewport to create your desired pose.
+4. **Record the Pose:**
+    - Highlight your new attribute in the list and click **Save**. The controller transforms are now recorded onto the underlying pose nodes driven by this attribute value.<br/>
+    ![Save Pose](img/save_pose.png)
+5. **Persist to Template:**
+    - Click **Save Mods** in the top bar to record these driven keys into your Mikan template modifiers, ensuring they persist across rig rebuilds.<br/>
+    ![Saves Modifiers in Template](img/saved_mods.png)
+
+### 2. Sculpting a Multi-Mesh Blendshape
+
+The Shape Editor allows a single driver attribute to control blendshape targets across multiple geometries simultaneously.
+
+1. **Select Target Meshes:** Select all base geometries in the viewport that should receive the sculpt.
+2. **Add a Sculpt Target:** Right-click the desired attribute in the **Pose Editor** list and select **Add Sculpt Target**.
+3. **Sculpt:**
+    * Set your driver attribute value to `1.0`.
+    * Sculpt adjustments directly on the generated target meshes or base geometry.
+4. **Validate:** Dial your driver attribute between `0.0` and `1.0` to verify the deformation across all connected meshes.
+
+### 3. Fast L/R Pose Splitting with the Pose Shelf
+
+1. **Create the Full Pose:** Sculpt/pose both sides symmetrically on your rig.
+2. **Buffer in Shelf:** In the **Pose Shelf**, click **Save Edit** to temporarily cache this full symmetrical pose as a button preset.
+3. **Isolate One Side:** Zero out or dampen the opposite side controllers using the SRT scale tools (`/2`, `Reset`).
+4. **Save Left Pose:** Record this single-side pose onto your `_L` driver attribute.
+5. **Flip & Save Right Pose:** Click **Flip** in the **Controllers** panel to mirror the pose onto the opposite side, then save it onto your `_R` driver attribute.
+6. **Clean Up:** Delete the temporary pose preset from your shelf once validated.
+
+## Interface Reference
+
+The Shape Editor window is divided into two main sections:
+
+- **Left Panel (Control Utilities & Pose Shelf):** Selection sets, transform utilities (Reset/Mirror/Flip), SRT value scaling, and temporary pose storage.
+- **Right Panel (Driver Management & Pose Editor):** Driver assignment, custom attribute creation, and saving/deleting shape poses.
 
 ![Shape Editor Overview](img/shape_editor.png)
 
 ### Selector Toolbar
 
-- **Driver:** Sets the DAG node that will host driving attributes for your shapes.
-- **Group:** Defines the active module/controller set.
-  - Clicking **Group** automatically climbs up the hierarchy from the active selection to find the top `core.group` module.
-  - *Troubleshooting:* If the field fails to populate, verify that the hierarchy beneath the group contains controls with valid pose nodes.
-  - *Manual Override:* **Right-click** the Group field to choose a specific module manually from the dropdown list.
+- **Driver:** Assigns the DAG node that hosts driving attributes for your shapes.
+- **Group:** Assigns the active controller module set.
+    - Clicking **Group** climbs up the selection hierarchy to locate the root `core.group` module.
+    - *Troubleshooting:* If this fails to populate, ensure the hierarchy contains controls linked to valid pose nodes.
+    - *Manual Override:* **Right-click** the Group field to choose a specific module manually from the dropdown list.
 - **Save Mods:**<br/>
   ![Save Mods Buttons](img/btn_save_mods.png)
-  - **Save Mods:** Transfers all driver attribute creation commands and existing scene driven keys into template modifiers.
-  - **Auto Checkbox:** Automatically saves modifiers back to the template on every pose save operation.
-  - **Clean Checkbox:** Removes driven keys associated with deprecated poses that no longer exist on the driver node.
+    - **Save Mods:** Bakes all driver attribute creation commands and scene driven keys directly into template modifiers.
+    - **Auto Checkbox:** Automatically updates template modifiers every time a pose is saved.
+    - **Clean Checkbox:** Purges driven keys associated with obsolete or deleted driver attributes.
 
-### Controllers
+### Control Utilities
 
-- **Reset / Mirror / Flip:** Quickly clear or transfer transforms across all controls or currently selected controls.<br/>
-  ![Reset Mirror Flip Buttons](img/btn_controllers.png)
-- **SRT Scale Values:** Numeric buttons allow you to multiply or divide SRT values on selected controls. This is particularly useful when sculpting L/R split poses (e.g., dampening or amplifying values).<br/>
-  ![Reset Mirror Flip Buttons](img/btn_mult.png)
+- **Reset / Mirror / Flip:** Clears or transfers transforms across all controls or active selections.<br/>
+  ![Control Utility Buttons](img/btn_controllers.png)
+- **SRT Scale Values:** Multiplies or divides SRT values on selected controls. Ideal for dampening or amplifying influence during L/R splitting.<br/>
+  ![SRT Scale Buttons](img/btn_mult.png)
 
 ### Pose Shelf (Iteration Buffer)
 
-The **Pose Shelf** acts as a temporary storage buffer for poses while you sculpt:
+Acts as a temporary preset shelf for storing intermediate poses during sculpting and testing sessions.
 
-- Useful when iterating on facial skinning setups to quickly compare pose variations.
-- **L/R Split Workflow:** Store a full symmetrical pose on the shelf, perform your L/R split, store the split result, and easily flip it to the opposite side using the control tools.
+![Pose Shelf](img/shelf_editor.png)
 
-![Reset Mirror Flip Buttons](img/shelf_editor.png)
+#### Actions:
 
-#### Shelf Controls:
-- **Save Edit:** Caches the current transform states of all controllers within the active group.
-- **Save Selection:** Caches current transforms and custom attributes for the active selection only.
+- **Save Edit:** Caches current transforms for all controllers within the active group.
+- **Save Selection:** Caches transforms and custom attributes for selected controls only.
 
-Saved poses generate shelf buttons for one-click recall. Right-clicking a pose button opens a context menu with the following options:
+Right-clicking any saved pose button opens its context menu:
 
-- **Delete:** Removes the selected pose item.
-- **Clear:** Clears all pose items from the shelf.
+- **Delete:** Removes the selected preset.
+- **Clear:** Clears all items from the shelf.
 - **Clear Poses:** Removes all *Save Edit* entries.
 - **Clear Selections:** Removes all *Save Selection* entries.
-- **Import:** Loads shelf items from a saved configuration file.
-- **Export:** Saves all current shelf items to an external file.
+- **Import / Export:** Loads or saves shelf items to an external JSON configuration file.
 
 ### Pose Editor
 
-The **Pose Editor** panel manages all poses via the assigned Driver node. Once both the **Driver** and **Group** fields are set, the attribute list automatically populates with available pose attributes.
+Manages all shape attributes connected to the assigned Driver node. Once both **Driver** and **Group** fields are set, the attribute list populates automatically.
 
-Existing blendshapes in the scene that are correctly structured in a matching target group will be loaded and connected via driven keys automatically, making them controllable directly from the driver.
+Existing blendshapes properly organized in matching scene target groups are loaded and connected via driven keys automatically.
 
-The editor allows creating and recording new pose attributes, both as driven keys on pose nodes and as target mesh blendshapes.
-
-#### Main Actions
+#### Main Action Bar
 
 ![Pose Editor Buttons](img/btn_pose_editor.png)
 
 - **Save:** Records controller transforms onto the selected pose attribute.
 - **Clear:** Removes driven keys associated with the selected attribute.
 - **Reset:** Zeroes out all attribute values on the driver node.
-- **Mute:** Temporarily disables pose node transforms for selected attributes. This is useful when editing a shape at a partial weight (e.g., 50%) without interference from previously recorded pose data.
-- **Recall:** Re-applies pose node transform values back onto the controllers for further editing *(Note: this overrides current controller transforms)*.
-- **Bake:** Bakes the combined total deformation of pose nodes and current controller transforms directly onto the controllers.
+- **Mute:** Temporarily disables pose node transforms for selected attributes (useful for sculpting a shape at 50% weight without interference from existing pose data).
+- **Recall:** Re-applies pose node transforms back onto controllers for further editing *(overrides current controller transforms)*.
+- **Bake:** Bakes combined pose node deformations and controller transforms directly onto the controllers.
 
 #### Attribute List Context Menu
 
-Right-clicking in empty space within the attribute list provides:
-- **Add Shape:** Adds a new shape attribute to the driver.
-- **Reset All:** Resets all driver attributes to their default values.
+Right-clicking empty space in the list:
 
-Right-clicking an existing attribute entry provides:
-- **Save Pose / Clear Pose / Recall Pose / Bake Pose / Mute Pose:** Performs the corresponding main action on the highlighted attribute.
-- **Add Sculpt Target:** Generates and connects a new blendshape target on the selected meshes.
-- **Select Attributes:** Selects the attribute nodes in the Maya scene and highlights them in the Outliner.
-- **Reset Selected:** Resets selected attributes to default values.
-- **Remove Selected:** Deletes the selected pose attributes.
-- **Add Shape:** Adds a new shape attribute to the driver.
-- **Reset All:** Resets all driver attributes to default.
+- **Add Shape:** Creates a new shape attribute on the driver.
+- **Reset All:** Resets all driver attributes to default (`0.0`).
+
+Right-clicking an existing attribute entry:
+
+- **Save Pose / Clear Pose / Recall Pose / Bake Pose / Mute Pose:** Executes the action on the selected attribute.
+- **Add Sculpt Target:** Generates and connects a new blendshape target on selected base meshes.
+- **Select Attributes:** Selects attribute nodes in Maya and highlights them in the Outliner.
+- **Reset Selected:** Resets selected attributes to default.
+- **Remove Selected:** Deletes selected pose attributes.
