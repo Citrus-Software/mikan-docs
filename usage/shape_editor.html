@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.10.0">
 <title data-rh="true">Shape Editor | Mikan Rigging Framework</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://citrus-software.github.io/mikan-docs/usage/shape_editor"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Shape Editor | Mikan Rigging Framework"><meta data-rh="true" name="description" content="Learn how to manage set driven keys, blendshape collections, and bridge them with Mikan template modules."><meta data-rh="true" property="og:description" content="Learn how to manage set driven keys, blendshape collections, and bridge them with Mikan template modules."><link data-rh="true" rel="icon" href="/mikan-docs/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://citrus-software.github.io/mikan-docs/usage/shape_editor"><link data-rh="true" rel="alternate" href="https://citrus-software.github.io/mikan-docs/usage/shape_editor" hreflang="en"><link data-rh="true" rel="alternate" href="https://citrus-software.github.io/mikan-docs/usage/shape_editor" hreflang="x-default"><link data-rh="true" rel="preconnect" href="https://H22UAVUF6S-dsn.algolia.net" crossorigin="anonymous"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Shape Editor","item":"https://citrus-software.github.io/mikan-docs/usage/shape_editor/"}]}</script><link rel="search" type="application/opensearchdescription+xml" title="Mikan Rigging Framework" href="/mikan-docs/opensearch.xml"><link rel="stylesheet" href="/mikan-docs/assets/css/styles.673234d4.css">
-<script src="/mikan-docs/assets/js/runtime~main.9ed18dff.js" defer="defer"></script>
+<script src="/mikan-docs/assets/js/runtime~main.a1866739.js" defer="defer"></script>
 <script src="/mikan-docs/assets/js/main.40a1aa56.js" defer="defer"></script>
 </head>
 <body>
@@ -37,9 +37,12 @@
 </ul>
 <p><img decoding="async" loading="lazy" alt="Blendshape Group Setup" src="/mikan-docs/assets/images/bs_group-583cb3ff9455a8761fd68e0977931a26.png" width="693" height="232" class="img_ev3q"></p>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="3-driver-connections">3. Driver Connections<a href="#3-driver-connections" class="hash-link" aria-label="Direct link to 3. Driver Connections" title="Direct link to 3. Driver Connections" translate="no">​</a></h3>
+<p>The Driver node acts as an intermediary evaluation layer that routes, remaps, and distributes animation data across rig attributes. It standardizes how complex control values drive lower-level character deformations.</p>
 <ul>
-<li class=""><strong>Facial Rigs:</strong> Driven key distribution across controls is typically handled via the <code>shape.channel</code> modifier.</li>
-<li class=""><strong>Pose Space Deformation (PSD):</strong> Connected via custom network nodes (dedicated PSD modifiers are planned for future releases).</li>
+<li class=""><strong>Initial Setup &amp; Core Role</strong>: Once the node is initialized, incoming control channels are bound to target attributes. The driver handles evaluation logic, range remapping, and blending before passing values down to the deformation graph.</li>
+<li class=""><strong>Multi-Target Mesh Grouping</strong>: A single driver channel can target identical shapes spread across multiple distinct meshes. This allows driving synchronized deformations (such as a mouth shape shared between a face mesh and a mustache mesh) from a single source attribute without duplicating control setups.</li>
+<li class=""><strong>Facial Rigs &amp; Combination Logic</strong>: Driving logic, remap curves, and combination shapes (e.g., pose combinations) are handled upstream via specific modifiers like <code>shape.channel</code>.</li>
+<li class=""><strong>Pose Space Deformation (PSD)</strong>: Connected via custom network nodes to evaluate pose combinations <em>(dedicated PSD modifiers are planned for future releases)</em>.</li>
 </ul>
 <p><img decoding="async" loading="lazy" alt="Driver Setup" src="/mikan-docs/assets/images/init_driver-1d63815f30e69f71de4ba7ae4cb61d93.png" width="880" height="193" class="img_ev3q"></p>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="step-by-step-guides">Step-by-Step Guides<a href="#step-by-step-guides" class="hash-link" aria-label="Direct link to Step-by-Step Guides" title="Direct link to Step-by-Step Guides" translate="no">​</a></h2>
@@ -80,23 +83,35 @@
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="2-sculpting-a-multi-mesh-blendshape">2. Sculpting a Multi-Mesh Blendshape<a href="#2-sculpting-a-multi-mesh-blendshape" class="hash-link" aria-label="Direct link to 2. Sculpting a Multi-Mesh Blendshape" title="Direct link to 2. Sculpting a Multi-Mesh Blendshape" translate="no">​</a></h3>
 <p>The Shape Editor allows a single driver attribute to control blendshape targets across multiple geometries simultaneously.</p>
 <ol>
-<li class=""><strong>Select Target Meshes:</strong> Select all base geometries in the viewport that should receive the sculpt.</li>
-<li class=""><strong>Add a Sculpt Target:</strong> Right-click the desired attribute in the <strong>Pose Editor</strong> list and select <strong>Add Sculpt Target</strong>.</li>
-<li class=""><strong>Sculpt:</strong>
+<li class="">
+<p><strong>Select Target Meshes:</strong> Select all base geometries in the viewport that should receive the sculpt.</p>
+</li>
+<li class="">
+<p><strong>Add a Sculpt Target:</strong> Right-click the desired attribute in the <strong>Pose Editor</strong> list and select <strong>Add Sculpt Target</strong>.<br>
+<img decoding="async" loading="lazy" alt="Select Target Meshes" src="/mikan-docs/assets/images/add_sculpt_target-7e8db07d2aec0e7b9f3cf7f7f7a6b983.png" width="642" height="228" class="img_ev3q"></p>
+</li>
+<li class="">
+<p><strong>Sculpt:</strong></p>
 <ul>
 <li class="">Set your driver attribute value to <code>1.0</code>.</li>
-<li class="">Sculpt adjustments directly on the generated target meshes or base geometry.</li>
+<li class="">Toggle Sculpt Target on the desired mesh in the list to sculpt adjustments directly on the geometry.<br>
+<img decoding="async" loading="lazy" alt="Sculpt" src="/mikan-docs/assets/images/toggle_sculpt-64ce88d80783d1a8f80c477f3599bfad.png" width="684" height="173" class="img_ev3q"></li>
 </ul>
 </li>
-<li class=""><strong>Validate:</strong> Dial your driver attribute between <code>0.0</code> and <code>1.0</code> to verify the deformation across all connected meshes.</li>
+<li class="">
+<p><strong>Validate:</strong> Dial your driver attribute between <code>0.0</code> and <code>1.0</code> to verify the deformation across all connected meshes.</p>
+</li>
 </ol>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="3-fast-lr-pose-splitting-with-the-pose-shelf">3. Fast L/R Pose Splitting with the Pose Shelf<a href="#3-fast-lr-pose-splitting-with-the-pose-shelf" class="hash-link" aria-label="Direct link to 3. Fast L/R Pose Splitting with the Pose Shelf" title="Direct link to 3. Fast L/R Pose Splitting with the Pose Shelf" translate="no">​</a></h3>
 <ol>
 <li class=""><strong>Create the Full Pose:</strong> Sculpt/pose both sides symmetrically on your rig.</li>
-<li class=""><strong>Buffer in Shelf:</strong> In the <strong>Pose Shelf</strong>, click <strong>Save Edit</strong> to temporarily cache this full symmetrical pose as a button preset.</li>
-<li class=""><strong>Isolate One Side:</strong> Zero out or dampen the opposite side controllers using the SRT scale tools (<code>/2</code>, <code>Reset</code>).</li>
+<li class=""><strong>Buffer in Shelf:</strong> In the <strong>Pose Shelf</strong>, click <strong>Save Edit</strong> to temporarily cache this full symmetrical pose as a button preset.<br>
+<img decoding="async" loading="lazy" alt="Buffer in Shelf" src="/mikan-docs/assets/images/shelf_edit-17b3640455ccd15f73d09086a03ad9f5.png" width="692" height="217" class="img_ev3q"></li>
+<li class=""><strong>Isolate One Side:</strong> Zero out or dampen the opposite side controllers using the SRT scale tools (<code>/2</code>, <code>Reset</code>).<br>
+<img decoding="async" loading="lazy" alt="Isolate One Side" src="/mikan-docs/assets/images/divide_shape-85a00bef2c3b01ee56a8e22504c335e5.png" width="582" height="217" class="img_ev3q"></li>
 <li class=""><strong>Save Left Pose:</strong> Record this single-side pose onto your <code>_L</code> driver attribute.</li>
-<li class=""><strong>Flip &amp; Save Right Pose:</strong> Click <strong>Flip</strong> in the <strong>Controllers</strong> panel to mirror the pose onto the opposite side, then save it onto your <code>_R</code> driver attribute.</li>
+<li class=""><strong>Flip &amp; Save Right Pose:</strong> Click <strong>Flip</strong> in the <strong>Controllers</strong> panel to mirror the pose onto the opposite side, then save it onto your <code>_R</code> driver attribute.<br>
+<img decoding="async" loading="lazy" alt="Flip Pose" src="/mikan-docs/assets/images/flip_shape-ddbc6527317cfc6e2c3519a427918312.png" width="663" height="157" class="img_ev3q"></li>
 <li class=""><strong>Clean Up:</strong> Delete the temporary pose preset from your shelf once validated.</li>
 </ol>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="interface-reference">Interface Reference<a href="#interface-reference" class="hash-link" aria-label="Direct link to Interface Reference" title="Direct link to Interface Reference" translate="no">​</a></h2>
