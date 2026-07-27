@@ -60,6 +60,10 @@ data = export_shaders("geo")
 ## 3. Creating the Alembic File
 Once the asset is prepared and shader data is saved, you can proceed to export.
 
+:::danger[Critical Naming & Path Requirement]
+Because Tangerine references the `.abc` file externally by absolute/relative path rather than embedding its data, **where and how you save this file matters**. Always name your `.abc` file according to project conventions and place it in the final shared/pipeline workspace **before** importing it into Tangerine.
+:::
+
 ### Automated Export (Recommended)
 Use the Mikan helper tool to ensure all settings are correct:
 
@@ -92,4 +96,18 @@ Once Tangerine is running and the Python environment is initialized:
 
 :::info[Troubleshooting]
 If the build fails or behaves unexpectedly, check the Console Logs in Tangerine. Errors usually indicate either a fabrication issue in Maya or a bug in the Mikan framework that should be reported.
+:::
+
+## 6. Saving and Delivering the Asset
+
+### Saving the Asset (.tang)
+Once the build is complete and validated inside Tangerine:
+
+1. Go to **File > Export Asset**.
+2. Save your generated asset file (saved with the `.tang` extension).
+
+### Crucial Dependency: External Alembic (.abc) File
+
+:::warning[Important - Non-Embedded Dependency]
+The `.abc` file used to build the asset is **NOT embedded** inside the `.tang` file. The `.tang` file acts as a scene/asset configuration layer that references the `.abc` geometry and hierarchy source file externally.
 :::
