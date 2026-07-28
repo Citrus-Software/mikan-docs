@@ -25,10 +25,10 @@ Every joint in this linear main chain generates a dedicated controller, with the
 
 ### Hierarchy & Nodes
 
-| Parameter   | Type              | Default | Description                                                                                                                                                                                                                                           |
-|:------------|:------------------|:--------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `do_pose`   | *bool*            | `off`   | Adds a `pose` node between the root and controller (useful for driven key control).                                                                                                                                                                   |
-| `add_nodes` | *str / list[str]* | `null`  | Adds custom buffer nodes to the hierarchy. <br/>- `inf`: inserts `inf_{name}` above the controller.<br/>- `[inf, pose]`: inserts both `inf` and `pose` nodes in order.<br/>- `[c, dyn]`: adds `dyn_{name}` between the controller and the skin joint. |
+| Parameter   | Type              | Default | Description                                                                                                                                                                                                                                                                                                                                 |
+|:------------|:------------------|:--------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `add_nodes` | *str / list[str]* | `null`  | Injects custom buffer nodes into the node hierarchy. Use `c` as an anchor to define placement relative to the controller:<br/>- `inf` or `[inf]`: inserts `inf_{name}` above `c_{name}`.<br/>- `[inf, pose]`: inserts both `inf` and `pose` nodes above ctrl.<br/>- `[inf, c, dyn]`: inserts inf above ctrl, and dyn between ctrl and skin. |
+| `do_pose`   | *bool*            | `off`   | Convenience flag. Injects a `pose` node between `root` and `ctrl` (ideal for driven key setups).                                                                                                                                                                                                                                            |
 
 ### Transform & Behavior
 
@@ -41,7 +41,7 @@ Every joint in this linear main chain generates a dedicated controller, with the
 
 | Parameter     | Type   | Default | Description                                                                                                                                                                                                                                                                     |
 |:--------------|:-------|:--------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `flip_orient` | *bool* | `off`   | Flips root orientation to produce symmetrical translation behavior.                                                                                                                                                                                                             |
+| `flip_orient` | *bool* | `off`   | Flips root orientation to produce symmetrical translation behavior on mirrored modules.                                                                                                                                                                                         |
 | `orient`      | *enum* | `copy`  | Strategy for orienting the rig. <br/>- `copy`: Copies orientation directly from the template joint.<br/>- `auto`: Computes orientation using the Auto Orientation Controls below.<br/>- `world`: Aligns strictly to world axes.<br/>- `parent`: Aligns to the parent rig joint. |
 
 #### Auto Orientation Controls
@@ -55,7 +55,44 @@ Every joint in this linear main chain generates a dedicated controller, with the
 | `up_dir`   | *enum* | `auto`    | Mode for computing the world up vector. Can be `auto` (geometry-based) or a fixed world axis (`+x`, `-x`, `+y`, `-y`, `+z`, `-z`).                                                                                                                                    |
 | `up_auto`  | *enum* | `average` | Strategy when `up_dir` is `auto`. <br/>- `average`: Averages all segment triangles.<br/>- `each`: Computes an individual up vector per joint.<br/>- `first`: Uses the first segment's up vector for the whole chain.<br/>- `last`: Uses the last segment's up vector. |
 
-## Usage
+## Outputs
+
+Once the module builds the rig, it exposes a specific node structure and generates connection hooks for other modules.
+
+### DAG Node Tree
+
+Below is the node hierarchy generated for each segment in the chain, including optional buffer nodes injected via parameters:
+
+```text
+[root]
+ └── [inf]            <-- Optional: injected above ctrl via add_nodes
+ └── [pose]           <-- Optional: injected via do_pose or add_nodes
+ └── [ctrl]
+      └── [dyn]       <-- Optional: injected below ctrl via add_nodes
+ └── [skin] (j.#)
+      └── [tip]
+```
+
+### Node IDs
+
+Node IDs are returned as arrays, meaning a 3-bone chain will generate 3 roots, 3 ctrls, etc.
+
+- `<id>::roots.#`: The top buffer group of each controller segment.
+- `<id>::ctrls.#`: The animator-facing control curve.
+- `<id>::j.#`: The structural rig joint. This node is always generated regardless of skinning options and acts as the actual attachment point for child modules.
+- `<id>::skin.#`: The deformation tag, usually mapped directly to the `j.#` joint (unless explicitly untagged).
+- `<id>::end`: A generated joint at the very tip of the chain with scale compensation disabled. This ensures the final bone segment is properly drawn in the viewport.
+
+Any custom buffer nodes injected into the hierarchy (via parameters like `add_nodes` or `do_pose`) automatically expose matching dynamic Node IDs. For instance, injecting a `pose` or `inf` node will generate arrays accessible as `<id>::poses.#` or `<id>::infs.#`.
+
+### Hooks
+
+When another template module is parented under one of this chain's joints during the template phase, the build process uses these hooks to seamlessly attach the child rig to the correct deformation joint.
+
+- `<id>::hooks.#`: A hook explicitly mapped to every generated joint corresponding to the template chain (except the tip).
+- `<id>::hooks.tip`: A dedicated hook mapped to the generated `<id>::end` joint, representing the absolute end of the chain.
+
+## Usage & Rigging Notes
 
 ### Decoupling Hierarchy for Advanced Rigging
 
@@ -74,24 +111,3 @@ The `auto` orientation mode solves this by mathematically aiming each joint at i
 By default in Maya, parenting joints does not transmit scale to children (Segment Scale Compensate is enabled). `core.bones` mimics this animation-friendly standard by defaulting `parent_scale` to `off`. This prevents unwanted shearing and scaling issues down the chain (ideal for tails).
 
 However, if you are rigging a highly nested, rigid hierarchy, such as a skull and jaw assembly where all child elements must stretch and scale together as a single block, you should set `parent_scale` to `on`.
-
-## Outputs
-
-Once the module builds the rig, it exposes a specific node structure and generates connection hooks for other modules.
-
-### Node IDs
-
-Node IDs are returned as arrays, meaning a 3-bone chain will generate 3 roots, 3 ctrls, etc.
-
-- `<id>::roots.#`: The top buffer group of each controller segment.
-- `<id>::ctrls.#`: The animator-facing control curve.
-- `<id>::j.#`: The structural rig joint. This node is always generated regardless of skinning options and acts as the actual attachment point for child modules.
-- `<id>::skin.#`: The deformation tag, usually mapped directly to the `j.#` joint (unless explicitly untagged).
-- `<id>::end`: A generated joint at the very tip of the chain with scale compensation disabled. This ensures the final bone segment is properly drawn in the viewport.
-
-### Hooks
-
-When another template module is parented under one of this chain's joints during the template phase, the build process uses these hooks to seamlessly attach the child rig to the correct deformation joint.
-
-- `<id>::hooks.0`, `<id>::hooks.1`, ...: A hook explicitly mapped to every generated joint corresponding to the template chain (except the tip).
-- `<id>::hooks.tip`: A dedicated hook mapped to the generated `<id>::end` joint, representing the absolute end of the chain.
