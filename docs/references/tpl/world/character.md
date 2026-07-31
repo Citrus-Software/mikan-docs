@@ -23,6 +23,8 @@ The `world.character` template is intentionally simple:
 
 Despite its simplicity, this module is essential for maintaining compatibility across the entire animation pipeline.
 
+![Outliner Example](img/world_structure.png)
+
 ### Placing the Template Pivot
 
 When configuring the template guide in the viewport, the `root` guide serves as the positioning reference for the **Fly** control (`c_fly`).
@@ -32,21 +34,38 @@ When configuring the template guide in the viewport, the `root` guide serves as 
 
 ## Options
 
-| Parameter    | Type   | Default | Description                                                                                        |
-|:-------------|:-------|:--------|:---------------------------------------------------------------------------------------------------|
-| `fly_ctrl`   | *bool* | `off`   | Enables the Fly controller (`c_fly`) at the template `root` position for aerial maneuvers.         |
-| `scale_ctrl` | *bool* | `off`   | Enables the Scale/Squash control (`c_scale`) with dynamic pivot placement and volume preservation. |
+| Parameter    | Type   | Default | Description                                                                                                                                                |
+|:-------------|:-------|:--------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `fly_ctrl`   | *bool* | `on`    | Enables the Fly controller (`c_fly`) at the template `root` position for aerial maneuvers. If `off`, `hooks.root` defaults to following `c_move` directly. |
+| `scale_ctrl` | *bool* | `on`    | Enables the Scale/Squash control (`c_scale`) with dynamic pivot placement and volume preservation.                                                         |
 
 ## Outputs
+
+### Generated Hierarchy (Build)
+
+Depending on the selected options, the final generated hierarchy follows this logical structure:
+
+```text
+c_world
+└── c_move
+    ├── [c_scale] (if scale_ctrl: on)
+    │   └── [c_fly] (if fly_ctrl: on)
+    │       └── hooks.root
+    └── hooks.world
+```
+
+:::note
+(Note: If `c_fly` or `c_scale` are disabled, `hooks.root` automatically falls back to parent itself under the closest active parent in this chain, defaulting to `c_move`.)
+:::
 
 ### Node IDs
 
 #### Controllers
 
-- `<id>::ctrls.world`: Global world control node (c_world).
-- `<id>::ctrls.move`: Primary translation/rotation root control (c_move).
-- `<id>::ctrls.fly`: Aerial/center-of-gravity control (c_fly, only exposed if fly: on).
-- `<id>::ctrls.scale`: Special scale and squash control (c_scale, only exposed if scale: on).
+- `<id>::ctrls.world`: Global world control node (`c_world`). Includes native uniform global scaling for the entire asset.
+- `<id>::ctrls.move`: Primary translation/rotation root control (`c_move`). Can also be used for uniform global placement and scaling on the ground.
+- `<id>::ctrls.fly`: Aerial/center-of-gravity control (`c_fly`, only exposed if `fly: on`).
+- `<id>::ctrls.scale`: Special scale and squash control (`c_scale`, only exposed if `scale: on`).
 
 #### Misc.
 
