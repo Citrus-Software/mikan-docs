@@ -41,6 +41,8 @@ The template uses a point-to-point placement workflow:
 After the initial auto-orientation, the module conforms the axes across the chain. This ensures that if an animator selects all FK controllers and rotates them uniformly, the entire chain moves homogeneously in the same direction.
 :::
 
+![Controllers Orientation](img/legacy_orientation.png)
+
 ## Options
 
 ### General & Setup
@@ -158,6 +160,8 @@ A powerful capability of this module is the ability to decouple translation spac
 - The **parent root** stays aligned to the world ground axis, driving predictable and clean primary translation axes.
 - The **IK controller** inherits local rotation axes tailored specifically to the targeted geometry of the foot.
 
+![Decoupling axes](img/decoupling_ik.png)
+
 ### Clavicle / Pelvis Mechanics (If Enabled)
 
 - **Rotation to Translation Conversion (`auto_translate`):** Converts the controller's rotation into a pendulum-like translation movement, making the joint behave as if it is physically tethered to the hip. Because the shoulder/pelvis area is notoriously difficult to skin realistically, displacing the joint (rather than purely rotating it) often yields much
@@ -184,9 +188,11 @@ During the rig authoring and publishing phase, the **Weights Shape Controller** 
 
 - **Blend Joints (Passive):** When enabled in the template options, the rig generates dedicated blend joints at major articulations. These are exclusively used by the TD during the skinning process. They act as half-angle helpers to interpolate rotations, providing a smoother gradient for skinning and helping to prevent geometry collapse on extreme bends,
   remaining completely transparent to the animator.
-- **Flex Rig (Deformation Offsets):** Exposes `flex_offset` attributes (up/dn, X/Y/Z) to dynamically adjust the positional offsets simulating the physical spacing of the knee joints. This allows the TD to automatically push the knee volume outwards during extreme bends to aid deformation.
+- **Flex Rig (Deformation Offsets):** Exposes `flex_offset` attributes (up/dn, X/Y/Z) to dynamically adjust the positional offsets simulating the physical spacing of the knee joints. This allows the TD to automatically push the knee volume outwards during extreme bends to aid deformation.<br/>
+  ![Flex tweak offsets](img/flex.gif) ![Flex settings](img/flex_values.png)
 - **Twist Distribution:** Dial in the exact mathematical twist distribution values across the split joints for both the upper and lower limb chains.
-- **Shearing Values:** Adjust the manual shear weights (`shear_up_base`, `shear_tip`) on the splits. Applying shear directly via skinning vastly improves joint articulation deformation during non-uniform scaling, without needing additional influence joints.
+- **Shearing Values:** Adjust the manual shear weights (`shear_up_base`, `shear_tip`) on the splits. Applying shear directly via skinning vastly improves joint articulation deformation during non-uniform scaling, without needing additional influence joints.<br/>
+  ![Shearing effect](img/shearing.gif) ![Shearing settings](img/shearing_settings.png)
 
 ### Reverse Foot Calibration
 
