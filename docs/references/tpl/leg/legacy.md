@@ -43,7 +43,7 @@ After the initial auto-orientation, the module conforms the axes across the chai
 
 ![Controllers Orientation](img/legacy_orientation.png)
 
-## Options
+## Parameters
 
 ### General & Setup
 

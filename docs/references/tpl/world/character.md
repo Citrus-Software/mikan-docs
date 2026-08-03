@@ -32,7 +32,7 @@ When configuring the template guide in the viewport, the `root` guide serves as 
 - Place the `root` guide at the character’s center of mass or balance center (e.g., around the mid-torso / pelvis level).
 - This position establishes the pivot point used by animators when making the character float, jump, or rotate freely in air.
 
-## Options
+## Parameters
 
 | Parameter    | Type   | Default | Description                                                                                                                                                |
 |:-------------|:-------|:--------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------|
