@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5.5
+sidebar_position: 5
 description: Learn how to organize assets, add template modules, edit rig options, and build a rig with the Template Editor.
 ---
 

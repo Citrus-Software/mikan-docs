@@ -1,5 +1,5 @@
 ---
-sidebar_position: 5
+sidebar_position: 6
 description: Learn how to manage set driven keys, blendshape collections, and bridge them with Mikan template modules.
 ---
 
