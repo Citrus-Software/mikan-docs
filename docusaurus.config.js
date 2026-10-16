@@ -85,7 +85,7 @@ const config = {
         title: "Mikan",
         logo: {
           alt: "Mikan Logo",
-          src: "img/logo.svg",
+          src: "img/icon32.png",
         },
         items: [
           {
