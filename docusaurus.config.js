@@ -107,24 +107,28 @@ const config = {
         style: "dark",
         links: [
           {
-            title: "Community",
+            title: "Citrus Software",
             items: [
-              {
-                label: "Discord",
-                href: "https://rebrand.ly/mikan-rig-discord",
-              },
+               {
+                 label: "Home",
+                 to: "https://www.citrus-software.com",
+               },
+               {
+                 label: "Tangerine",
+                 to: "https://www.citrus-software.com/tangerine",
+               },
             ],
           },
           {
-            title: "More",
+            title: "Community",
             items: [
-              // {
-              //   label: "Blog",
-              //   to: "/blog",
-              // },
               {
                 label: "GitHub",
                 href: "https://github.com/citrus-software/mikan",
+              },
+              {
+                label: "Discord",
+                href: "https://rebrand.ly/mikan-rig-discord",
               },
             ],
           },
