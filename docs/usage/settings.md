@@ -30,6 +30,8 @@ Here is an example configuration:
 ```yaml
 # Mikan Production Configuration File
 
+name: My Project  # name of the project for the title bar
+
 pipeline:
   # Rename or define build modes to match your production's specific nomenclature
   steps:
@@ -119,20 +121,10 @@ Here is an example of a custom pipeline menu:
     from my_pipeline import prefs
     prefs.auto_save_enabled = not prefs.auto_save_enabled
 
-- separator: Display Modes
-
-# Exclusive Radio Buttons using "group"
-- name: High Res
-  group: display_mode
-  py: "import cmds; cmds.displaySmoothness(divisionsU=3, divisionsV=3)"
-
-- name: Proxy
-  group: display_mode
-  py: "import cmds; cmds.displaySmoothness(divisionsU=0, divisionsV=0)"
-
-- separator: Misc.
-
 # Examples of advanced keys
+
+- separator: advanced
+
 - name: Documentation
   web: 'https://intranet/docs'
   icon: box
@@ -167,4 +159,4 @@ To see exactly how far you can push the YAML menu system, you can browse Mikan's
 - [tools.yml](https://github.com/Citrus-Software/mikan/blob/main/src/mikan/maya/ui/tools.yml)
 - [prefs.yml](https://github.com/Citrus-Software/mikan/blob/main/src/mikan/maya/ui/prefs.yml)
 - [help.yml](https://github.com/Citrus-Software/mikan/blob/main/src/mikan/maya/ui/help.yml)
-  :::
+:::
