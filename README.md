@@ -1,41 +1,38 @@
-# Website
+# Mikan Documentation
 
-This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
+Official documentation repository for [Mikan Rigging Toolkit](https://github.com/Citrus-Software/mikan).
 
-## Installation
+👉 [View Live Documentation](https://citrus-software.github.io/mikan-docs/)
+
+## 🚀 Local Development
+
+To run and preview the documentation locally:
+
+### Install dependencies
 
 ```bash
-yarn
+yarn install
 ```
 
-## Local Development
+### Start the development server
 
 ```bash
 yarn start
 ```
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+The site will open automatically at http://localhost:3000. Changes in the docs/ directory will update live in your browser.
 
-## Build
+## 📁 Repository Structure
+
+- `docs/`: Markdown (`.md`) and MDX (`.mdx`) documentation source files.
+- `docusaurus.config.js`: Core site configuration (navigation, sidebars, theme options, and metadata).
+- `src/`: Custom components, pages (such as the landing page), and custom CSS.
+- `static/`: Static assets (images, diagrams, downloads) referenced directly in pages.
+
+## 🛠️ Build & Test
+
+Always run a local build before pushing changes to catch broken internal links or formatting errors:
 
 ```bash
 yarn build
 ```
-
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
-
-## Deployment
-
-Using SSH:
-
-```bash
-USE_SSH=true yarn deploy
-```
-
-Not using SSH:
-
-```bash
-GIT_USER=<Your GitHub username> yarn deploy
-```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
