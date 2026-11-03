@@ -116,6 +116,7 @@ If `<dst>@t.x` is **already connected** to another node, we only provide a singl
 ```yml
 connect:
   node: <dst>@t.x
+  merge: true
   op: mult
   input: 0.5
 ```
