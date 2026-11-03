@@ -8,10 +8,10 @@ description: Establishes a connection between two plugs, optionally applying bas
 Establishes a connection between two plugs, optionally applying basic math operations.
 
 :::note[Bridging Existing Connections]
-If the destination plug is already connected, the modifier **will not overwrite it**. Instead, the existing connection is preserved and automatically injected as the **first input** for the math operation.
+If the destination plug is already connected, you can use the `merge` parameter to ensure the modifier does not overwrite it. Instead, the existing connection is preserved and automatically injected as the **first input** for the math operation.
 
-This means that if a plug is already driven, you only need to provide *one* additional `input` to perform a 2-input operation (like `add` or `mult`). The modifier will insert the math node between the existing driver and the destination.
-:::
+- This means that if a plug is already driven, you only need to provide *one* additional `input` to perform a 2-input operation (like `add` or `mult`). The modifier will insert the math node between the existing driver and the destination.
+  :::
 
 :::warning[Legacy Modifier]
 This modifier is considered legacy for math operations. For more advanced and flexible usage, prefer using the [**`expression`**](./expression.md) modifier.
@@ -40,6 +40,13 @@ You must provide a destination. You can either pass explicit plugs directly via 
 :::tip[Time variables]
 You can use the strings `'time'` or `'frame'` in your inputs. The modifier will automatically convert them to connect to the frame number.
 :::
+
+### Connection Behavior
+
+| Parameter | Type   | Default | Description                                                                                         |
+|-----------|--------|---------|-----------------------------------------------------------------------------------------------------|
+| `merge`   | *bool* | `false` | Preserves the existing connection on the target plug by including it in the mathematical operation. |
+| `force`   | *bool* | `false` | Forces the connection and overwrites any existing input on the target plug if `merge` is disabled.  |
 
 ### Math & Modifiers
 
@@ -127,3 +134,13 @@ connect:
   min: 0.0
   max: 360.0
 ```
+
+## Legacy
+
+To maintain backward compatibility with older productions where connection merging was enabled by default, you can configure this behavior globally in your production's preferences.
+
+When set in the preferences, it will override the modifier's default values if they are not explicitly specified in the template.
+
+| Preference Key      | Type   | Description                                                                                                          |
+|---------------------|--------|----------------------------------------------------------------------------------------------------------------------|
+| `mod/connect/merge` | *bool* | If `true`, the `merge` parameter will default to `true` globally, restoring the legacy additive connection behavior. |
