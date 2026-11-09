@@ -104,7 +104,6 @@ const config = {
         ],
       },
       footer: {
-        style: "dark",
         links: [
           {
             title: "Citrus Software",
@@ -135,6 +134,12 @@ const config = {
         ],
         copyright: `Copyright © ${new Date().getFullYear()} Citrus Animation Software. Built with Docusaurus.`,
       },
+
+      colorMode: {
+        defaultMode: 'dark',
+        respectPrefersColorScheme: false,
+      },
+
       prism: {
         theme: prismThemes.oneLight,
         darkTheme: prismThemes.palenight,
