@@ -6,6 +6,7 @@
 
 /* You can override the default Infima variables here. */
 :root {
+  /* infima */
   --ifm-color-primary: #FF6C32;
   --ifm-color-primary-dark: #29784c;
   --ifm-color-primary-darker: #277148;
@@ -16,10 +17,21 @@
   --ifm-code-font-size: 95%;
   --ifm-font-size-base: 90%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+
+  /* mermaid */
+  --mermaid-node-bg: #ddd;
+  --mermaid-node-color: #333;
+  --mermaid-rig-bg: #fb5;
+  --mermaid-rig-color: #000;
+  --mermaid-edge-bg: #eee;
+  --mermaid-edge-text: #666;
+  --mermaid-cluster-bg: rgba(0, 0, 0, 0.04);
+  --mermaid-cluster-border: rgba(0, 0, 0, 0.06);
+  --mermaid-cluster-title: #444;
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme="dark"] {
+  /* infima */
   --ifm-color-primary: #FF6C32;
   --ifm-color-primary-dark: #21af90;
   --ifm-color-primary-darker: #1fa588;
@@ -28,6 +40,17 @@
   --ifm-color-primary-lighter: #32d8b4;
   --ifm-color-primary-lightest: #4fddbf;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+
+  /* mermaid */
+  --mermaid-node-bg: #333;
+  --mermaid-node-color: #ccc;
+  --mermaid-rig-bg: #d60;
+  --mermaid-rig-color: #111;
+  --mermaid-edge-bg: #2f2f2f;
+  --mermaid-edge-text: #888;
+  --mermaid-cluster-bg: rgba(255, 255, 255, 0.03);
+  --mermaid-cluster-border: rgba(255, 255, 255, 0.06);
+  --mermaid-cluster-title: #aaa;
 }
 
 [data-theme='dark'] .markdown {
@@ -54,33 +77,7 @@
   filter: brightness(0.8);
 }
 
-
 /* mermaid overrides */
-
-:root {
-  --mermaid-node-bg: #ddd;
-  --mermaid-node-color: #333;
-  --mermaid-rig-bg: #fb5;
-  --mermaid-rig-color: #000;
-  --mermaid-edge-bg: #eee;
-  --mermaid-edge-text: #666;
-  --mermaid-cluster-bg: rgba(0, 0, 0, 0.04);
-  --mermaid-cluster-border: rgba(0, 0, 0, 0.06);
-  --mermaid-cluster-title: #444;
-}
-
-[data-theme='dark'] {
-  --mermaid-node-bg: #333;
-  --mermaid-node-color: #ccc;
-  --mermaid-rig-bg: #d60;
-  --mermaid-rig-color: #111;
-  --mermaid-edge-bg: #2f2f2f;
-  --mermaid-edge-text: #888;
-  --mermaid-cluster-bg: rgba(255, 255, 255, 0.03);
-  --mermaid-cluster-border: rgba(255, 255, 255, 0.06);
-  --mermaid-cluster-title: #aaa;
-}
-
 .node :is(rect, path, polygon) {
   fill: var(--mermaid-node-bg) !important;
   stroke: none !important;
@@ -119,7 +116,7 @@
 }
 
 
-.docusaurus-mermaid-container .cluster rect {
+.docusaurus-mermaid-container .cluster :is(rect, path) {
   rx: 8px !important;
   ry: 8px !important;
   fill: var(--mermaid-cluster-bg) !important;
