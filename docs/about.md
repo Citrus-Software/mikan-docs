@@ -25,18 +25,15 @@ Creating a rig with Mikan is an iterative process. The blueprint remains your si
 
 ```mermaid
 flowchart LR
-    BP([Assemble Blueprint]):::bpNode
-    TPL("**Template**<br/>(Guides, Pivots & YAML Logic)"):::rigNode
-    RIG("**Rig**<br/>(Controllers, Math & Constraints)"):::rigNode
-    MAN("Bind & Adjust Deformers"):::bpNode
+    BP([**Assemble Blueprint**]):::rig
+    TPL("**Template**<br/>(Guides, Pivots & YAML Logic)")
+    RIG("**Rig**<br/>(Controllers, Math & Constraints)")
+    MAN("**Bind & Adjust Deformers**"):::rig
 
     BP --> TPL
-    TPL -->|"<div style='padding: 4px 10px; font-weight:bold;font-size:13px;'>Run Build</div>"| RIG
+    TPL -->|Run Build| RIG
     RIG --> MAN
-    MAN --> |"<div style='padding: 4px 10px; font-weight:bold;font-size:13px;'>Inject Changes</div>"| TPL
-
-    classDef bpNode fill:#fb5, color:#000, font-weight:bold, stroke:none
-    classDef rigNode fill:#dfd9d0, color:#000, stroke:none
+    MAN -->|Inject Changes| TPL
 ```
 
 1. **Assemble:** Define the rig’s structure using `Templates` and add procedural logic via `Modifiers`.

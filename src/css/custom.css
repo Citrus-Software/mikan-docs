@@ -53,3 +53,90 @@
 [data-theme='dark'] .theme-admonition {
   filter: brightness(0.8);
 }
+
+
+/* mermaid overrides */
+
+:root {
+  --mermaid-node-bg: #ddd;
+  --mermaid-node-color: #333;
+  --mermaid-rig-bg: #fb5;
+  --mermaid-rig-color: #000;
+  --mermaid-edge-bg: #eee;
+  --mermaid-edge-text: #666;
+}
+
+[data-theme='dark'] {
+  --mermaid-node-bg: #333;
+  --mermaid-node-color: #ccc;
+  --mermaid-rig-bg: #d60;
+  --mermaid-rig-color: #111;
+  --mermaid-edge-bg: #2f2f2f;
+  --mermaid-edge-text: #888;
+}
+
+.node :is(rect, path, polygon) {
+  fill: var(--mermaid-node-bg) !important;
+  stroke: none !important;
+}
+.node :is(.nodeLabel, span, p, strong) {
+  color: var(--mermaid-node-color) !important;
+}
+
+.rig :is(rect, path, polygon) {
+  fill: var(--mermaid-rig-bg) !important;
+  stroke: none !important;
+}
+.rig :is(.nodeLabel, span, p, strong) {
+  color: var(--mermaid-rig-color) !important;
+}
+
+.docusaurus-mermaid-container .edgeLabel .labelBkg {
+  background-color: var(--mermaid-edge-bg) !important;
+  border: none !important;
+  border-radius: 12px !important;
+  padding: 3px 8px !important;
+}
+
+.docusaurus-mermaid-container .edgeLabel,
+.docusaurus-mermaid-container .edgeLabel span,
+.docusaurus-mermaid-container .edgeLabel p {
+  background: transparent !important;
+  color: var(--mermaid-edge-text) !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+}
+
+.docusaurus-mermaid-container .edgeLabel foreignObject {
+  overflow: visible !important;
+}
+
+
+:root {
+  --mermaid-cluster-bg: rgba(0, 0, 0, 0.04);
+  --mermaid-cluster-border: rgba(0, 0, 0, 0.06);
+  --mermaid-cluster-title: #444;
+}
+
+[data-theme='dark'] {
+  --mermaid-cluster-bg: rgba(255, 255, 255, 0.03);
+  --mermaid-cluster-border: rgba(255, 255, 255, 0.06);
+  --mermaid-cluster-title: #aaa;
+}
+
+.docusaurus-mermaid-container .cluster rect {
+  rx: 8px !important;
+  ry: 8px !important;
+  fill: var(--mermaid-cluster-bg) !important;
+  stroke: var(--mermaid-cluster-border) !important;
+  stroke-width: 1px !important;
+  stroke-dasharray: none !important;
+}
+
+.docusaurus-mermaid-container .cluster .cluster-label span,
+.docusaurus-mermaid-container .cluster .cluster-label p,
+.docusaurus-mermaid-container .cluster text {
+  color: var(--mermaid-cluster-title) !important;
+  fill: var(--mermaid-cluster-title) !important;
+}

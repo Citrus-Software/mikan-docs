@@ -20,20 +20,20 @@ To use the Shape Editor efficiently, you only need to understand two main compon
 
 ```mermaid
 flowchart LR
-    subgraph DRIVER["Driver Node (e.g. Locator)"]
-        ATTR["Custom Attribute<br/><i>(e.g., mouth_up_L = 1.0)</i>"]
+    subgraph DRIVER ["**Driver Node (e.g. Locator)**"]
+        ATTR("Custom Attribute<br/><i>(e.g., mouth_up_L = 1.0)</i>")
     end
 
-    subgraph GROUP["Template Group (core.group)"]
+    subgraph GROUP ["**Template Group (core.group)**"]
         direction TB
         
-        POSES["Pose Nodes<br/><code>{tpl}::poses.*</code>"]
-        BS["Blendshape Nodes"]
+        POSES("Pose Nodes<br/><code>{tpl}::poses.*</code>")
+        BS("Blendshape Nodes")
         
-        subgraph TARGETS["Multi-Mesh Targets"]
+        subgraph TARGETS ["**Multi-Mesh Targets**"]
             direction LR
-            M1["msh_head"]
-            M2["msh_eyebrows, ..."]
+            M1("msh_head")
+            M2("msh_eyebrows, ...")
         end
 
         BS --> M1

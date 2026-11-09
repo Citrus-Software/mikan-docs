@@ -17,20 +17,19 @@ graph LR
     root0 --> ctrl0("ctrls.0")
     ctrl0 --> skin0("skin.0")
     
-    skin0 --> root1
+    skin0 ==> root1
     
     rvt1("(rivet)") --> root1("root.1")
     root1 --> ctrl1("ctrls.1")
     ctrl1 --> skin1("skin.1")
     
-    skin1 --> root2
+    skin1 ==> root2
 
     rvt2("(rivet)") --> root2("root.2")
     root2 --> ctrl2("ctrls.2")
     ctrl2 --> skin2("skin.2")
 
-    linkStyle 3,7 stroke:#f60,stroke-width:3px;
-    classDef default fill:#fff,stroke:#aaa,stroke-width:2px,color:#333;
+    linkStyle 3,7 stroke:#f60,fill:none;
 ```
 
 ## Parameters
