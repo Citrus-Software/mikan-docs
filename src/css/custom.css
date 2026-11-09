@@ -43,10 +43,10 @@
   color: var(--ifm-font-color-base);
 }
 
-[data-theme='dark'] .markdown strong:not(.docusaurus-mermaid-container *),
-[data-theme='dark'] .markdown b:not(.docusaurus-mermaid-container *),
-[data-theme='dark'] .markdown em:not(.docusaurus-mermaid-container *),
-[data-theme='dark'] .markdown i:not(.docusaurus-mermaid-container *) {
+[data-theme='dark'] .markdown strong:not(.docusaurus-mermaid-container *):not(.theme-admonition *):not(.alert *),
+[data-theme='dark'] .markdown b:not(.docusaurus-mermaid-container *):not(.theme-admonition *):not(.alert *),
+[data-theme='dark'] .markdown em:not(.docusaurus-mermaid-container *):not(.theme-admonition *):not(.alert *),
+[data-theme='dark'] .markdown i:not(.docusaurus-mermaid-container *):not(.theme-admonition *):not(.alert *) {
   color: #bfbfbf;
 }
 
