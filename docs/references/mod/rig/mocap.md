@@ -128,8 +128,8 @@ rig.mocap:
   right_hand_pinky3: [ pinky.R::ctrls.3, pinky.R::tip ]
 
   # IK effectors
-  left_ankle_effector: arm.L::ctrls.ik
-  right_ankle_effector: arm.R::ctrls.ik
-  left_wrist_effector: leg.L::ctrls.ik
-  right_wrist_effector: leg.R::ctrls.ik
+  left_ankle_effector: leg.L::ctrls.ik
+  right_ankle_effector: leg.R::ctrls.ik
+  left_wrist_effector: arm.L::ctrls.ik
+  right_wrist_effector: arm.R::ctrls.ik
 ```
