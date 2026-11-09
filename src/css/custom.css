@@ -64,6 +64,9 @@
   --mermaid-rig-color: #000;
   --mermaid-edge-bg: #eee;
   --mermaid-edge-text: #666;
+  --mermaid-cluster-bg: rgba(0, 0, 0, 0.04);
+  --mermaid-cluster-border: rgba(0, 0, 0, 0.06);
+  --mermaid-cluster-title: #444;
 }
 
 [data-theme='dark'] {
@@ -73,6 +76,9 @@
   --mermaid-rig-color: #111;
   --mermaid-edge-bg: #2f2f2f;
   --mermaid-edge-text: #888;
+  --mermaid-cluster-bg: rgba(255, 255, 255, 0.03);
+  --mermaid-cluster-border: rgba(255, 255, 255, 0.06);
+  --mermaid-cluster-title: #aaa;
 }
 
 .node :is(rect, path, polygon) {
@@ -112,18 +118,6 @@
   overflow: visible !important;
 }
 
-
-:root {
-  --mermaid-cluster-bg: rgba(0, 0, 0, 0.04);
-  --mermaid-cluster-border: rgba(0, 0, 0, 0.06);
-  --mermaid-cluster-title: #444;
-}
-
-[data-theme='dark'] {
-  --mermaid-cluster-bg: rgba(255, 255, 255, 0.03);
-  --mermaid-cluster-border: rgba(255, 255, 255, 0.06);
-  --mermaid-cluster-title: #aaa;
-}
 
 .docusaurus-mermaid-container .cluster rect {
   rx: 8px !important;
