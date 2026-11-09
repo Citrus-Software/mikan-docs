@@ -11,10 +11,10 @@ The generated skeleton is compatible with traditional motion capture pipelines (
 
 ## Parameters
 
-| Parameter     | Type                                 | Default | Description                                                                                                                                                                                   |
-|---------------|--------------------------------------|---------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `reference`   | *plug \| node*                       |         | Reference controller node used as the base anchor for the mocap hierarchy (e.g., world or main placement controller).                                                                         | 
-| `<hik_label>` | *plug \| node \| list[plug \| node]* |         | HumanIK joint definition. Maps a specific HIK bone label to a rig controller. Can accept a single controller node or a list of two nodes `[start, end]` to generate a tip joint/bone segment. |
+| Parameter     | Type                 | Default | Description                                                                                                                                                                                   |
+|---------------|----------------------|---------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `reference`   | *node*               |         | Reference controller node used as the base anchor for the mocap hierarchy (e.g., world or main placement controller).                                                                         | 
+| `<hik_label>` | *node \| list[node]* |         | HumanIK joint definition. Maps a specific HIK bone label to a rig controller. Can accept a single controller node or a list of two nodes `[start, end]` to generate a tip joint/bone segment. |
 
 :::note[Automatic End Joints]
 When providing a pair of nodes `[start, end]` for a HumanIK slot (e.g., `head: [neck::ctrls.head, neck::tip]`), the modifier automatically builds an end joint to close the bone segment if no child joint is explicitly declared.
