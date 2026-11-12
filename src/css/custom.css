@@ -30,7 +30,7 @@
   --mermaid-cluster-title: #444;
 }
 
-[data-theme="dark"] {
+html[data-theme="dark"] {
   /* infima */
   --ifm-color-primary: #FF6C32;
   --ifm-color-primary-dark: #21af90;
