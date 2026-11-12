@@ -86,11 +86,11 @@
   color: var(--mermaid-node-color) !important;
 }
 
-.rig :is(rect, path, polygon) {
+.node.rig :is(rect, path, polygon) {
   fill: var(--mermaid-rig-bg) !important;
   stroke: none !important;
 }
-.rig :is(.nodeLabel, span, p, strong) {
+.node.rig :is(.nodeLabel, span, p, strong) {
   color: var(--mermaid-rig-color) !important;
 }
 

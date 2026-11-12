@@ -145,6 +145,13 @@ const config = {
         darkTheme: prismThemes.palenight,
       },
 
+      mermaid: {
+        theme: {
+          light: 'neutral',
+          dark: 'dark',
+        },
+      },
+
       algolia: {
         appId: 'H22UAVUF6S',
         apiKey: 'b2a03ef98dc17b72b35b698e2c5ffc4f',
