@@ -27,6 +27,12 @@ The `rig.mocap` modifier constructs a complete hierarchical mocap skeleton:
 - **Maya**: Automatically creates and hooks up a native **HumanIK Character** definition node connected to the generated joint hierarchy. This mocap skeleton can also be exported to FBX and is directly compatible with motion capture tools and libraries such as Mixamo or Rokoko.
 - **Tangerine**: Generates the corresponding native mocap structure. This structure is consumed by internal animation retargeting tools upon FBX animation import, allowing custom studio scripts to transfer the imported mocap motion directly onto the designated animation controllers of the final rig.
 
+:::caution[FBX Export Requirement]
+When exporting the generated mocap skeleton to an FBX file (especially for use with Mixamo or transferring animations back into Tangerine), ensure that the FBX strictly contains only the generated mocap skeleton (the HIK skeleton) and, optionally, previz meshes.
+
+Do not include the rig controllers, extra locators, or other unnecessary nodes in the export selection, as this can cause the import or retargeting process to fail.
+:::
+
 ### Hierarchy & Placement
 
 The mocap skeleton is parented under the output node of the scope where the modifier is declared (typically a helper node at the root of the template).
